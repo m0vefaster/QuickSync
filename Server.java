@@ -10,43 +10,48 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class Server implements Runnable{
+public class Server implements Runnable
+{
+    private ServerSocket ss;
+    private Socket s;
+    public Server(ServerSocket ss, Socket s)
+    {
+        this.ss = ss;
+        this.s = s; 
+    }
     @Override
     public void run() 
     {
-	ServerSocket ss;
-	File myFile;
-	byte[] aByte = new byte[1];
-	try {
-	    ss = new ServerSocket(60010);
-	    Socket s = ss.accept();
-	    InputStream inFromServer = s.getInputStream();
-	    DataInputStream in =
-	       new DataInputStream(inFromServer);
-	    String line = null;
-	    line = in.readUTF();
-	    System.out.println(line);
-		myFile = new File(line);
-		if (myFile.createNewFile())
-		{
-	        System.out.println("File is created!");
-	    }
-		else
-		{
-	        System.out.println("File already exists.");
-	    }
-	    byte[] mybytearray = new byte[1024];
-	    InputStream is = s.getInputStream();
-	    FileOutputStream fos = new FileOutputStream(line);
-	    BufferedOutputStream bos = new BufferedOutputStream(fos);
-	    int bytesRead = is.read(mybytearray, 0, mybytearray.length);
-	    bos.write(mybytearray, 0, bytesRead);
-	    bos.close();
-	    ss.close();
-	    
-	} catch (Exception e) {
-	    e.printStackTrace();
-	}
+    File myFile;
+    byte[] aByte = new byte[1];
+    try {
+        InputStream inFromServer = s.getInputStream();
+        DataInputStream in =
+           new DataInputStream(inFromServer);
+        String line = null;
+        line = in.readUTF();
+        System.out.println(line);
+        myFile = new File(line);
+        if (myFile.createNewFile())
+        {
+            System.out.println("File is created!");
+        }
+        else
+        {
+            System.out.println("File already exists.");
+        }
+        byte[] mybytearray = new byte[1024];
+        InputStream is = s.getInputStream();
+        FileOutputStream fos = new FileOutputStream(line);
+        BufferedOutputStream bos = new BufferedOutputStream(fos);
+        int bytesRead = is.read(mybytearray, 0, mybytearray.length);
+        bos.write(mybytearray, 0, bytesRead);
+        bos.close();
+        ss.close();
+        
+    } catch (Exception e) {
+        e.printStackTrace();
+    }
 
     }
 }
