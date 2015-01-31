@@ -10,11 +10,14 @@ public class Client implements Runnable
      int port;
      private Thread t;
      private String threadName = "Client";
-     Client (String serverName, String port)
+     private String fileName;
+
+     Client (String serverName, String port, String fileName)
      {
         this.serverName = serverName;    	      
 	this.port = Integer.parseInt(port);
-      }
+        this.fileName = fileName;
+     }
 
      public void run()
      {
@@ -32,10 +35,10 @@ public class Client implements Runnable
 		 DataOutputStream out =
 			       new DataOutputStream(outToServer);
 
-		 out.writeUTF("temp.c");
+		 out.writeUTF(fileName);
 
 
-                 File myFile = new File("temp.c");
+                 File myFile = new File(fileName);
 	         byte[] mybytearray = new byte[(int) myFile.length()];
                  BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile));
                  bis.read(mybytearray, 0, mybytearray.length);
