@@ -51,7 +51,7 @@ public class Client implements Runnable
     }
 
  
-   void start ()
+/*   void start ()
    {
       System.out.println("Starting " +  threadName );
       if (t == null)
@@ -60,5 +60,5 @@ public class Client implements Runnable
          t.start ();
       }
    }
-     
+  */   
 }
