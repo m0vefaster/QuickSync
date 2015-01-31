@@ -5,7 +5,7 @@ public class ClientServer{
 
         if(Integer.parseInt(args[2]) == 1){
             client.start();
-        }else if(Integer.parseInt(args[2] == 0){
+        }else if(Integer.parseInt(args[2]) == 0){
             server.start();
         }
     }
