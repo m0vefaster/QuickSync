@@ -24,6 +24,7 @@ public class Server implements Runnable
     {
     File myFile;
     byte[] aByte = new byte[1];
+    System.out.println("Server running "+s.toString());
     try {
         InputStream inFromServer = s.getInputStream();
         DataInputStream in =
