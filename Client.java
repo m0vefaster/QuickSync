@@ -30,7 +30,7 @@ public class Client implements Runnable
 		 DataOutputStream out =
 			       new DataOutputStream(outToServer);
 
-		 out.writeUTF("temp1.c");
+		 out.writeUTF("temp.c");
 
 
                  File myFile = new File("temp.c");
