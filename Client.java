@@ -39,7 +39,7 @@ public class Client implements Runnable
 		    {
                           try 
                                {
-                                  t.sleep(10000); //milliseconds
+                                  t.sleep(100); //milliseconds
        		               } 
                          catch (InterruptedException e) 
                               {

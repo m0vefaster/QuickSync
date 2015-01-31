@@ -23,7 +23,7 @@ public class ClientServer{
             } catch (Exception e) {
                   try 
                    {
-                      Thread.sleep(10000); //milliseconds
+                      Thread.sleep(10); //milliseconds
                    } 
                  catch (InterruptedException e1) 
                   {
