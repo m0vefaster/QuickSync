@@ -19,7 +19,8 @@ public class ClientServer{
             try {
                 Socket s = ss.accept();
                 Thread server = new Thread(new Server(ss, s));
-                server.start();
+                System.out.println("Created Thread for " +s. getRemoteSocketAddress());
+		server.start();
             } catch (Exception e) {
                   try 
                    {
