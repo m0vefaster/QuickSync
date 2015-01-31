@@ -1,12 +1,35 @@
+import java.io.IOException;
+import java.io.*;
+import java.net.*;
+
 public class ClientServer{
     public static void main(String[] args){
-        Thread client = new Thread(new Client(args[0], args[1], args[2]));
-        Thread server = new Thread(new Server());
+        Thread client1 = new Thread(new Client(args[0], args[1], args[2]));
+        Thread client2 = new Thread(new Client(args[3], args[1], args[4]));
 
-        //if(Integer.parseInt(args[2]) == 1){
-            client.start();
-        //}else if(Integer.parseInt(args[2]) == 0){
-            server.start();
-        //}
+        client1.start();
+        client2.start();
+        ServerSocket ss = null;
+        try{
+            ss = new ServerSocket(Integer.parseInt(args[1]));
+        }catch (Exception e2){
+        }
+
+        while(true){
+            try {
+                Socket s = ss.accept();
+                Thread server = new Thread(new Server(ss, s));
+                server.start();
+            } catch (Exception e) {
+                  try 
+                   {
+                      Thread.sleep(10000); //milliseconds
+                   } 
+                 catch (InterruptedException e1) 
+                  {
+
+                  } 
+            }
+        }
     }
 }
