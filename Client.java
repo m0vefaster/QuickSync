@@ -26,9 +26,30 @@ public class Client implements Runnable
 	      {
 		 System.out.println("Connecting to " + serverName + " on port " + port);
 		 
-		 Socket client ;
+		 Socket client =null ;
 		 
-		 while((client= new Socket(serverName, port)) ==null);
+		 do 
+		 {
+		    try
+	    	    {
+		
+		  	  client = new Socket(serverName,port);
+	            }
+		    catch (Exception anye)
+		    {
+                          try 
+                               {
+                                  t.sleep(10000); //milliseconds
+       		               } 
+                         catch (InterruptedException e) 
+                              {
+
+             		      } 
+		    }
+
+
+		  }while(client==null);
+
 		 System.out.println("Just connected to "
 			      + client.getRemoteSocketAddress());
 		 OutputStream outToServer = client.getOutputStream();
