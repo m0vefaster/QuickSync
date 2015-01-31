@@ -2,19 +2,27 @@
 
 import java.net.*;
 import java.io.*;
-
-public class Client
+import java.lang.*;
+public class Client implements Runnable
 {
-     public static void main(String args[])
-     {
 
-	      String serverName = args[0];
-	      int port = Integer.parseInt(args[1]);
+     String serverName ;
+     int port;
+     private Thread t;
+     private String threadName = "Client";
+     Client (String serverName, String port)
+     {
+        this.serverName = serverName;    	      
+	this.port = Integer.parseInt(port);
+      }
+
+     public void run()
+     {
 
 	      try
 	      {
-		 System.out.println("Connecting to " + serverName
-				     + " on port " + port);
+		 System.out.println("Connecting to " + serverName + " on port " + port);
+		 
 		 Socket client = new Socket(serverName, port);
 		 System.out.println("Just connected to "
 			      + client.getRemoteSocketAddress());
@@ -22,8 +30,7 @@ public class Client
 		 DataOutputStream out =
 			       new DataOutputStream(outToServer);
 
-		 out.writeUTF("Hello from "
-			      + client.getLocalSocketAddress());
+		 out.writeUTF("temp1.c");
 
 
                  File myFile = new File("temp.c");
@@ -42,4 +49,16 @@ public class Client
 		 e.printStackTrace();
 	      }
     }
+
+ 
+   void start ()
+   {
+      System.out.println("Starting " +  threadName );
+      if (t == null)
+      {
+         t = new Thread (this, threadName);
+         t.start ();
+      }
+   }
+     
 }
