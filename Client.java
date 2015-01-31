@@ -18,12 +18,14 @@ public class Client implements Runnable
 
      public void run()
      {
-
+          
 	      try
 	      {
 		 System.out.println("Connecting to " + serverName + " on port " + port);
 		 
-		 Socket client = new Socket(serverName, port);
+		 Socket client ;
+		 
+		 while((client= new Socket(serverName, port)) ==null);
 		 System.out.println("Just connected to "
 			      + client.getRemoteSocketAddress());
 		 OutputStream outToServer = client.getOutputStream();
@@ -51,7 +53,7 @@ public class Client implements Runnable
     }
 
  
-/*   void start ()
+   void start ()
    {
       System.out.println("Starting " +  threadName );
       if (t == null)
@@ -60,5 +62,5 @@ public class Client implements Runnable
          t.start ();
       }
    }
-  */   
+    
 }
