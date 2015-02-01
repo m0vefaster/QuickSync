@@ -18,7 +18,9 @@ public class ClientServer{
                 System.out.println("ClientServer:Created Thread for " +s. getRemoteSocketAddress());
 		server.start();
             } catch (Exception e) {
-        	Thread.sleep(100);    
+        	try{
+			Thread.sleep(100);   
+		}catch(Exception e1){}
 	}
         }
     }
