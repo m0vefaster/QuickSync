@@ -21,18 +21,14 @@ public class Client implements Runnable
 
      public void run()
      {
-          
 	      try
 	      {
-		 System.out.println("Connecting to " + serverName + " on port " + port);
-		 
+		 System.out.println("Client:Connecting to " + serverName + " on port " + port);
 		 Socket client =null ;
-		 
 		 do 
 		 {
 		    try
 	    	    {
-		
 		  	  client = new Socket(serverName,port);
 	            }
 		    catch (Exception anye)
@@ -47,18 +43,17 @@ public class Client implements Runnable
              		      } 
 		    }
 
-
 		  }while(client==null);
 
-		 System.out.println("Just connected to "
+		 System.out.println("Client:Just connected to "
 			      + client.getRemoteSocketAddress());
 		 OutputStream outToServer = client.getOutputStream();
 		 DataOutputStream out =
 			       new DataOutputStream(outToServer);
 
 		 out.writeUTF(fileName);
-
-
+   
+                 System.out.println("Client:Sent Filename " + fileName);
                  File myFile = new File(fileName);
 	         byte[] mybytearray = new byte[(int) myFile.length()];
                  BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile));
@@ -67,9 +62,10 @@ public class Client implements Runnable
                  os.write(mybytearray, 0, mybytearray.length);
                  os.flush(); 
 		 
+		 System.out.println("Client:Sent the file " + fileName);
                  client.close();
 	      }
-	      
+
 	      catch(IOException e)
 	      {
 		 e.printStackTrace();
