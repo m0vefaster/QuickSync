@@ -10,27 +10,16 @@ public class ClientServer{
         client1.start();
         client2.start();
         ServerSocket ss = null;
-        try{
-            ss = new ServerSocket(Integer.parseInt(args[1]));
-        }catch (Exception e2){
-        }
-
         while(true){
             try {
+	    	ss = new ServerSocket(Integer.parseInt(args[1]));
                 Socket s = ss.accept();
                 Thread server = new Thread(new Server(ss, s));
                 System.out.println("ClientServer:Created Thread for " +s. getRemoteSocketAddress());
 		server.start();
             } catch (Exception e) {
-                  try 
-                   {
-                      Thread.sleep(10); //milliseconds
-                   } 
-                 catch (InterruptedException e1) 
-                  {
-
-                  } 
-            }
+        	Thread.sleep(100);    
+	}
         }
     }
 }
