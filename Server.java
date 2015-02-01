@@ -35,11 +35,11 @@ public class Server implements Runnable
         myFile = new File(line);
         if (myFile.createNewFile())
         {
-            System.out.println("File is created!");
+            System.out.println("Server: File is created!");
         }
         else
         {
-            System.out.println("File already exists.");
+            System.out.println("Server: File already exists.");
         }
         byte[] mybytearray = new byte[1024];
         InputStream is = s.getInputStream();
@@ -49,6 +49,7 @@ public class Server implements Runnable
         bos.write(mybytearray, 0, bytesRead);
         bos.close();
         ss.close();
+        System.out.println("Server: closing socket "+s.toString());
         
     } catch (Exception e) {
         e.printStackTrace();
