@@ -4,26 +4,31 @@ import java.util.*;
 class ListOfFiles
 {
 	  
-//      String path ="\~/QuickSync";
    String path ="/Users/vishalparekh/QuickSync/";
-	  ArrayList getList ( )
+
+   ArrayList getList ( )
 	  {
 		       ArrayList<String> list = new ArrayList<String>();
 			   
-			   return getListHelper(list);
+			   return getListHelper(list,path);
 	  }
 
-	  ArrayList getListHelper (ArrayList<String> list)
+	  ArrayList getListHelper (ArrayList<String> list, String path)
 	  {
 		      File folder = new File(path);
 		      File[] listOfFiles = folder.listFiles();
 
-			  System.out.println("list:" + listOfFiles.length);
 			  for(int i=0;i< listOfFiles.length;i++)
 			  {
 				    if(listOfFiles[i].isFile())
 					{
-						 list.add(listOfFiles[i].getName());
+						  System.out.println("File is:" + listOfFiles[i].getAbsolutePath());
+						  list.add(path +"/" + listOfFiles[i].getName());
+					}
+					else if(listOfFiles[i].isDirectory())
+					{
+						  System.out.println("Directory is:" + listOfFiles[i].getAbsolutePath());
+						  getListHelper(list,path+"/"+ listOfFiles[i].getName());
 					}
 			  }
 
