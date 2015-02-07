@@ -1,11 +1,16 @@
 import java.io.*;
 import java.util.*;
+import java.lang.*;
 
 class ListOfFiles
 {
-	  
-   String path ="/Users/vishalparekh/QuickSync/";
+String path;
 
+     ListOfFiles(String path)
+   {
+       this.path=path;
+       System.out.println("\nPath is :"+path);	   
+   } 
    ArrayList getList ( )
 	  {
 		       ArrayList<String> list = new ArrayList<String>();
