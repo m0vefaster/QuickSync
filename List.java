@@ -3,8 +3,10 @@ import java.util.*;
 
 class List
 {
-	  static String path1 ="/Users/vishalparekh/QuickSync/";
-      static String path2 ="/Users/vishalparekh/Documents/QuickSync/"; 
+	  static String homeDir = System.getProperty("user.home");
+	  static String folder = "QuickSync";
+	  static String path1 = homeDir + "/" + folder ;
+      static String path2 = homeDir + "/" + "Documents/" +folder ; 
 	   public static void main(String args[])
 	   {
 		   ListOfFiles lof1 = new ListOfFiles(path1);
@@ -30,6 +32,9 @@ class List
 					 System.out.print(al.get(i) + ",");
 				}
 				
-		   }  
+		   } 
+
+		  String currentUsersHomeDir = System.getProperty("user.home");
+		  System.out.println("\n\n\n" + currentUsersHomeDir); 
 	   }
 }
