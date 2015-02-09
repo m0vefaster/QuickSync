@@ -6,19 +6,19 @@ class ListOfFiles
 {
 String path;
 
-     ListOfFiles(String path)
+   ListOfFiles(String path)
    {
        this.path=path;
        System.out.println("\nPath is :"+path);	   
    } 
-   ArrayList getList ( )
+   ArrayList<String> getList ( )
 	  {
 		       ArrayList<String> list = new ArrayList<String>();
 			   
 			   return getListHelper(list,path);
 	  }
 
-	  ArrayList getListHelper (ArrayList<String> list, String path)
+	  ArrayList<String> getListHelper (ArrayList<String> list, String path)
 	  {
 		      File folder = new File(path);
 		      File[] listOfFiles = folder.listFiles();
