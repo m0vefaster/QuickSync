@@ -40,8 +40,7 @@ public class udpServer implements Runnable
             /* Start the client TCP */
             Thread client = new Thread(new Client(recvPacket.getAddress().getHostAddress(), ClientServerGen.serverPort, ClientServerGen.filename));
             client.start();
+            System.out.println("Created client TCP connection");
         }
     }
 }
-
-

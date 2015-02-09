@@ -9,6 +9,7 @@ public class udpClient implements Runnable
     private int port;
 
     udpClient(int port, String broadcastAdd){
+        System.out.println("Starting UDP client on port" + port);
         try{
             this.clientSocket = new DatagramSocket(port);
             this.clientSocket.setBroadcast(true);
@@ -30,8 +31,9 @@ public class udpClient implements Runnable
 
     void broadcastUdpPacket(byte[] data){
         try{
-            DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(broadcastAdd), this.port);
+            DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(broadcastAdd), 8888);
             this.clientSocket.send(packet);
+            System.out.println("Broadcasting to "+ broadcastAdd);
         } catch(Exception e){
             e.printStackTrace();
         }
@@ -39,13 +41,19 @@ public class udpClient implements Runnable
     
     public void run(){
         /* Start a udp server */
-        byte[] buf = new byte[10000];
-        Thread server = new Thread(new udpServer(8888));
-        server.start();
+        byte[] buf = new byte[100];
+        //Thread server = new Thread(new udpServer(8888));
+        //server.start();
 
         try{
-            String ipPort = clientSocket.getLocalAddress()+":"+this.port;
-            byte[] bytes = ipPort.getBytes(ipPort);
+            System.out.println("Local Add "+ clientSocket.getInetAddress());
+            //String ipPort = this.clientSocket.getLocalAddress()+":"+this.port;
+            StringBuilder a = new StringBuilder();
+            a.append("blah blah");
+            a.append(String.valueOf(port));
+            String ipPort = "blah blah";
+            byte[] bytes = ipPort.getBytes("UTF-8");
+            System.out.println("Created stream");
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] digest = md.digest(bytes);
 
@@ -55,6 +63,7 @@ public class udpClient implements Runnable
             ObjectOutputStream o = new ObjectOutputStream(b);
             o.writeObject(host);
             buf = b.toByteArray();
+            System.out.println("Created digest");
         }catch(Exception e){
             e.printStackTrace();
         }
