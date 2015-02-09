@@ -34,7 +34,5 @@ class List
 				
 		   } 
 
-		  String currentUsersHomeDir = System.getProperty("user.home");
-		  System.out.println("\n\n\n" + currentUsersHomeDir); 
 	   }
 }
