@@ -2,6 +2,8 @@ import java.net.*;
 import java.io.*;
 import java.lang.*;
 import java.security.*;
+import java.util.*;
+
 public class udpClient implements Runnable
 {
     private DatagramSocket clientSocket;
@@ -11,7 +13,8 @@ public class udpClient implements Runnable
     udpClient(int port, String broadcastAdd){
         System.out.println("Starting UDP client on port" + port);
         try{
-            this.clientSocket = new DatagramSocket(port);
+            //this.clientSocket = new DatagramSocket(port, InetAddress.getByName("137.110.90.255"));
+            this.clientSocket = new DatagramSocket();
             this.clientSocket.setBroadcast(true);
         }catch(Exception e){
             e.printStackTrace();
@@ -31,18 +34,36 @@ public class udpClient implements Runnable
 
     void broadcastUdpPacket(byte[] data){
         try{
-            DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(broadcastAdd), 8888);
-            this.clientSocket.send(packet);
-            System.out.print("-----Broadcasting to "+ broadcastAdd);
-        } catch(Exception e){
-            e.printStackTrace();
+            Enumeration interfaces = NetworkInterface.getNetworkInterfaces();
+            while(interfaces.hasMoreElements()){
+                NetworkInterface networkInterface = (NetworkInterface)interfaces.nextElement();
+                if (networkInterface.isLoopback() || !networkInterface.isUp()) {
+                    continue; // Don't want to broadcast to the loopback interface
+                }
+                for (InterfaceAddress interfaceAddress : networkInterface.getInterfaceAddresses()) {
+                    InetAddress broadcast = interfaceAddress.getBroadcast();
+                    System.out.println(broadcast);
+                    if (broadcast == null) {
+                        continue;
+                    }
+                    try{
+                        //DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(broadcastAdd), 8888);
+                        DatagramPacket packet = new DatagramPacket(data, data.length, broadcast, 61001);
+                        this.clientSocket.send(packet);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
+                    //System.out.print("-----Broadcasting to "+ broadcastAdd);
+                }
+            }
+        }catch(Exception e){
         }
     }
     
     public void run(){
         /* Start a udp server */
         byte[] buf = new byte[100];
-        Thread server = new Thread(new udpServer(8888));
+        Thread server = new Thread(new udpServer(61001));
         server.start();
 
         try{

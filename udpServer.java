@@ -11,6 +11,9 @@ public class udpServer implements Runnable
         try{
             this.serverSocket = new DatagramSocket(port);
             this.serverSocket.setBroadcast(true);
+            InetAddress addr = InetAddress.getLocalHost();
+            String ipAddress = addr.getHostAddress(); 
+            System.out.println("---------------------" +ipAddress);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -26,6 +29,10 @@ public class udpServer implements Runnable
             try{
                 this.serverSocket.receive(recvPacket);
                 System.out.println("Received UDP packet from" + recvPacket.getAddress().getHostAddress() + " " + recvPacket.getPort());
+                if(recvPacket.getAddress().getHostAddress().toString().compareTo(ClientServerGen.selfIp) == 0){
+                    //System.out.println("------Moving on---------------" );
+                    continue;
+                }
 
                 ByteArrayInputStream b = new ByteArrayInputStream(recvPacket.getData());
                 ObjectInputStream o = new ObjectInputStream(b);
