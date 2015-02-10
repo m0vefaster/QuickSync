@@ -33,6 +33,6 @@ class List
 				}
 				
 		   } 
-
+          System.getProperties().list(System.out);
 	   }
 }
