@@ -109,6 +109,7 @@ public class udpClient implements Runnable
             try {
                 Thread.sleep(100); //milliseconds
             } catch (InterruptedException e){
+                e.printStackTrace();
             } 
         }
     }

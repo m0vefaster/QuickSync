@@ -39,6 +39,7 @@ public class Client implements Runnable
        		               } 
                          catch (InterruptedException e) 
                               {
+                                 e.printStackTrace();
 
              		      } 
 		    }
