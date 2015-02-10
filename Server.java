@@ -40,6 +40,8 @@ public class Server implements Runnable
         else
         {
             System.out.println("Server: File already exists.");
+            ss.close();
+            System.out.println("Server: closing socket "+s.toString());
             return;
         }
         byte[] mybytearray = new byte[1024];
