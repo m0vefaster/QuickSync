@@ -34,6 +34,9 @@ class ConnectionTable
 
    String getHash(String srcIP, String destIP, int srcPort,int destPort)
    {
+	  try
+	  {
+
 	  String concat = srcIP + destIP + String.valueOf(srcPort) + String.valueOf(destPort);
 	  byte[] bytesOfMessage = concat.getBytes("UTF-8");
 
@@ -46,8 +49,16 @@ class ConnectionTable
         {
          sb.append(Integer.toString((theDigest[i] & 0xff) + 0x100, 16).substring(1));
         }  
-      
-     return sb.toString();
+     
+	    return sb.toString(); 
+	  }
+
+	  catch (Exception e)
+	  {
+		   
+	  }
+
+	  return "error";
    }   
    
 
