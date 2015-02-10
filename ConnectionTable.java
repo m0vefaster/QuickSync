@@ -32,6 +32,15 @@ class ConnectionTable
 		return null;
    }
 
+   boolean existsConnection(String srcIP, String destIP, int srcPort,int destPort)
+   {
+        String hashVal = getHash(srcIP,destIP,srcPort,destPort);
+        if(connections.containsKey(hashVal))
+            return true;
+
+        return false;
+   } 
+      
    String getHash(String srcIP, String destIP, int srcPort,int destPort)
    {
 	  try
