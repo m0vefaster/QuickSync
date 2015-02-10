@@ -14,7 +14,6 @@ public class udpServer implements Runnable
             this.serverSocket.setBroadcast(true);
             InetAddress addr = InetAddress.getLocalHost();
             String ipAddress = addr.getHostAddress(); 
-            System.out.println("---------------------" +ipAddress);
             table = new ConnectionTable();
         }catch(Exception e){
             e.printStackTrace();
@@ -30,7 +29,7 @@ public class udpServer implements Runnable
         while(true){
             try{
                 this.serverSocket.receive(recvPacket);
-                System.out.println("...." + recvPacket.getAddress().getHostAddress() + " " + recvPacket.getPort());
+                System.out.print(".");
                 if(recvPacket.getAddress().getHostAddress().toString().compareTo(ClientServerGen.selfIp) == 0){
                     //System.out.println("------Moving on---------------" );
                     continue;
