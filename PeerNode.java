@@ -8,5 +8,9 @@ public class PeerNode implements Serializable{
         this.peerId = peerId;
         this.peerWeight = peerWeight;
     }
+
+    int getWeight(){
+        return peerWeight;
+    }
 }
 

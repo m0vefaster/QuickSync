@@ -6,6 +6,7 @@ public class udpServer implements Runnable
 {
     private DatagramSocket serverSocket;
     private int port;
+    private ConnectionTable table;
 
     udpServer(int port){
         try{
@@ -14,6 +15,7 @@ public class udpServer implements Runnable
             InetAddress addr = InetAddress.getLocalHost();
             String ipAddress = addr.getHostAddress(); 
             System.out.println("---------------------" +ipAddress);
+            table = new ConnectionTable();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -33,10 +35,18 @@ public class udpServer implements Runnable
                     //System.out.println("------Moving on---------------" );
                     continue;
                 }
+                if(table.existsConnection(recvPacket.getAddress().getHostAddress(), ClientServerGen.selfIp, recvPacket.getPort(), port) == true){
+                    continue;
+                }
 
                 ByteArrayInputStream b = new ByteArrayInputStream(recvPacket.getData());
                 ObjectInputStream o = new ObjectInputStream(b);
                 PeerNode peer = (PeerNode)o.readObject();
+                if(table.addConnection(recvPacket.getAddress().getHostAddress(), ClientServerGen.selfIp, recvPacket.getPort(), port, peer) == false){
+                    System.out.println("Can't insert");
+                    continue;
+                }
+
 
                 /* Store the sender info in the linked list */
                 ClientServerGen.peerList.add(peer);
