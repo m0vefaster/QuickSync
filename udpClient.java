@@ -105,13 +105,16 @@ public class udpClient implements Runnable
         while(true){
             //for(i = 1; i <= 255; i++){
                 broadcastUdpPacket(buf, ClientServerGen.client1);
-                broadcastUdpPacket(buf, ClientServerGen.client2);
-            try {
- //               Thread.sleep(100); //milliseconds
+   
+   				broadcastUdpPacket(buf, ClientServerGen.client2);
+   /*         try {
+                  Thread.sleep(100); //milliseconds
 
             } catch (InterruptedException e){
                 e.printStackTrace();
             } 
-        }
+     */
+
+		 	}
     }
 }

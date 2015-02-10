@@ -33,15 +33,17 @@ public class Client implements Runnable
 	            }
 		    catch (Exception anye)
 		    {
-                          try 
+                          /*try 
                                {
-                                  //t.sleep(100); //milliseconds
+                                  t.sleep(100); //milliseconds
        		               } 
                          catch (InterruptedException e) 
                               {
                                  e.printStackTrace();
 
-             		      } 
+             		      } */
+
+				anye.printStackTrace();
 		    }
 
 		  }while(client==null);
