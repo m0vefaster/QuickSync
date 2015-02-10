@@ -30,7 +30,7 @@ public class udpServer implements Runnable
         while(true){
             try{
                 this.serverSocket.receive(recvPacket);
-                System.out.println("Received UDP packet from" + recvPacket.getAddress().getHostAddress() + " " + recvPacket.getPort());
+                System.out.println("...." + recvPacket.getAddress().getHostAddress() + " " + recvPacket.getPort());
                 if(recvPacket.getAddress().getHostAddress().toString().compareTo(ClientServerGen.selfIp) == 0){
                     //System.out.println("------Moving on---------------" );
                     continue;
