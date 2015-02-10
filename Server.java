@@ -40,6 +40,7 @@ public class Server implements Runnable
         else
         {
             System.out.println("Server: File already exists.");
+            return;
         }
         byte[] mybytearray = new byte[1024];
         InputStream is = s.getInputStream();
