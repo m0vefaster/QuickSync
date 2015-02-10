@@ -42,7 +42,9 @@ public class ClientServerGen{
 class Comp implements Comparator<PeerNode>{
  
     @Override
-    public int compare(PeerNode pn1,PeerNode pn2) {
-        return pn1.getWeight().compareTo(pn2.getWeight());
+    public int  compare(PeerNode pn1,PeerNode pn2) {
+        if( pn1.getWeight() > pn2.getWeight())
+			return 1;
+		return -1 ; 
     }
 }  
