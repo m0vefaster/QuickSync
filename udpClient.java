@@ -33,7 +33,7 @@ public class udpClient implements Runnable
         try{
             DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(broadcastAdd), 8888);
             this.clientSocket.send(packet);
-            System.out.println("Broadcasting to "+ broadcastAdd);
+            System.out.print("-----Broadcasting to "+ broadcastAdd);
         } catch(Exception e){
             e.printStackTrace();
         }
