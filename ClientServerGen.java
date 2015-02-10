@@ -8,11 +8,15 @@ public class ClientServerGen{
     public static String filename;
     public static String serverPort;
     public static String selfIp;
+    public static String client1;
+    public static String client2;
     public static LinkedList<PeerNode> peerList = new LinkedList<PeerNode>();
     public static void main(String[] args){
         serverPort = args[2];
         filename = args[3];
         selfIp = args[4];
+        client1 = args[5];
+        client2 = args[6];
         Thread udpThread = new Thread(new udpClient(Integer.parseInt(args[0]), args[1]));
         udpThread.start();
 

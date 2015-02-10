@@ -32,7 +32,8 @@ public class udpClient implements Runnable
         }
     }
 
-    void broadcastUdpPacket(byte[] data){
+    void broadcastUdpPacket(byte[] data, String ip){
+        /*
         try{
             Enumeration interfaces = NetworkInterface.getNetworkInterfaces();
             while(interfaces.hasMoreElements()){
@@ -47,7 +48,7 @@ public class udpClient implements Runnable
                         continue;
                     }
                     try{
-                        DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(broadcastAdd), 8888);
+                        DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(broadcastAdd), 61001);
                         //DatagramPacket packet = new DatagramPacket(data, data.length, broadcast, 61001);
                         this.clientSocket.send(packet);
                     }catch(Exception e){
@@ -58,10 +59,20 @@ public class udpClient implements Runnable
             }
         }catch(Exception e){
         }
+        */
+        try{
+                        //DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(broadcastAdd), 61001);
+                        DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(ip), 61001);
+                        //DatagramPacket packet = new DatagramPacket(data, data.length, broadcast, 61001);
+                        this.clientSocket.send(packet);
+                    }catch(Exception e){
+                        e.printStackTrace();
+                    }
     }
     
     public void run(){
         /* Start a udp server */
+        int i ;
         byte[] buf = new byte[100];
         Thread server = new Thread(new udpServer(61001));
         server.start();
@@ -92,7 +103,9 @@ public class udpClient implements Runnable
 
         /* Send Broadcast info */
         while(true){
-            broadcastUdpPacket(buf);
+            //for(i = 1; i <= 255; i++){
+                broadcastUdpPacket(buf, ClientServerGen.client1);
+                broadcastUdpPacket(buf, ClientServerGen.client2);
             try {
                 Thread.sleep(100); //milliseconds
             } catch (InterruptedException e){
