@@ -107,7 +107,8 @@ public class udpClient implements Runnable
                 broadcastUdpPacket(buf, ClientServerGen.client1);
                 broadcastUdpPacket(buf, ClientServerGen.client2);
             try {
-                Thread.sleep(100); //milliseconds
+ //               Thread.sleep(100); //milliseconds
+
             } catch (InterruptedException e){
                 e.printStackTrace();
             } 

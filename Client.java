@@ -35,7 +35,7 @@ public class Client implements Runnable
 		    {
                           try 
                                {
-                                  t.sleep(100); //milliseconds
+                                  //t.sleep(100); //milliseconds
        		               } 
                          catch (InterruptedException e) 
                               {

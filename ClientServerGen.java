@@ -31,7 +31,7 @@ public class ClientServerGen{
 		server.start();
             } catch (Exception e) {
         	try{
-                    Thread.sleep(100);   
+                   // Thread.sleep(100);   
 		}catch(Exception e1){}
             }
         }
