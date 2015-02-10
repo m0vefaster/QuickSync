@@ -10,7 +10,7 @@ public class ClientServerGen{
     public static String selfIp;
     public static String client1;
     public static String client2;
-    public static LinkedList<PeerNode> peerList = new LinkedList<PeerNode>();
+    public static SortedSet<PeerNode> peerList = new TreeSet<PeerNode>(new Comp());
     public static void main(String[] args){
         serverPort = args[2];
         filename = args[3];
@@ -36,4 +36,13 @@ public class ClientServerGen{
             }
         }
     }
+
 }
+
+class Comp implements Comparator<PeerNode>{
+ 
+    @Override
+    public int compare(PeerNode pn1,PeerNode pn2) {
+        return pn1.getWeight().compareTo(pn2.getWeight());
+    }
+}  
