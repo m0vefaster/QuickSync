@@ -47,8 +47,8 @@ public class udpClient implements Runnable
                         continue;
                     }
                     try{
-                        //DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(broadcastAdd), 8888);
-                        DatagramPacket packet = new DatagramPacket(data, data.length, broadcast, 61001);
+                        DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(broadcastAdd), 8888);
+                        //DatagramPacket packet = new DatagramPacket(data, data.length, broadcast, 61001);
                         this.clientSocket.send(packet);
                     }catch(Exception e){
                         e.printStackTrace();
