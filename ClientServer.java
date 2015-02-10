@@ -42,11 +42,12 @@ public class ClientServer{
     }
     catch (Exception e) 
     {
+		e.printStackTrace();
       try
       {
         Thread.sleep(100);   
       }
-      catch(Exception e1){}
+      catch(Exception e1){ e1.printStackTrace(); }
     }
   } 
 
