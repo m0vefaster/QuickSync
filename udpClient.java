@@ -57,7 +57,7 @@ public class udpClient implements Runnable
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] digest = md.digest(bytes);
 
-            peerNode host = new peerNode(digest, 1); 
+            PeerNode host = new PeerNode(digest, 1); 
 
             ByteArrayOutputStream b = new ByteArrayOutputStream();
             ObjectOutputStream o = new ObjectOutputStream(b);

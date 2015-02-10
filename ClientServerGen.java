@@ -7,7 +7,7 @@ import java.util.*;
 public class ClientServerGen{
     public static String filename;
     public static String serverPort;
-    public static LinkedList<peerNode> peerList = new LinkedList<peerNode>();
+    public static LinkedList<PeerNode> peerList = new LinkedList<PeerNode>();
     public static void main(String[] args){
         serverPort = args[2];
         filename = args[3];

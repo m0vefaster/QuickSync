@@ -29,7 +29,7 @@ public class udpServer implements Runnable
 
                 ByteArrayInputStream b = new ByteArrayInputStream(recvPacket.getData());
                 ObjectInputStream o = new ObjectInputStream(b);
-                peerNode peer = (peerNode)o.readObject();
+                PeerNode peer = (PeerNode)o.readObject();
 
                 /* Store the sender info in the linked list */
                 ClientServerGen.peerList.add(peer);
