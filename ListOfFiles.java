@@ -4,12 +4,12 @@ import java.lang.*;
 
 class ListOfFiles
 {
-String path;
+    static String homeDir = System.getProperty("user.home");
+      static String folder = "QuickSync";
+      static String path = homeDir + "/" + folder ;
 
-   ListOfFiles(String path)
+   ListOfFiles( )
    {
-       this.path=path;
-       System.out.println("\nPath is :"+path);	   
    } 
    ArrayList<String> getList ( )
 	  {
