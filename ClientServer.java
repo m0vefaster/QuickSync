@@ -32,7 +32,8 @@ public class ClientServer{
         for(String str: fileList)
         {
           Socket s = ss.accept();
-          Thread server = new Thread(new Server(ss, s));
+          System.out.println("Server: Accepted Connection");
+		  Thread server = new Thread(new Server(ss, s));
           System.out.println("ClientServer:Created Thread for " +s. getRemoteSocketAddress());
           server.start();
           Thread client1 = new Thread(new Client(pairs.getKey(), "60010", str));
@@ -43,8 +44,10 @@ public class ClientServer{
     catch (Exception e) 
     {
 		e.printStackTrace();
-      try
+
+  		try
       {
+		ss.close();  
         Thread.sleep(100);   
       }
       catch(Exception e1){ e1.printStackTrace(); }

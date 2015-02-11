@@ -21,10 +21,11 @@ public class Client implements Runnable
 
      public void run()
      {
+		 Socket client=null;
 	      try
 	      {
 		 System.out.println("Client:Connecting to " + serverName + " on port " + port);
-		 Socket client =null ;
+		 client =null ;
 		 do 
 		 {
 		    try
@@ -72,6 +73,13 @@ public class Client implements Runnable
 	      catch(IOException e)
 	      {
 		 e.printStackTrace();
+		    try{
+            client.close();
+			}
+			catch (Exception ee)
+			{
+
+			}
 	      }
     }
 

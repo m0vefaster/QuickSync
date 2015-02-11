@@ -26,12 +26,14 @@ public class ClientServerGen{
             try {
 	    	ss = new ServerSocket(Integer.parseInt(serverPort));
                 Socket s = ss.accept();
-                Thread server = new Thread(new Server(ss, s));
+                System.out.println("Server:Accepted Connection");
+		  		Thread server = new Thread(new Server(ss, s));
                 System.out.println("ClientServer:Created Thread for " +s. getRemoteSocketAddress());
 		server.start();
             } catch (Exception e) {
         	try{
-                   // Thread.sleep(100);   
+				   ss.close();
+                   Thread.sleep(100);   
 		}catch(Exception e1){}
             }
         }
