@@ -40,7 +40,7 @@ public class Server implements Runnable
         else
         {
             System.out.println("Server: File already exists.");
-            ss.close();
+            s.close();
             System.out.println("Server: closing socket "+s.toString());
             return;
         }
@@ -51,7 +51,7 @@ public class Server implements Runnable
         int bytesRead = is.read(mybytearray, 0, mybytearray.length);
         bos.write(mybytearray, 0, bytesRead);
         bos.close();
-        ss.close();
+        s.close();
         System.out.println("Server: closing socket "+s.toString());
         
     } catch (Exception e) {
