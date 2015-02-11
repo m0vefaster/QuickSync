@@ -10,7 +10,14 @@ public class PeerNode implements Serializable{
         this.peerWeight = peerWeight;
     }
 
-    int getWeight(){
+    public byte[] getId()
+    {
+      return peerId;
+    }
+
+    public int getWeight(){
+        Random ran = new Random();
+        peerWeight = ran.nextInt(60000);
         return peerWeight;
     }
 
