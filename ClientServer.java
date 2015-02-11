@@ -48,7 +48,7 @@ public class ClientServer{
   		try
       {
 		ss.close();  
-        Thread.sleep(100);   
+        Thread.sleep(1000);   
       }
       catch(Exception e1){ e1.printStackTrace(); }
     }

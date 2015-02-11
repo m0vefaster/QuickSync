@@ -34,7 +34,7 @@ public class Client implements Runnable
 	            }
 		    catch (Exception anye)
 		    {
-                          /*try 
+                          try 
                                {
                                   t.sleep(100); //milliseconds
        		               } 
@@ -42,7 +42,7 @@ public class Client implements Runnable
                               {
                                  e.printStackTrace();
 
-             		      } */
+             		      } 
 
 				anye.printStackTrace();
 		    }
