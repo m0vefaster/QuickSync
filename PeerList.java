@@ -4,13 +4,14 @@ import java.util.*;
 class PeerList
 {
 	public SortedSet<PeerNode> peerList = new TreeSet<PeerNode>(new Comp());
-    
+    public ArrayList<ArrayList<String>> llof; 
 	PeerNode mySelf;
      
 	PeerList(PeerNode mySelf)
 	{
           //Insert to Peer List cloud domain id
 	    this.mySelf = mySelf;
+		llof = new ArrayList<ArrayList<String>>();
 	}
 
        
@@ -73,5 +74,26 @@ class PeerList
        }
 
        return null;
+   }
+
+   SortedSet<PeerNode> getPeerList()
+   {
+	   return peerList;
+   }
+
+   PeerNode getSelf()
+   {
+	   return mySelf;
+   }
+   ArrayList<ArrayList<String>> getPeerListOfFiles()
+   {
+       llof = null;
+       Iterator it = peerList.iterator();
+       while (it.hasNext()) {
+         // Get element
+         PeerNode element =(PeerNode)  it.next();
+         llof.add(element.getListOfFiles());
+       } 
+       return llof;
    }
 }

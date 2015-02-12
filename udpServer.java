@@ -2,13 +2,13 @@ import java.net.*;
 import java.io.*;
 import java.lang.*;
 
-public class udpServer implements Runnable
+public class UdpServer implements Runnable
 {
     private DatagramSocket serverSocket;
     private int port;
     private ConnectionTable table;
 
-    udpServer(int port){
+    UdpServer(int port){
         try{
             this.serverSocket = new DatagramSocket(port);
             this.serverSocket.setBroadcast(true);
@@ -30,31 +30,31 @@ public class udpServer implements Runnable
             try{
                 this.serverSocket.receive(recvPacket);
        //         System.out.print(".");
-                if(recvPacket.getAddress().getHostAddress().toString().compareTo(ClientServerGen.selfIp) == 0){
+                if(recvPacket.getAddress().getHostAddress().toString().compareTo(QuickSync.selfIp) == 0){
                     //System.out.println("------Moving on---------------" );
                     continue;
                 }
-                if(table.existsConnection(recvPacket.getAddress().getHostAddress(), ClientServerGen.selfIp, recvPacket.getPort(), port) == true){
+                if(table.existsConnection(recvPacket.getAddress().getHostAddress(), QuickSync.selfIp, recvPacket.getPort(), port) == true){
                     continue;
                 }
 
                 ByteArrayInputStream b = new ByteArrayInputStream(recvPacket.getData());
                 ObjectInputStream o = new ObjectInputStream(b);
                 PeerNode peer = (PeerNode)o.readObject();
-                if(table.addConnection(recvPacket.getAddress().getHostAddress(), ClientServerGen.selfIp, recvPacket.getPort(), port, peer) == false){
+                if(table.addConnection(recvPacket.getAddress().getHostAddress(), QuickSync.selfIp, recvPacket.getPort(), port, peer) == false){
                     System.out.println("Can't insert");
                     continue;
                 }
 
 
                 /* Store the sender info in the linked list */
-                ClientServerGen.peerList.addPeerNode(peer);
+                QuickSync.peerList.addPeerNode(peer);
             }catch(Exception e){
                 e.printStackTrace();
             }
 
             /* Start the client TCP */
-            /*Thread client = new Thread(new Client(recvPacket.getAddress().getHostAddress(), ClientServerGen.serverPort, ClientServerGen.filename));
+            /*Thread client = new Thread(new Client(recvPacket.getAddress().getHostAddress(), QuickSync.serverPort, QuickSync.filename));
             client.start();
             System.out.println("Created client TCP connection");*/
         }

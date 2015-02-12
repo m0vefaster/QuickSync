@@ -50,9 +50,15 @@ HashMap<String, ArrayList<String>> getFilesToRequestPerPeer(HashMap<String,Array
          if(!filesPerPeer.containsKey(me.getValue()))
          {
            ArrayList<String> files = new ArrayList<String>();
+           
            files.add(me.getValue())
            filesPerPeer.put(me.getKey(),me.getValue());
          }
+
+		 else
+		 {
+
+		 }
    } 
 
       

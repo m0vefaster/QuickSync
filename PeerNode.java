@@ -10,7 +10,7 @@ public class PeerNode implements Serializable{
         this.peerWeight = peerWeight;
     }
 
-    public byte[] getId()
+    public String getId()
     {
       return peerId;
     }
@@ -31,10 +31,6 @@ public class PeerNode implements Serializable{
             return lof;
     }
 
-    String getIp(){
-    }
 
-    String getPort(){
-    }
 }
 

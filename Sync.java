@@ -14,18 +14,17 @@ public class Sync implements Runnable{
 
     public void run(){
         PeerNode controller = peerList.getMaster();
-	ListOfFiles lof = peerList.getSelf().getListOfFiles();
+    	ListOfFiles lof = peerList.getSelf().getListOfFiles();
 
-        String controllerAddress = controller.getIp();       //Obtain from sortedSet.first 
-        String controllerPort = controller.getPort();          //Cloud Obtain from sortedSet.first
 
         /* Keep checking if any changes have been made to the shared directory */
         Thread t = new Thread(){
             public void run(){
                 while(true){
                     /* Update list fo file for self by periodic poling of the shared directory */
-                    lof = lof.getListHelper(lof, "."); 
-                }
+                    peerList.setList( lof.getList()); 
+                    //Send to Controller
+		  		}
             }
         };
         t.start();

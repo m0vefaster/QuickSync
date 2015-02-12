@@ -64,17 +64,18 @@ class ListOfPeers{
 	  return false;
    }
 
-   PeerNode getPeerNode(byte[] peerId){
+   PeerNode getPeerNode(String peerId){
        Iterator itr = peerList.iterator();
        PeerNode node;
 
        while(itr.hasNext()){
            node = itr.next();
-           if(node.getId() == peerId){
+           if(node.getId().equals(peerId)){
                return node;
            }
        }
 
        return null;
    }
+
 }

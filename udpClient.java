@@ -4,13 +4,13 @@ import java.lang.*;
 import java.security.*;
 import java.util.*;
 
-public class udpClient implements Runnable
+public class UdpClient implements Runnable
 {
     private DatagramSocket clientSocket;
     private String broadcastAdd;
     private int port;
 
-    udpClient(int port, String broadcastAdd){
+    UdpClient(int port, String broadcastAdd){
         System.out.println("Starting UDP client on port" + port);
         try{
             //this.clientSocket = new DatagramSocket(port, InetAddress.getByName("137.110.90.255"));
@@ -102,9 +102,8 @@ public class udpClient implements Runnable
         /* Send Broadcast info */
         while(true){
             //for(i = 1; i <= 255; i++){
-                broadcastUdpPacket(buf, ClientServerGen.client1);
-   
-   				broadcastUdpPacket(buf, ClientServerGen.client2);
+                broadcastUdpPacket(buf, QuickSync.client1);
+                broadcastUdpPacket(buf, QuickSync.client2);
            try {
                   Thread.sleep(5000); //milliseconds
 
