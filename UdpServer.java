@@ -6,7 +6,6 @@ public class UdpServer implements Runnable
 {
     private DatagramSocket serverSocket;
     private int port;
-    private ConnectionTable table;
 
     UdpServer(int port){
         try{
@@ -14,7 +13,6 @@ public class UdpServer implements Runnable
             this.serverSocket.setBroadcast(true);
             InetAddress addr = InetAddress.getLocalHost();
             String ipAddress = addr.getHostAddress(); 
-            table = new ConnectionTable();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -34,17 +32,22 @@ public class UdpServer implements Runnable
                     //System.out.println("------Moving on---------------" );
                     continue;
                 }
+                /*
                 if(table.existsConnection(recvPacket.getAddress().getHostAddress(), QuickSync.selfIp, recvPacket.getPort(), port) == true){
                     continue;
                 }
+                */
+                /* TODO: Check if it is from the same client. Parse peerList */
 
                 ByteArrayInputStream b = new ByteArrayInputStream(recvPacket.getData());
                 ObjectInputStream o = new ObjectInputStream(b);
                 PeerNode peer = (PeerNode)o.readObject();
+                /*
                 if(table.addConnection(recvPacket.getAddress().getHostAddress(), QuickSync.selfIp, recvPacket.getPort(), port, peer) == false){
                     System.out.println("Can't insert");
                     continue;
                 }
+                */
 
 
                 /* Store the sender info in the linked list */
