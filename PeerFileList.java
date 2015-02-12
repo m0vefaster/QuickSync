@@ -32,6 +32,6 @@ class PeerFileList
 
         return hm;
     }	
-*/
+
 
 }

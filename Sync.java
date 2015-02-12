@@ -42,14 +42,14 @@ public class Sync implements Runnable{
                 
 			if(peerList.getMaster() == null) /*I am the master*/
 			{
-           		peerList.getSelf().setHashMapFilePeer( getFilesToRequestPerPeerMaster(peerList);
+           		peerList.getSelf().setHashMapFilePeer( getFilesToRequestPerPeerMaster(peerList));
                                 
 			}
 
 
 
          }
-
+	}
     boolean seekFromPeer(ArrayList<String> fileName, String peerId){
         PeerNode peer;
 

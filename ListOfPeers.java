@@ -1,9 +1,9 @@
 import java.io.*;
 import java.util.*;
 
-class ListOfPeers{
+class ListOfPeers
 {
-	public SortedSet<PeerNode> peerList = new TreeSet<PeerNode>(new Comp());
+	SortedSet<PeerNode> peerList = new TreeSet<PeerNode>(new Comp());
     
 	PeerNode mySelf;
      
@@ -13,9 +13,10 @@ class ListOfPeers{
 	    this.mySelf = mySelf;
 	}
 
-        PeerNode getSelf(){
+    PeerNode getSelf()
+	{
             return mySelf;
-        }
+    }
        
    class Comp implements Comparator<PeerNode>
    {
