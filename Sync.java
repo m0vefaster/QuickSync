@@ -6,13 +6,15 @@ public class Sync implements Runnable{
     private ListOfFiles files;
     private SendList toBeSent;
     private PeerFileList fileList;
-
-    Sync(){
+    private ListOfPeers peerList;
+    Sync(PeerList peerList)
+	{
+		this.peerList = peerList;
     }
 
     public void run(){
-        PeerNode controller = QuickSync.peerList.getMaster();
-	ListOfFiles lof = QuickSync.peerList.getSelf().getListOfFiles();
+        PeerNode controller = peerList.getMaster();
+	ListOfFiles lof = peerList.getSelf().getListOfFiles();
 
         String controllerAddress = controller.getIp();       //Obtain from sortedSet.first 
         String controllerPort = controller.getPort();          //Cloud Obtain from sortedSet.first
