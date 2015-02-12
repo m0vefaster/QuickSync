@@ -39,13 +39,14 @@ public class TcpServer implements Runnable
                 }
 
                 /* Send the corresponding file */
-                 myFile = new File(line);
-	         byte[] mybytearray = new byte[(int) myFile.length()];
-                 BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile));
-                 bis.read(mybytearray, 0, mybytearray.length);
-                 OutputStream os = s.getOutputStream();
-                 os.write(mybytearray, 0, mybytearray.length);
-                 os.flush(); 
+                myFile = new File(line);
+                byte[] mybytearray = new byte[(int) myFile.length()];
+                BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile));
+                bis.read(mybytearray, 0, mybytearray.length);
+                OutputStream os = s.getOutputStream();
+                os.write(mybytearray, 0, mybytearray.length);
+                os.flush(); 
+                System.out.println("Server: Sent file " + line);
             }
             s.close();
             System.out.println("Server: closing socket "+s.toString());
