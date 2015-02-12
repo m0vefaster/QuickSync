@@ -8,10 +8,12 @@ public class QuickSync{
     public static String selfIp;
     public static String client1;
     public static String client2;
-    public static PeerList peerList = new PeerList();
+    public static ListOfPeers peerList;
     public static Sync sync;
     public static String serverPort;
     public static void main(String[] args){
+        PeerNode self = new PeerNode(args[4], 1);
+        peerList = new ListOfPeers(self);
         /* Start UDP client thread */
         Thread udpClient = new Thread(new UdpClient(Integer.parseInt(args[0]), args[3]));
         udpClient.start();
@@ -21,7 +23,7 @@ public class QuickSync{
         udpServer.start();
 
         /* Start Sync thread */
-        Thread sync = new Thread(new Sync());
+        Thread sync = new Thread(new Sync(peerList));
         sync.start();
 
         /* Start a TCP receive thread */

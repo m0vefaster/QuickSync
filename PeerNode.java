@@ -5,7 +5,7 @@ public class PeerNode implements Serializable{
     private int peerWeight;
     private ListOfFiles lof;
 
-    PeerNode(byte[] peerId, int peerWeight){
+    PeerNode(String peerId, int peerWeight){
         this.peerId = peerId;
         this.peerWeight = peerWeight;
     }
