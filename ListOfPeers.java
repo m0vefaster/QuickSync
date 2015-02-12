@@ -79,4 +79,8 @@ class ListOfPeers
        return null;
    }
 
+   ArrayList<String> getList()
+   {
+	    return peerList;
+   }   
 }

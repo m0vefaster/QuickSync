@@ -2,12 +2,11 @@ import java.io.*;
 import java.util.*;
 
 public class Sync implements Runnable{
-    private ConnectionTable table;
-    private ListOfFiles files;
-    private SendList toBeSent;
-    private PeerFileList fileList;
-    private ListOfPeers peerList;
-    Sync(PeerList peerList)
+    ListOfFiles files;
+    SendList toBeSent;
+    PeerFileList fileList;
+    ListOfPeers peerList;
+    Sync(ListOfPeers peerList)
 	{
 		this.peerList = peerList;
     }
