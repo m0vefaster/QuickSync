@@ -106,7 +106,8 @@ public class Sync implements Runnable{
         	
     }
 
-    HashMap<String, ArrayList<String>> getFilesToRequestPerPeer(HashMap<String,ArrayList<String>> hmFilePeer){
+    HashMap<String, ArrayList<String>> getFilesToRequestPerPeer(HashMap<String,ArrayList<String>> hmFilesPeers){
+        int i;
          ArrayList<String> filesWithSelf=myself.getListOfFiles();
           for(i=0;i<filesWithSelf.size();i++)
             {

@@ -9,8 +9,9 @@ public class UdpClient implements Runnable
     private DatagramSocket clientSocket;
     private String broadcastAdd;
     private int port;
+    private String selfIp;
 
-    UdpClient(int port, String broadcastAdd){
+    UdpClient(int port, String broadcastAdd, String selfIp){
         System.out.println("Starting UDP client on port" + port);
         try{
             //this.clientSocket = new DatagramSocket(port, InetAddress.getByName("137.110.90.255"));
@@ -21,6 +22,7 @@ public class UdpClient implements Runnable
         }
         this.broadcastAdd = broadcastAdd;
         this.port = port;
+        this.selfIp = selfIp;
     }
 
     void sendUdpPacket(byte[] data, InetAddress remoteIp){
@@ -78,6 +80,7 @@ public class UdpClient implements Runnable
         try{
             System.out.println("Local Add "+ clientSocket.getInetAddress());
             //String ipPort = this.clientSocket.getLocalAddress()+":"+this.port;
+            /*
             StringBuilder a = new StringBuilder();
             a.append("blah blah");
             a.append(String.valueOf(port));
@@ -86,8 +89,9 @@ public class UdpClient implements Runnable
             System.out.println("Created stream");
             MessageDigest md = MessageDigest.getInstance("MD5");
             byte[] digest = md.digest(bytes);
+            */
 
-            PeerNode host = new PeerNode(digest, 1); 
+            PeerNode host = new PeerNode(selfIp, 1); 
 
             ByteArrayOutputStream b = new ByteArrayOutputStream();
             ObjectOutputStream o = new ObjectOutputStream(b);
