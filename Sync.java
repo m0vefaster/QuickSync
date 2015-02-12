@@ -24,9 +24,8 @@ public class Sync implements Runnable{
             //Send to Controller
                 
             /* Call seekFromPeer() on the list of files received from the controller */
-            if(peerList.getMaster()){ // If not Master
                 
-				hashMap = getFilesToRequestPerPeer(peerList);
+				HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(peerList,false);
 
                 Set mappingSet = hashMap.entrySet();
 
@@ -34,17 +33,19 @@ public class Sync implements Runnable{
 
 				while(itr.hasNext()){
 					Map.Entry entry = (Map.Entry)itr.next();
-					ret = seekFromPeer(entry.getValue(), entry.getKey());
+					ret = seekFromPeer(new ArrayList<String>(entry.getKey()), entry.getValue().indexOf(0));
 					if(ret == false){
 						System.out.println("Not seeking from peer. Error!");
 					}
 				}
-			}
 
+                
 			if(peerList.getMaster() == null) /*I am the master*/
 			{
-                
+                mySelf.setHAshMapFilePeer( getFilesToRequestPerPeer(peerList,true));
+                                
 			}
+
 
 
          }
@@ -56,14 +57,14 @@ public class Sync implements Runnable{
             return false;
         }
 
-        peer = QuickSync.peerList.getPeerNode(peerId);
+        peer = peerList.getPeerNode(peerId);
 
         if(peer == null){
             return false;
         }
 
         /* Insert code to open a client thread and ask the peer for the file */
-        Thread client = new Thread(new TcpClient(peer.getIp(), peer.getPort(), fileName));
+        Thread client = new Thread(new TcpClient(peer.getId(), peer.getPort(), fileName));
         client.start();
         System.out.println("Created client TCP connection");
 
@@ -71,7 +72,7 @@ public class Sync implements Runnable{
     }
 
 
-    HashMap<String, ArrayList<String>> getFilesToRequestPerPeer(ListOfPeers peers){
+    HashMap<String, ArrayList<String>> getFilesToRequestPerPeerMaster(ListOfPeers peers){
         /* Condense hashmap from controller to a dense hashmap of actual files to get*/
 		SortedSet<PeerNode> peerList = peers.getPeerList();
         PeerNode mySelf = peers.getSelf();
@@ -100,14 +101,20 @@ public class Sync implements Runnable{
                }
           }
         }
-
-        for(i=0;i<filesWithSelf.size();i++)
-		{
-           if(hmFilesPeers.containsKey(filesWithSelf(i)))
- 	         hmFilesPeers.remove(filesWithSelf.indexOf(i));  
-		}
+        
 
         return hmFilesPeers;       
         	
     }
-}
+
+    HashMap<String, ArrayList<String>> getFilesToRequestPerPeer(HashMap<String,ArrayList<String>> hmFilePeer){
+         ArrayList<String> filesWithSelf=myself.getListOfFiles();
+          for(i=0;i<filesWithSelf.size();i++)
+            {
+               if(hmFilesPeers.containsKey(filesWithSelf(i)))
+                 hmFilesPeers.remove(filesWithSelf.indexOf(i));
+            }
+
+        return hmFilesPeers;
+     }
+ }
