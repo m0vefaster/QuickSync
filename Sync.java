@@ -73,14 +73,14 @@ public class Sync implements Runnable{
 
     HashMap<String, ArrayList<String>> getFilesToRequestPerPeerMaster(ListOfPeers peers){
         /* Condense hashmap from controller to a dense hashmap of actual files to get*/
-		SortedSet<PeerNode> peerList = peers.getPeerList();
+        SortedSet<PeerNode> peerList = peers.getPeerList();
         PeerNode mySelf = peers.getSelf();
         int i;
 
         ArrayList<String> filesWithSelf=myself.getListOfFiles();
         HashMap<String, ArrayList<String>> hmFilesPeers	= new HashMap<String, ArrayList<String>>();
 	    
-	    Iterator<PeerNode> it = set.iterator();
+        Iterator<PeerNode> it = set.iterator();
         while (it.hasNext()) 
         {
           PeerNode peerNode = it.next();
@@ -94,9 +94,9 @@ public class Sync implements Runnable{
 			   }
               else
                {
-                   Array<String> newListOfPeers = new Array<String>();
+                   ArrayList<String> newListOfPeers = new ArrayList<String>();
                    newListOfPeers.add(peerNode.getId());
-  				   hmFilesPeers.put(lof.indexOf(i),newListOfPeers);
+                   hmFilesPeers.put(lof.indexOf(i), newListOfPeers);
                }
           }
         }
@@ -108,10 +108,12 @@ public class Sync implements Runnable{
 
     HashMap<String, ArrayList<String>> getFilesToRequestPerPeer(HashMap<String,ArrayList<String>> hmFilesPeers){
         int i;
-         ArrayList<String> filesWithSelf=myself.getListOfFiles();
+        PeerNode mySelf = peerList.getSelf();
+
+         ArrayList<String> filesWithSelf=mySelf.getListOfFiles();
           for(i=0;i<filesWithSelf.size();i++)
             {
-               if(hmFilesPeers.containsKey(filesWithSelf(i)))
+               if(hmFilesPeers.containsKey(filesWithSelf.indexOf(i)))
                  hmFilesPeers.remove(filesWithSelf.indexOf(i));
             }
 
