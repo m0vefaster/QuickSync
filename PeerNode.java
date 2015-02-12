@@ -39,7 +39,7 @@ public class PeerNode implements Serializable{
             hMap = hashFromController;
     }
 
-    HashMap<ArrayList<String>, String> getHashMap( ) 
+    HashMap<ArrayList<String>, String> getHashMapFilePeer( ) 
     {
             return hMap;
     }

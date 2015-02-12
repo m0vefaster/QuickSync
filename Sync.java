@@ -25,7 +25,7 @@ public class Sync implements Runnable{
                 
             /* Call seekFromPeer() on the list of files received from the controller */
                 
-				HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(peerList,false);
+				HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(peerList.getSelf().getHashMapFilePeer());
 
                 Set mappingSet = hashMap.entrySet();
 
@@ -42,7 +42,7 @@ public class Sync implements Runnable{
                 
 			if(peerList.getMaster() == null) /*I am the master*/
 			{
-                mySelf.setHAshMapFilePeer( getFilesToRequestPerPeer(peerList,true));
+           		peerList.getSelf().setHashMapFilePeer( getFilesToRequestPerPeerMaster(peerList);
                                 
 			}
 
