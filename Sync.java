@@ -24,26 +24,30 @@ public class Sync implements Runnable{
             //Send to Controller
                 
             /* Call seekFromPeer() on the list of files received from the controller */
-            if(QuickSync.controller == false){
-                hashMap = getFilesToRequestPerPeer(peerList);
-                if(hashMap == null){
-                    continue;
-                }
-            }
+            if(peerList.getMaster()){ // If not Master
+                
+				hashMap = getFilesToRequestPerPeer(peerList);
 
-            Set mappingSet = hashMap.entrySet();
+                Set mappingSet = hashMap.entrySet();
 
-            Iterator itr =  mappingSet.iterator();
+				Iterator itr =  mappingSet.iterator();
 
-            while(itr.hasNext()){
-                Map.Entry entry = (Map.Entry)itr.next();
-                ret = seekFromPeer(entry.getValue(), entry.getKey());
-                if(ret == false){
-                    System.out.println("Not seeking from peer. Error!");
-                }
-            }
-        }
-    }
+				while(itr.hasNext()){
+					Map.Entry entry = (Map.Entry)itr.next();
+					ret = seekFromPeer(entry.getValue(), entry.getKey());
+					if(ret == false){
+						System.out.println("Not seeking from peer. Error!");
+					}
+				}
+			}
+
+			if(peerList.getMaster() == null) /*I am the master*/
+			{
+                
+			}
+
+
+         }
 
     boolean seekFromPeer(ArrayList<String> fileName, String peerId){
         PeerNode peer;

@@ -43,10 +43,6 @@ class PeerList
 		peerList.remove(removeNode);
    }
 
-   PeerNode getMaster()
-   {
-	   return peerList.first();
-   }
 
    boolean present(PeerNode node)
    {
@@ -62,13 +58,13 @@ class PeerList
 	  return false;
    }
 
-   PeerNode getPeerNode(byte[] peerId){
+   PeerNode getPeerNode(String peerId){
        Iterator itr = peerList.iterator();
        PeerNode node;
 
        while(itr.hasNext()){
            node = itr.next();
-           if(node.getId() == peerId){
+           if(node.getId().equals(peerId)){
                return node;
            }
        }
@@ -95,5 +91,13 @@ class PeerList
          llof.add(element.getListOfFiles());
        } 
        return llof;
+   }
+
+   PeerNode getMaster()
+   {
+	   if(peerList.isEmpty() || mySelf.equals(peerList.first()))
+		   return null;
+
+	   return peerList.first();
    }
 }
