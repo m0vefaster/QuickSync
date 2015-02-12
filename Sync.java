@@ -1,7 +1,7 @@
 import java.io.*;
 import java.util.*;
 
-public class Sync{
+public class Sync implements Runnable{
     private ConnectionTable table;
     private ListOfFiles files;
     private SendList toBeSent;
@@ -11,7 +11,7 @@ public class Sync{
     }
 
     public void run(){
-        PeerNode controller = ClientServerGen.peerList.getMaster();
+        PeerNode controller = QuickSync.peerList.getMaster();
         String controllerAddress = controller.getIp();       //Obtain from sortedSet.first 
         String controllerPort = controller.getPort();          //Cloud Obtain from sortedSet.first
 
@@ -34,7 +34,7 @@ public class Sync{
             return false;
         }
 
-        peer = ClientServerGen.peerList.getPeerNode(peerId);
+        peer = QuickSync.peerList.getPeerNode(peerId);
 
         if(peer == null){
             return false;
