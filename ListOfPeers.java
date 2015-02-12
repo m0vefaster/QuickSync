@@ -13,6 +13,9 @@ class ListOfPeers{
 	    this.mySelf = mySelf;
 	}
 
+        PeerNode getSelf(){
+            return mySelf;
+        }
        
    class Comp implements Comparator<PeerNode>
    {

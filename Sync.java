@@ -12,13 +12,22 @@ public class Sync implements Runnable{
 
     public void run(){
         PeerNode controller = QuickSync.peerList.getMaster();
+	ListOfFiles lof = QuickSync.peerList.getSelf().getListOfFiles();
+
         String controllerAddress = controller.getIp();       //Obtain from sortedSet.first 
         String controllerPort = controller.getPort();          //Cloud Obtain from sortedSet.first
 
-        /*TODO: Keep checking if any changes have been made to PeerFileList and HashTable
-         * and send to the controller*/ 
-        keepChecking();
-
+        /* Keep checking if any changes have been made to the shared directory */
+        Thread t = new Thread(){
+            public void run(){
+                while(true){
+                    /* Update list fo file for self by periodic poling of the shared directory */
+                    lof = lof.getListHelper(lof, "."); 
+                }
+            }
+        };
+        t.start();
+                
         /* Call seekFromPeer() on the list of files received from the controller */
         if(QuickSync.controller == false){
             hashMap = getFilesToRequestPerPeer(hmFromController);
@@ -61,13 +70,5 @@ public class Sync implements Runnable{
 
     HashMap<String, ArrayList<String>> getFilesToRequestPerPeer(ListOfPeers peers){
         /* Condense hashmap from controller to a dense hashmap of actual files to get*/
-    }
-
-
-    void keepChecking(){
-        /* Keep checking the shared directory */
-
-        /* If changes found, send a list of files to controller */
-        /* Make a hashmap of self.peerId and list of files */
     }
 }
