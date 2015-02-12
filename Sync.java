@@ -61,6 +61,42 @@ public class Sync implements Runnable{
 
     HashMap<String, ArrayList<String>> getFilesToRequestPerPeer(ListOfPeers peers){
         /* Condense hashmap from controller to a dense hashmap of actual files to get*/
+		SortedSet<PeerNode> peerList = peers.getPeerList();
+        PeerNode mySelf = peers.getSelf();
+        int i;
+
+        ArrayList<String> filesWithSelf=myself.getListOfFiles();
+        HashMap<String, ArrayList<String>> hmFilesPeers	= new HashMap<String, ArrayList<String>>();
+	    
+	    Iterator<PeerNode> it = set.iterator();
+        while (it.hasNext()) 
+        {
+          PeerNode peerNode = it.next();
+          ArrayList<String> lof = peerNode.getListOfFiles();
+          
+          for(i=0; i < lof.size();i++)
+          {
+              if ( hmFilesPeers.containsKey(lof.indexOf(i)))
+               {
+                   hmFilesPeers.get(lof.indexOf(i)).add(peerNode.getId());  
+			   }
+              else
+               {
+                   Array<String> newListOfPeers = new Array<String>();
+                   newListOfPeers.add(peerNode.getId());
+  				   hmFilesPeers.put(lof.indexOf(i),newListOfPeers);
+               }
+          }
+        }
+
+        for(i=0;i<filesWithSelf.size();i++)
+		{
+           if(hmFilesPeers.containsKey(filesWithSelf(i)))
+ 	         hmFilesPeers.remove(filesWithSelf.indexOf(i));  
+		}
+
+        return hmFilesPeers;       
+        	
     }
 
 
