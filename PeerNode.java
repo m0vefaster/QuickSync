@@ -3,7 +3,7 @@ import java.io.*;
 public class PeerNode implements Serializable{
     private byte[] peerId;
     private int peerWeight;
-    private lof ;
+    private ListOfFiles lof;
 
     PeerNode(byte[] peerId, int peerWeight){
         this.peerId = peerId;
@@ -21,14 +21,20 @@ public class PeerNode implements Serializable{
         return peerWeight;
     }
 
-	void setListOfFiles(ListOfFiles lof)
-	{
-		this.lof = lof;
-	}
+    void setListOfFiles(ListOfFiles lof)
+    {
+            this.lof = lof;
+    }
 
-	ListOfFiles getListOfFiles( ) 
-	{
-		return lof;
-	}
+    ListOfFiles getListOfFiles( ) 
+    {
+            return lof;
+    }
+
+    String getIp(){
+    }
+
+    String getPort(){
+    }
 }
 

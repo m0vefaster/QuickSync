@@ -74,8 +74,6 @@ public class udpClient implements Runnable
         /* Start a udp server */
         int i ;
         byte[] buf = new byte[100];
-        Thread server = new Thread(new udpServer(61001));
-        server.start();
 
         try{
             System.out.println("Local Add "+ clientSocket.getInetAddress());

@@ -60,4 +60,18 @@ class PeerList
 
 	  return false;
    }
+
+   PeerNode getPeerNode(byte[] peerId){
+       Iterator itr = peerList.iterator();
+       PeerNode node;
+
+       while(itr.hasNext()){
+           node = itr.next();
+           if(node.getId() == peerId){
+               return node;
+           }
+       }
+
+       return null;
+   }
 }

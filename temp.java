@@ -1,3 +1,4 @@
+/*
 void keepChecking()
 {
 	ListOfFiles lof = new ListOfFiles();
@@ -9,3 +10,4 @@ void keepChecking()
 
 	}
 }
+*/

@@ -5,49 +5,51 @@ import java.lang.*;
 import java.util.*;
 
 public class ClientServerGen{
-    public static String filename;
-    public static String serverPort;
     public static String selfIp;
     public static String client1;
     public static String client2;
-    public static SortedSet<PeerNode> peerList = new TreeSet<PeerNode>(new Comp());
+    public static PeerList peerList = new PeerList();
+    public static Sync sync;
+    public static String serverPort;
     public static void main(String[] args){
-        serverPort = args[2];
-        filename = args[3];
-        selfIp = args[4];
-        client1 = args[5];
-        client2 = args[6];
-        Thread udpThread = new Thread(new udpClient(Integer.parseInt(args[0]), args[1]));
+        /* Start UDP client thread */
+        Thread udpThread = new Thread(new udpClient(Integer.parseInt(args[0])));
         udpThread.start();
+
+        /* Start UDP server thread */
+        Thread server = new Thread(new udpServer(args[1]));
+        server.start();
+
+        /* Start Sync thread */
+        Thread sync = new Thread(new Sync());
+        sync.start();
 
         /* Start a TCP receive thread */
         ServerSocket ss = null;
         try
-		{
-		ss = new ServerSocket(Integer.parseInt(serverPort));
-		}
-		catch(Exception e)
-		{
+        {
+            serverPort = args[2];
+            ss = new ServerSocket(Integer.parseInt(serverPort));
+        }
+        catch(Exception e)
+        {
 
-		}
-		Socket s=null;
-		while(true){
+        }
+        Socket s=null;
+        while(true){
             try {
-	    	//ss = new ServerSocket(Integer.parseInt(serverPort));
-                 s = ss.accept();
+                s = ss.accept();
                 System.out.println("Server:Accepted Connection");
-		  		Thread server = new Thread(new Server(ss, s));
+                Thread server = new Thread(new TcpServer(ss, s));
                 System.out.println("ClientServer:Created Thread for " +s. getRemoteSocketAddress());
-		server.start();
+                server.start();
             } catch (Exception e) {
-        	try{
-				   s.close();
-                   //Thread.sleep(1);   
-		}catch(Exception e1){}
+                try{
+                   s.close();
+                }catch(Exception e1){}
             }
         }
     }
-
 }
 
 class Comp implements Comparator<PeerNode>{

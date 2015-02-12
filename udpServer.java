@@ -48,15 +48,15 @@ public class udpServer implements Runnable
 
 
                 /* Store the sender info in the linked list */
-                ClientServerGen.peerList.add(peer);
+                ClientServerGen.peerList.addPeerNode(peer);
             }catch(Exception e){
                 e.printStackTrace();
             }
 
             /* Start the client TCP */
-            Thread client = new Thread(new Client(recvPacket.getAddress().getHostAddress(), ClientServerGen.serverPort, ClientServerGen.filename));
+            /*Thread client = new Thread(new Client(recvPacket.getAddress().getHostAddress(), ClientServerGen.serverPort, ClientServerGen.filename));
             client.start();
-            System.out.println("Created client TCP connection");
+            System.out.println("Created client TCP connection");*/
         }
     }
 }

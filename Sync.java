@@ -1,25 +1,54 @@
+import java.io.*;
+import java.util.*;
+
 public class Sync{
     private ConnectionTable table;
     private ListOfFiles files;
     private SendList toBeSent;
-    private HashMap< String,ArrayList< String > > map;
+    private PeerFileList fileList;
+
+    Sync(){
+    }
 
     public void run(){
-        /* Keep checking if any changes have been made to PeerFileList and HashTable*/ 
-        String controllerAddress = args[7];       //Cloud IP 
-        String controllerPort = args[2];          //Cloud listen port
+        PeerNode controller = ClientServerGen.peerList.getMaster();
+        String controllerAddress = controller.getIp();       //Obtain from sortedSet.first 
+        String controllerPort = controller.getPort();          //Cloud Obtain from sortedSet.first
 
-        //send files
-        ListOfFiles files = new ListOfFiles(".");
-        SendList toBeSent = new SendList(controllerAddress, controllerPort);
-        toBeSent.sendList(files.getList());
+        /*TODO: Keep checking if any changes have been made to PeerFileList and HashTable
+         * and send to the controller*/ 
+        keepChecking();
 
-        //TODO:get peer files        
-        HashMap< String,ArrayList< String > > map = new HashMap<String, ArrayList<String> >();
+        /* Call seekFromPeer() on the list of files received from the controller */
+        /* TODO:
+        while( all peers in hashmap){
+            ret = seekFromPeer(arrayList, peerId);
+        }
+        */
+    }
 
-        Iterator< Map.Entry<String, ArrayList<String> > > it = map.entrySet().iterator();
+    boolean seekFromPeer(ArrayList<String> fileName, byte[] peerId){
+        PeerNode peer;
 
+        if(fileName == null || peerId == null){
+            return false;
+        }
 
+        peer = ClientServerGen.peerList.getPeerNode(peerId);
 
+        if(peer == null){
+            return false;
+        }
 
-        
+        /* Insert code to open a client thread and ask the peer for the file */
+        Thread client = new Thread(new TcpClient(peer.getIp(), peer.getPort(), fileName));
+        client.start();
+        System.out.println("Created client TCP connection");
+
+        return true;
+    }
+
+    void keepChecking(){
+        /* TODO: */
+    }
+}
