@@ -18,31 +18,29 @@ public class Sync implements Runnable{
 
 
         /* Keep checking if any changes have been made to the shared directory */
-        Thread t = new Thread(){
-            public void run(){
-                while(true){
-                    /* Update list fo file for self by periodic poling of the shared directory */
-                    peerList.setList( lof.getList()); 
-                    //Send to Controller
-		  		}
-            }
-        };
-        t.start();
+        while(true){
+            /* Update list fo file for self by periodic poling of the shared directory */
+            peerList.setList( lof.getList()); 
+            //Send to Controller
                 
-        /* Call seekFromPeer() on the list of files received from the controller */
-        if(QuickSync.controller == false){
-            hashMap = getFilesToRequestPerPeer(hmFromController);
-        }
+            /* Call seekFromPeer() on the list of files received from the controller */
+            if(QuickSync.controller == false){
+                hashMap = getFilesToRequestPerPeer(peerList);
+                if(hashMap == null){
+                    continue;
+                }
+            }
 
-        Set mappingSet = hashMap.entrySet();
+            Set mappingSet = hashMap.entrySet();
 
-        Iterator itr =  mappingSet.iterator();
+            Iterator itr =  mappingSet.iterator();
 
-        while(itr.hasNext()){
-            Map.Entry entry = (Map.Entry)itr.next();
-            ret = seekFromPeer(entry.getValue(), entry.getKey());
-            if(ret == false){
-                System.out.println("Not seeking from peer. Error!");
+            while(itr.hasNext()){
+                Map.Entry entry = (Map.Entry)itr.next();
+                ret = seekFromPeer(entry.getValue(), entry.getKey());
+                if(ret == false){
+                    System.out.println("Not seeking from peer. Error!");
+                }
             }
         }
     }
