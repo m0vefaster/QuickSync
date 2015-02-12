@@ -1,7 +1,7 @@
 import java.io.*;
 
 public class PeerNode implements Serializable{
-    private byte[] peerId;
+    private String peerId;
     private int peerWeight;
     private ListOfFiles lof;
 

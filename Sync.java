@@ -20,14 +20,24 @@ public class Sync implements Runnable{
         keepChecking();
 
         /* Call seekFromPeer() on the list of files received from the controller */
-        /* TODO:
-        while( all peers in hashmap){
-            ret = seekFromPeer(arrayList, peerId);
+        if(QuickSync.controller == false){
+            hashMap = getFilesToRequestPerPeer(hmFromController);
         }
-        */
+
+        Set mappingSet = hashMap.entrySet();
+
+        Iterator itr =  mappingSet.iterator();
+
+        while(itr.hasNext()){
+            Map.Entry entry = (Map.Entry)itr.next();
+            ret = seekFromPeer(entry.getValue(), entry.getKey());
+            if(ret == false){
+                System.out.println("Not seeking from peer. Error!");
+            }
+        }
     }
 
-    boolean seekFromPeer(ArrayList<String> fileName, byte[] peerId){
+    boolean seekFromPeer(ArrayList<String> fileName, String peerId){
         PeerNode peer;
 
         if(fileName == null || peerId == null){
@@ -48,7 +58,16 @@ public class Sync implements Runnable{
         return true;
     }
 
+
+    HashMap<String, ArrayList<String>> getFilesToRequestPerPeer(ListOfPeers peers){
+        /* Condense hashmap from controller to a dense hashmap of actual files to get*/
+    }
+
+
     void keepChecking(){
-        /* TODO: */
+        /* Keep checking the shared directory */
+
+        /* If changes found, send a list of files to controller */
+        /* Make a hashmap of self.peerId and list of files */
     }
 }
