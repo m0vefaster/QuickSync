@@ -4,7 +4,7 @@ import java.lang.*;
 
 class ListOfFiles
 {
-    static String homeDir = System.getProperty("user.home");
+      static String homeDir = System.getProperty("user.home");
       static String folder = "QuickSync";
       static String path = homeDir + "/" + folder ;
 
