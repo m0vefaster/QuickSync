@@ -36,6 +36,7 @@ class ListOfPeers
 		   return false;
 	  
 	     peerList.add(newNode);	 
+       return true;
    }
 
    boolean removePeerNode(PeerNode removeNode)
@@ -44,6 +45,7 @@ class ListOfPeers
 			return false;
 
 		peerList.remove(removeNode);
+    return true;
    }
 
    PeerNode getMaster()
@@ -53,7 +55,7 @@ class ListOfPeers
 
    boolean present(PeerNode node)
    {
-      Iterator itr = peerList.iterator();
+      Iterator<PeerNode> itr = peerList.iterator();
 
 	  while(itr.hasNext())
 	  {
@@ -66,7 +68,7 @@ class ListOfPeers
    }
 
    PeerNode getPeerNode(String peerId){
-       Iterator itr = peerList.iterator();
+       Iterator<PeerNode> itr = peerList.iterator();
        PeerNode node;
 
        while(itr.hasNext()){
@@ -79,7 +81,7 @@ class ListOfPeers
        return null;
    }
 
-   ArrayList<String> getList()
+   SortedSet<PeerNode> getList()
    {
 	    return peerList;
    }   
