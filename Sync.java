@@ -57,7 +57,8 @@ public class Sync implements Runnable{
 
             if(peerList.getMaster() == null) /*I am the master*/
             {
-                System.out.println("I am the master");
+                System.out.println("I am the master" + peerList.getList().size() );
+
                 peerList.getSelf().setHashMapFilePeer( getFilesToRequestPerPeerMaster(peerList));
             }
 
@@ -140,14 +141,23 @@ public class Sync implements Runnable{
     HashMap<String, ArrayList<String>> getFilesToRequestPerPeer(HashMap<String,ArrayList<String>> hmFilesPeers){
         int i;
         PeerNode mySelf = peerList.getSelf();
+        
+		System.out.println("\n\nInside getFileToRequestPerPeer");
 
+		print(hmFilesPeers);
          ArrayList<String> filesWithSelf=mySelf.getListOfFiles().getList();
           for(i=0;i<filesWithSelf.size();i++)
             {
+			   System.out.println("\nMatching" + filesWithSelf.indexOf(i) );	
                if(hmFilesPeers.containsKey(filesWithSelf.indexOf(i)))
+			   {
+			     System.out.println("\nMatched" + filesWithSelf.indexOf(i) );
                  hmFilesPeers.remove(filesWithSelf.indexOf(i));
-            }
+               }
+			}
 
+		  
+		print(hmFilesPeers);  
         return hmFilesPeers;
      }
  }

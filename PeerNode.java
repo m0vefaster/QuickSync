@@ -10,7 +10,7 @@ public class PeerNode implements Serializable{
     PeerNode(String peerId, int peerWeight){
         this.peerId = peerId;
         this.peerWeight = peerWeight;
-        lof = new ListOfFiles();;
+        //lof = new ListOfFiles();
         hMap = new HashMap<String, ArrayList<String>>();
     }
 
