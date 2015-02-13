@@ -50,6 +50,7 @@ public class TcpServer implements Runnable
                 
                 myFile = new File(str);
                 JSONObject toSend = JSONManager.getJSON(myFile);
+                System.out.println("---"+toSend.toString());
                 byte[] mybytearray = new byte[(int) myFile.length()];
                 //BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile));
                 //bis.read(mybytearray, 0, mybytearray.length);

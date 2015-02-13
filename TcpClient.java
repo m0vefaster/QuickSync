@@ -60,7 +60,7 @@ public class TcpClient implements Runnable
                 DataOutputStream out = new DataOutputStream(outToServer);
                 out.writeUTF(JSONManager.getJSON(file).toString());
                 System.out.println("Client:File request sent for " + file);
-
+                System.out.println(JSONManager.getJSON(file).toString());
                 /* Accept and store the file obtained from the peer */
                 myFile = new File(file);
                 if (myFile.createNewFile())
@@ -87,7 +87,7 @@ public class TcpClient implements Runnable
             /* Send EOF to the server */
             OutputStream outToServer = client.getOutputStream();
             DataOutputStream out = new DataOutputStream(outToServer);
-            out.writeUTF("***EOF***");
+            out.writeUTF(((JSONObject)(JSONManager.getJSON("***EOF***"))).toString());
 
             /* Close the socket after current batch of files is received */
             client.close();
