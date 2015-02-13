@@ -2,7 +2,10 @@ import java.net.*;
 import java.io.*;
 import java.lang.*;
 import java.util.*;
-
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 public class TcpClient implements Runnable
 {
 
@@ -55,7 +58,7 @@ public class TcpClient implements Runnable
 
                 OutputStream outToServer = client.getOutputStream();
                 DataOutputStream out = new DataOutputStream(outToServer);
-                out.writeUTF(file);
+                out.writeUTF(JSONManager.getJSON(file).toString());
                 System.out.println("Client:File request sent for " + file);
 
                 /* Accept and store the file obtained from the peer */
@@ -70,7 +73,14 @@ public class TcpClient implements Runnable
                 FileOutputStream fos = new FileOutputStream(file);
                 BufferedOutputStream bos = new BufferedOutputStream(fos);
                 int bytesRead = is.read(mybytearray, 0, mybytearray.length);
-                bos.write(mybytearray, 0, bytesRead);
+                String str = mybytearray.toString();
+                JSONObject obj = (JSONObject)(JSONManager.convertStringToJSON(str));
+                if(obj.get("type").equals("File"))
+                {
+                  String fileContent = (String)obj.get("value");
+                  bos.write(fileContent.getBytes());
+
+                }
                 bos.close();
             }
 
