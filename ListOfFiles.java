@@ -7,16 +7,16 @@ class ListOfFiles
       static String homeDir = System.getProperty("user.home");
       static String folder = "QuickSync";
       static String path = homeDir + "/" + folder ;
+      ArrayList<String> list;
 
    ListOfFiles( )
    {
    } 
    ArrayList<String> getList ( )
-	  {
-		       ArrayList<String> list = new ArrayList<String>();
-			   
-			   return getListHelper(list,path);
-	  }
+    {
+        list = new ArrayList<String>();
+        return getListHelper(list,path);
+    }
 
 	  ArrayList<String> getListHelper (ArrayList<String> list, String path)
 	  {
@@ -40,4 +40,7 @@ class ListOfFiles
 			  return list;
 	  }
 
+          void setList(ArrayList<String> list){
+              this.list = list;
+          }
 }

@@ -5,7 +5,7 @@ public class PeerNode implements Serializable{
     private String peerId;
     private int peerWeight;
     private ListOfFiles lof;
-    private HashMap<ArrayList<String>, String> hMap;
+    private HashMap<String, ArrayList<String>> hMap;
 
     PeerNode(String peerId, int peerWeight){
         this.peerId = peerId;
@@ -35,12 +35,12 @@ public class PeerNode implements Serializable{
             return lof;
     }
 
-    void setHashMapFilePeer(HashMap<ArrayList<String>, String> hashFromController)
+    void setHashMapFilePeer(HashMap<String, ArrayList<String>> hashFromController)
     {
             hMap = hashFromController;
     }
 
-    HashMap<ArrayList<String>, String> getHashMapFilePeer( ) 
+    HashMap<String, ArrayList<String>> getHashMapFilePeer( ) 
     {
             return hMap;
     }
