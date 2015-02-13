@@ -27,6 +27,7 @@ public class UdpServer implements Runnable
 
     public void run(){
         byte[] recvBuf = new byte[15000];
+        String data = new String();
         DatagramPacket recvPacket = new DatagramPacket(recvBuf, recvBuf.length);
 
         /* Start listening on the UDP server port */
@@ -45,9 +46,9 @@ public class UdpServer implements Runnable
                 }
 
                 ByteArrayInputStream b = new ByteArrayInputStream(recvPacket.getData());
-                ObjectInputStream o = new ObjectInputStream(b);
-                String data = (String)o.readObject();
-                JSONObject JSONobj = (JSONObject)(JSONManager.convertStringToJSON(data));
+                //ObjectInputStream o = new ObjectInputStream(b);
+                //String data = (String)o.readObject();
+                JSONObject JSONobj = (JSONObject)(JSONManager.convertStringToJSON(b.toString()));
                 if(JSONobj.get("type").equals("control")){
                     data = (String)JSONobj.get("value");
                 }

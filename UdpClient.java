@@ -105,11 +105,11 @@ public class UdpClient implements Runnable
             JSONObject JSONobj = JSONManager.getJSON(data);
             data = JSONobj.toString();
 
-            /*ByteArrayOutputStream b = new ByteArrayOutputStream();
+            ByteArrayOutputStream b = new ByteArrayOutputStream();
             ObjectOutputStream o = new ObjectOutputStream(b);
             o.writeObject(data);
-            buf = b.toByteArray();*/
-            buf = data.getBytes();
+            buf = b.toByteArray();
+            //buf = data.getBytes();
             System.out.println("Created data");
         }catch(Exception e){
             e.printStackTrace();
