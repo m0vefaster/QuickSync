@@ -49,7 +49,7 @@ public class UdpServer implements Runnable
                 ObjectInputStream o = new ObjectInputStream(b);
                 data = (String)o.readObject();
                 JSONObject JSONobj = (JSONObject)(JSONManager.convertStringToJSON(data));
-                if(JSONobj.get("type").equals("control")){
+                if(JSONobj.get("type").equals("Control")){
                     data = (String)JSONobj.get("value");
                 }
 
