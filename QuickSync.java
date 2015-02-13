@@ -18,7 +18,7 @@ public class QuickSync{
 
         selfIp = args[0];
         /* Start UDP client thread */
-        Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "10.10.10.10", args[0]));
+        Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "10.10.10.10", args[0], peerList));
         udpClient.start();
 
         /* Start UDP server thread */
