@@ -39,6 +39,10 @@ public class UdpServer implements Runnable
                 */
                 /* TODO: Check if it is from the same client. Parse peerList */
 
+                if(QuickSync.peerList.getPeerNode(recvPacket.getAddress().getHostAddress()) != null){
+                    break;
+                }
+
                 ByteArrayInputStream b = new ByteArrayInputStream(recvPacket.getData());
                 ObjectInputStream o = new ObjectInputStream(b);
                 PeerNode peer = (PeerNode)o.readObject();
@@ -52,6 +56,7 @@ public class UdpServer implements Runnable
 
                 /* Store the sender info in the linked list */
                 QuickSync.peerList.addPeerNode(peer);
+                System.out.println("Added to peer list ");
             }catch(Exception e){
                 e.printStackTrace();
             }
