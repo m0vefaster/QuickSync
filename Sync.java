@@ -32,11 +32,14 @@ public class Sync implements Runnable{
             /* Call seekFromPeer() on the list of files received from the controller */
                 
             HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(peerList.getSelf().getHashMapFilePeer());
+            /*
             count = 0;
             while(count < hmFilesPeers.size()){
               System.out.println("Sync.java: hmFilesPeers updated to " + hmFilesPeers.get(count));
               count++;
             }
+            */
+            print(hmFilesPeers);
 
             Set mappingSet = hmFilesPeers.entrySet();
 
@@ -59,11 +62,23 @@ public class Sync implements Runnable{
             }
 
             try{
-                Thread.sleep(30000);
+                Thread.sleep(3000);
             }catch(Exception e){
             }
          }
     }
+
+    void print(HashMap<String, ArrayList<String>> hmap){
+        Set mappingSet = hmap.entrySet();
+
+        Iterator itr =  mappingSet.iterator();
+
+        while(itr.hasNext()){
+            Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
+            System.out.println("Hash from controller " + entry.getKey());
+        }
+    }
+
     boolean seekFromPeer(ArrayList<String> fileName, String peerId){
         PeerNode peer;
 

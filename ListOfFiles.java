@@ -5,7 +5,7 @@ import java.lang.*;
 class ListOfFiles implements Serializable
 {
       static String homeDir = System.getProperty("user.home");
-      static String folder = "Documents/courses/cse221/proj1/files";
+      static String folder = "QuickSync";
       static String path = homeDir + "/" + folder ;
       ArrayList<String> list;
 
