@@ -17,7 +17,7 @@ public class JSONManager {
 	public static JSONObject getJSON(ArrayList<String> files)
 	{
 		JSONObject obj = new JSONObject();
-		
+        System.out.println("Making JSON from ArrayList");		
 		obj.put("type", "ArrayList");
 		obj.put("value", files);
 		return obj;
@@ -26,7 +26,7 @@ public class JSONManager {
 	public static JSONObject getJSON(HashMap<String,ArrayList<String> > files)
 	{
 		JSONObject obj = new JSONObject();
-		
+		System.out.println("Making JSON from HashMap");
 		obj.put("type", "HashMap");
 		obj.put("value", files);
 		return obj;
@@ -35,7 +35,7 @@ public class JSONManager {
 	public static JSONObject getJSON(String message)
 	{
 		JSONObject obj = new JSONObject();
-		
+		System.out.println("Making JSON from Message");
 		obj.put("type", "Control");
 		obj.put("value", message);
 		return obj;
@@ -43,6 +43,7 @@ public class JSONManager {
 	public static JSONObject getJSON(File file)
 	{
 		JSONObject obj = new JSONObject();
+		System.out.println("Making JSON from File");
 		final String EoL = System.getProperty("line.separator");
 		List<String> lines;
 		try {
@@ -66,6 +67,7 @@ public class JSONManager {
 	}
 	public static Object convertStringToJSON(String str)
 	{
+		System.out.println("Converting String to JSON");
 		JSONParser parser=new JSONParser();
 		JSONObject obj = null;
 		try {
@@ -77,6 +79,4 @@ public class JSONManager {
         return obj;
 	}
 
-   public static void main(String[] args)
-   {System.out.println("");}	   
 }
