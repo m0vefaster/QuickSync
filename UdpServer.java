@@ -46,14 +46,15 @@ public class UdpServer implements Runnable
                 }
 
                 ByteArrayInputStream b = new ByteArrayInputStream(recvPacket.getData());
-                //ObjectInputStream o = new ObjectInputStream(b);
-                //String data = (String)o.readObject();
-                JSONObject JSONobj = (JSONObject)(JSONManager.convertStringToJSON(b.toString()));
+                ObjectInputStream o = new ObjectInputStream(b);
+                data = (String)o.readObject();
+                JSONObject JSONobj = (JSONObject)(JSONManager.convertStringToJSON(data));
                 if(JSONobj.get("type").equals("control")){
                     data = (String)JSONobj.get("value");
                 }
 
                 String[] components = data.split(":");
+                System.out.println("--------------" +  data);
 
                 PeerNode peer = new PeerNode(components[0], Integer.parseInt(components[1]));
 
