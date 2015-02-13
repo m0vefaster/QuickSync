@@ -16,6 +16,7 @@ public class QuickSync{
         peerList = new ListOfPeers(self);
         client1 = args[1];
 
+        selfIp = args[0];
         /* Start UDP client thread */
         Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "10.10.10.10", args[0]));
         udpClient.start();
