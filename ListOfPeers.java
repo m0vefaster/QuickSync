@@ -33,9 +33,13 @@ class ListOfPeers
    boolean addPeerNode(PeerNode newNode)
    {
 	     if(present(newNode))
-		   return false;
+        {
+          System.out.println(peerList);
+    		  return false;
+        }
 	  
 	     peerList.add(newNode);	 
+       System.out.println(peerList);
        return true;
    }
 
