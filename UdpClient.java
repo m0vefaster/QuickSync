@@ -98,9 +98,7 @@ public class UdpClient implements Runnable
             */
 
             //PeerNode host = new PeerNode(peerList.getSelf().getId(), peerList.getSelf().getWeight()); 
-            String data = peerList.getSelf().getId();
-            data.concat(":");
-            data.concat(String.valueOf(peerList.getSelf().getWeight()));
+            String data = peerList.getSelf().getId() + ":" + String.valueOf(peerList.getSelf().getWeight());
 
             JSONObject JSONobj = JSONManager.getJSON(data);
             data = JSONobj.toString();
