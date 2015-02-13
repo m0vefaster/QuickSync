@@ -50,7 +50,11 @@ class ListOfPeers
 
    PeerNode getMaster()
    {
-	   return peerList.size()==0? null :peerList.first();
+	   //return peerList.size()==0? null :peerList.first();
+       if(peerList.size()>0  && (peerList.first().getWeight()< getSelf().getWeight()))
+		   return peerList.first();
+
+	   return null;
    }
 
    boolean present(PeerNode node)
