@@ -22,7 +22,7 @@ public class QuickSync{
         udpClient.start();
 
         /* Start UDP server thread */
-        Thread udpServer = new Thread(new UdpServer(Integer.parseInt("61001")));
+        Thread udpServer = new Thread(new UdpServer(Integer.parseInt("61001"), peerList));
         udpServer.start();
 
         /* Start Sync thread */

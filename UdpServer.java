@@ -6,13 +6,15 @@ public class UdpServer implements Runnable
 {
     private DatagramSocket serverSocket;
     private int port;
+    private ListOfPeers peerList;
 
-    UdpServer(int port){
+    UdpServer(int port, ListOfPeers peerList){
         try{
             this.serverSocket = new DatagramSocket(port);
             this.serverSocket.setBroadcast(true);
             InetAddress addr = InetAddress.getLocalHost();
             String ipAddress = addr.getHostAddress(); 
+            this.peerList = peerList;
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -39,7 +41,7 @@ public class UdpServer implements Runnable
                 */
                 /* TODO: Check if it is from the same client. Parse peerList */
 
-                if(QuickSync.peerList.getPeerNode(recvPacket.getAddress().getHostAddress()) != null){
+                if(peerList.getPeerNode(recvPacket.getAddress().getHostAddress()) != null){
                     break;
                 }
 
@@ -55,7 +57,7 @@ public class UdpServer implements Runnable
 
 
                 /* Store the sender info in the linked list */
-                QuickSync.peerList.addPeerNode(peer);
+                peerList.addPeerNode(peer);
                 System.out.println("Added to peer list ");
             }catch(Exception e){
                 e.printStackTrace();
