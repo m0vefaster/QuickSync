@@ -5,7 +5,7 @@ import java.lang.*;
 class ListOfFiles
 {
       static String homeDir = System.getProperty("user.home");
-      static String folder = "QuickSync";
+      static String folder = "Documents/courses/cse221/proj1/files";
       static String path = homeDir + "/" + folder ;
       ArrayList<String> list;
 
@@ -27,12 +27,12 @@ class ListOfFiles
 			  {
 				    if(listOfFiles[i].isFile())
 					{
-						  System.out.println("File is:" + listOfFiles[i].getAbsolutePath());
+						  //System.out.println("File is:" + listOfFiles[i].getAbsolutePath());
 						  list.add(path +"/" + listOfFiles[i].getName());
 					}
 					else if(listOfFiles[i].isDirectory())
 					{
-						  System.out.println("Directory is:" + listOfFiles[i].getAbsolutePath());
+						  //System.out.println("Directory is:" + listOfFiles[i].getAbsolutePath());
 						  getListHelper(list,path+"/"+ listOfFiles[i].getName());
 					}
 			  }

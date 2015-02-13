@@ -13,7 +13,7 @@ public class Sync implements Runnable{
 
     public void run(){
         boolean ret = false;
-        PeerNode controller = peerList.getMaster();
+        //PeerNode controller = peerList.getMaster();
     	ListOfFiles lof = peerList.getSelf().getListOfFiles();
         ArrayList<String> arrayOfFiles = new ArrayList<String>();
 
