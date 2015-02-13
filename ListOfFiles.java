@@ -2,7 +2,7 @@ import java.io.*;
 import java.util.*;
 import java.lang.*;
 
-class ListOfFiles
+class ListOfFiles implements Serializable
 {
       static String homeDir = System.getProperty("user.home");
       static String folder = "Documents/courses/cse221/proj1/files";
