@@ -3,6 +3,10 @@ import java.io.*;
 import java.lang.*;
 import java.security.*;
 import java.util.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class UdpClient implements Runnable
 {
@@ -93,13 +97,20 @@ public class UdpClient implements Runnable
             byte[] digest = md.digest(bytes);
             */
 
-            PeerNode host = peerList.getSelf(); 
+            //PeerNode host = new PeerNode(peerList.getSelf().getId(), peerList.getSelf().getWeight()); 
+            String data = peerList.getSelf().getId();
+            data.concat(":");
+            data.concat(String.valueOf(peerList.getSelf().getWeight()));
 
-            ByteArrayOutputStream b = new ByteArrayOutputStream();
+            JSONObject JSONobj = JSONManager.getJSON(data);
+            data = JSONobj.toString();
+
+            /*ByteArrayOutputStream b = new ByteArrayOutputStream();
             ObjectOutputStream o = new ObjectOutputStream(b);
-            o.writeObject(host);
-            buf = b.toByteArray();
-            System.out.println("Created digest");
+            o.writeObject(data);
+            buf = b.toByteArray();*/
+            buf = data.getBytes();
+            System.out.println("Created data");
         }catch(Exception e){
             e.printStackTrace();
         }

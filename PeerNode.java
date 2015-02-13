@@ -7,10 +7,18 @@ public class PeerNode implements Serializable{
     private ListOfFiles lof;
     private HashMap<String, ArrayList<String>> hMap;
 
+    PeerNode(String peerId){
+        Random ran = new Random();
+        this.peerWeight = ran.nextInt(60000);
+        this.peerId = peerId;
+        lof = new ListOfFiles();
+        hMap = new HashMap<String, ArrayList<String>>();
+    }
+
     PeerNode(String peerId, int peerWeight){
         this.peerId = peerId;
         this.peerWeight = peerWeight;
-        //lof = new ListOfFiles();
+        lof = new ListOfFiles();
         hMap = new HashMap<String, ArrayList<String>>();
     }
 
@@ -20,8 +28,6 @@ public class PeerNode implements Serializable{
     }
 
     public int getWeight(){
-        Random ran = new Random();
-        peerWeight = ran.nextInt(60000);
         return peerWeight;
     }
 

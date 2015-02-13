@@ -1,6 +1,10 @@
 import java.net.*;
 import java.io.*;
 import java.lang.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class UdpServer implements Runnable
 {
@@ -32,7 +36,6 @@ public class UdpServer implements Runnable
 
                 if(recvPacket.getAddress().getHostAddress().toString().compareTo(peerList.getSelf().getId()) == 0 ||
                         recvPacket.getAddress().getHostAddress().toString().compareTo("127.0.0.1") == 0){
-                    //System.out.println("------Moving on---------------" );
                     continue;
                 }
 
@@ -43,7 +46,15 @@ public class UdpServer implements Runnable
 
                 ByteArrayInputStream b = new ByteArrayInputStream(recvPacket.getData());
                 ObjectInputStream o = new ObjectInputStream(b);
-                PeerNode peer = (PeerNode)o.readObject();
+                String data = (String)o.readObject();
+                JSONObject JSONobj = (JSONObject)(JSONManager.convertStringToJSON(data));
+                if(JSONobj.get("type").equals("control")){
+                    data = (String)JSONobj.get("value");
+                }
+
+                String[] components = data.split(":");
+
+                PeerNode peer = new PeerNode(components[0], Integer.parseInt(components[1]));
 
                 /* Store the sender info in the linked list */
                 peerList.addPeerNode(peer);
