@@ -81,7 +81,9 @@ class ListOfPeers
 
        while(itr.hasNext()){
            node = itr.next();
+           System.out.println("\n" + node.getId() + "with  "+ peerId);
            if(node.getId().equals(peerId)){
+               System.out.println("Found Match---");
                return node;
            }
        }
