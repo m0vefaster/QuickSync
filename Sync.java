@@ -22,11 +22,21 @@ public class Sync implements Runnable{
         while(true){
             /* Update list fo file for self by periodic poling of the shared directory */
             lof.setList(lof.getList()); 
+            int count = 0;
+            while(count < lof.getList().size()){
+              System.out.println("Sync.java: lof updated to " + lof.getList().get(count));
+              count++;
+            }
             //Send to Controller
                 
             /* Call seekFromPeer() on the list of files received from the controller */
                 
             HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(peerList.getSelf().getHashMapFilePeer());
+            count = 0;
+            while(count < hmFilesPeers.size()){
+              System.out.println("Sync.java: hmFilesPeers updated to " + hmFilesPeers.get(count));
+              count++;
+            }
 
             Set mappingSet = hmFilesPeers.entrySet();
 
@@ -44,7 +54,13 @@ public class Sync implements Runnable{
 
             if(peerList.getMaster() == null) /*I am the master*/
             {
+                System.out.println("I am the master");
                 peerList.getSelf().setHashMapFilePeer( getFilesToRequestPerPeerMaster(peerList));
+            }
+
+            try{
+                Thread.sleep(30000);
+            }catch(Exception e){
             }
          }
     }
@@ -65,7 +81,7 @@ public class Sync implements Runnable{
         /* TODO: Change hard-coded port*/
         Thread client = new Thread(new TcpClient(peer.getId(), "60010", fileName));
         client.start();
-        System.out.println("Created client TCP connection");
+        System.out.println("Created client TCP connection " + fileName.get(0));
 
         return true;
     }

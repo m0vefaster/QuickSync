@@ -29,18 +29,8 @@ public class UdpServer implements Runnable
         while(true){
             try{
                 this.serverSocket.receive(recvPacket);
-       //         System.out.print(".");
-                if(recvPacket.getAddress().getHostAddress().toString().compareTo(QuickSync.selfIp) == 0){
-                    //System.out.println("------Moving on---------------" );
-                    continue;
-                }
-                /*
-                if(table.existsConnection(recvPacket.getAddress().getHostAddress(), QuickSync.selfIp, recvPacket.getPort(), port) == true){
-                    continue;
-                }
-                */
-                /* TODO: Check if it is from the same client. Parse peerList */
 
+                /* Check if it is from the same client. Parse peerList */
                 if(peerList.getPeerNode(recvPacket.getAddress().getHostAddress()) != null){
                     break;
                 }
@@ -48,25 +38,13 @@ public class UdpServer implements Runnable
                 ByteArrayInputStream b = new ByteArrayInputStream(recvPacket.getData());
                 ObjectInputStream o = new ObjectInputStream(b);
                 PeerNode peer = (PeerNode)o.readObject();
-                /*
-                if(table.addConnection(recvPacket.getAddress().getHostAddress(), QuickSync.selfIp, recvPacket.getPort(), port, peer) == false){
-                    System.out.println("Can't insert");
-                    continue;
-                }
-                */
-
 
                 /* Store the sender info in the linked list */
                 peerList.addPeerNode(peer);
-                System.out.println("Added to peer list ");
+                System.out.println("Added to peer list size ");
             }catch(Exception e){
                 e.printStackTrace();
             }
-
-            /* Start the client TCP */
-            /*Thread client = new Thread(new Client(recvPacket.getAddress().getHostAddress(), QuickSync.serverPort, QuickSync.filename));
-            client.start();
-            System.out.println("Created client TCP connection");*/
         }
     }
 }
