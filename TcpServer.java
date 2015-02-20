@@ -51,11 +51,15 @@ public class TcpServer implements Runnable
               else if(obj.get("type").equals("File"))
               {
                 String fileContent = (String)obj.get("value");
+                String filename = path+"/"+(String)obj.get("name");
                 //Store this File...
-                File file = new File(path+"newFileNeedName");
-                //...Need the File Name
-
-                //Cannnnnt proceed
+                //brace yourself..awesome code ahead
+                File file = new File(filename);
+                file.createNewFile();
+                FileOutputStream fos = new FileOutputStream(file);
+                BufferedOutputStream bos = new BufferedOutputStream(fos);
+                bos.write(fileContent.getBytes());
+                //File file = new File(path+"newFileNeedName");
 
               }
               else if(obj.get("type").equals("ArrayList"))

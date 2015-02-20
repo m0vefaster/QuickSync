@@ -55,6 +55,7 @@ public class JSONManager {
 			final String content = sb.toString();
 			System.out.println(content);
 			obj.put("type", "File");
+			obj.put("name", file.getName());
 			obj.put("value", content);
 			
 		} catch (IOException e) {
