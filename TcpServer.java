@@ -41,6 +41,7 @@ public class TcpServer implements Runnable
 
               if(obj.get("type").equals("Control"))
               {
+                System.out.println("Got an Control Message from:"+s.getInetAddress().toString()); 
                 String str = (String)obj.get("value");  
                 //Send the file from ...
                 File file= new File(str);
@@ -50,6 +51,7 @@ public class TcpServer implements Runnable
               }
               else if(obj.get("type").equals("File"))
               {
+                 System.out.println("Got an File from:"+s.getInetAddress().toString()); 
                 String fileContent = (String)obj.get("value");
                 //Store this File...
                 File file = new File(path+"newFileNeedName");
@@ -64,6 +66,7 @@ public class TcpServer implements Runnable
               }
               else if(obj.get("type").equals("ArrayList"))
               {
+                 System.out.println("Got an ArrayList from:"+s.getInetAddress().toString()); 
                 ArrayList list = (ArrayList)obj.get("value");
                 //Uodate the peerList peerNode list of files
                 PeerNode peerNode = peerList.getPeerNodeFromIP(s.getInetAddress().toString());
@@ -80,11 +83,13 @@ public class TcpServer implements Runnable
               }
               else if(obj.get("type").equals("HashMap"))
               {
+                 System.out.println("Got an HashMap from:"+s.getInetAddress().toString()); 
                 HashMap map = (HashMap)obj.get("value");
                 peerList.getSelf().setHashMapFilePeer(map);
               }
               else
               {
+                 System.out.println("Got an Invalid Message from:"+s.getInetAddress().toString()); 
                 System.out.println("Invalid type");
               }
               /*  myFile = new File(str);

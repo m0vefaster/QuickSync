@@ -92,6 +92,8 @@ public class TcpClient implements Runnable
           client.close();
           */
             /* Close the socket after current batch of files is received */
+
+           client.close(); 
         }
 
         catch(Exception e)
