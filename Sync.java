@@ -1,5 +1,9 @@
 import java.io.*;
 import java.util.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class Sync implements Runnable{
     ListOfFiles files;
@@ -32,13 +36,13 @@ public class Sync implements Runnable{
             /* Call seekFromPeer() on the list of files received from the controller */
                 
             HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(peerList.getSelf().getHashMapFilePeer());
-            /*
+            
             count = 0;
             while(count < hmFilesPeers.size()){
               System.out.println("Sync.java: hmFilesPeers updated to " + hmFilesPeers.get(count));
               count++;
             }
-            */
+            
             print(hmFilesPeers);
 
             Set mappingSet = hmFilesPeers.entrySet();
@@ -95,7 +99,9 @@ public class Sync implements Runnable{
 
         /* Insert code to open a client thread and ask the peer for the file */
         /* TODO: Change hard-coded port*/
-        Thread client = new Thread(new TcpClient(peer.getId(), "60010", fileName));
+        //Thread client = new Thread(new TcpClient(peer.getId(), "60010", fileName));
+        JSONObject obj = null;
+        Thread client = new Thread(new TcpClient(peer.getId(), "60010", obj));
         client.start();
         System.out.println("Created client TCP connection " + fileName.get(0));
 
@@ -117,12 +123,13 @@ public class Sync implements Runnable{
         {
           PeerNode peerNode = it.next();
           ArrayList<String> lof = peerNode.getListOfFiles().getList();
-          
+         System.out.println("***********lof:"+lof.toString());
           for(i=0; i < lof.size();i++)
           {
-              if ( hmFilesPeers.containsKey(lof.indexOf(i)))
+             System.out.println("***********hmFile:"+hmFilesPeers.toString());
+              if ( hmFilesPeers.containsKey(lof.get(i)))
                {
-                   hmFilesPeers.get(lof.indexOf(i)).add(peerNode.getId());  
+                   hmFilesPeers.get(lof.get(i)).add(peerNode.getId());  
                }
               else
                {
