@@ -17,12 +17,13 @@ public class UdpClient implements Runnable
     private ListOfPeers peerList;
 
     UdpClient(int port, String broadcastAdd, String selfIp, ListOfPeers peerList){
+        
         System.out.println("Starting UDP client on port" + port);
         try{
-            //this.clientSocket = new DatagramSocket(port, InetAddress.getByName("137.110.90.255"));
             this.clientSocket = new DatagramSocket();
             this.clientSocket.setBroadcast(true);
-        }catch(Exception e){
+        }
+        catch(Exception e){
             e.printStackTrace();
         }
         this.broadcastAdd = broadcastAdd;

@@ -10,15 +10,17 @@ public class Sync implements Runnable{
     SendList toBeSent;
     PeerFileList fileList;
     ListOfPeers peerList;
+   
     Sync(ListOfPeers peerList)
-	{
-		this.peerList = peerList;
+	  {
+		   this.peerList = peerList;
     }
 
     public void run(){
+
         boolean ret = false;
         //PeerNode controller = peerList.getMaster();
-    	ListOfFiles lof = peerList.getSelf().getListOfFiles();
+    	  ListOfFiles lof = peerList.getSelf().getListOfFiles();
         ArrayList<String> arrayOfFiles = new ArrayList<String>();
 
 
@@ -27,23 +29,33 @@ public class Sync implements Runnable{
             /* Update list fo file for self by periodic poling of the shared directory */
             lof.setList(lof.getList()); 
             int count = 0;
-            while(count < lof.getList().size()){
+
+            /*while(count < lof.getList().size()){
               System.out.println("Sync.java: lof updated to " + lof.getList().get(count));
               count++;
-            }
+            }*/
+
             //Send to Controller
+
+            PeerNode masterNode = peerList.getMaster();
+
+            if(masterNode!=null)
+            {
+                  JSONObject obj = JSONManager.getJSON(lof.getList());// make the object
+                  Thread client = new Thread(new TcpClient(masterNode.getIPAddress().toString(), "60010", obj));
+            }
                 
             /* Call seekFromPeer() on the list of files received from the controller */
                 
             HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(peerList.getSelf().getHashMapFilePeer());
             
-            count = 0;
+            /*count = 0;
             while(count < hmFilesPeers.size()){
               System.out.println("Sync.java: hmFilesPeers updated to " + hmFilesPeers.get(count));
               count++;
-            }
+            }*/
             
-            print(hmFilesPeers);
+            /*print(hmFilesPeers);*/
 
             Set mappingSet = hmFilesPeers.entrySet();
 
@@ -61,7 +73,11 @@ public class Sync implements Runnable{
 
             if(peerList.getMaster() == null) /*I am the master*/
             {
-                System.out.println("I am the master" + peerList.getList().size() );
+                if(peerList.getList().size() !=0)
+                 System.out.println("I am the master and number of nodes in the list are" + peerList.getList().size() );
+
+                else
+                 System.out.println("Looks like I am the only one here!");
 
                 peerList.getSelf().setHashMapFilePeer( getFilesToRequestPerPeerMaster(peerList));
             }
@@ -115,7 +131,7 @@ public class Sync implements Runnable{
         PeerNode mySelf = peers.getSelf();
         int i;
 
-        ArrayList<String> filesWithSelf=mySelf.getListOfFiles().getList();
+        
         HashMap<String, ArrayList<String>> hmFilesPeers	= new HashMap<String, ArrayList<String>>();
 	    
         Iterator<PeerNode> it = peers.peerList.iterator();
@@ -155,16 +171,16 @@ public class Sync implements Runnable{
          ArrayList<String> filesWithSelf=mySelf.getListOfFiles().getList();
           for(i=0;i<filesWithSelf.size();i++)
             {
-			   System.out.println("\nMatching" + filesWithSelf.indexOf(i) );	
-               if(hmFilesPeers.containsKey(filesWithSelf.indexOf(i)))
+			   System.out.println("\nMatching" + filesWithSelf.get(i) );	
+               if(hmFilesPeers.containsKey(filesWithSelf.get(i)))
 			   {
 			     System.out.println("\nMatched" + filesWithSelf.indexOf(i) );
-                 hmFilesPeers.remove(filesWithSelf.indexOf(i));
+                 hmFilesPeers.remove(filesWithSelf.get(i));
                }
 			}
 
 		  
-		print(hmFilesPeers);  
+		     print(hmFilesPeers);  
         return hmFilesPeers;
      }
  }

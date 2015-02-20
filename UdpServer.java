@@ -57,9 +57,12 @@ public class UdpServer implements Runnable
                 System.out.println("--------------" +  data);
 
                 PeerNode peer = new PeerNode(components[0], Integer.parseInt(components[1]));
+                peer.setIPAddress(recvPacket.getAddress());
 
                 /* Store the sender info in the linked list */
                 peerList.addPeerNode(peer);
+                //Ask Peer Details .
+
                 System.out.println("Added to peer list size " + recvPacket.getAddress().getHostAddress());
             }catch(Exception e){
                 e.printStackTrace();

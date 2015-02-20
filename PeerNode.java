@@ -1,12 +1,13 @@
 import java.io.*;
 import java.util.*;
+import java.net.*;
 
 public class PeerNode implements Serializable{
     private String peerId;
     private int peerWeight;
     private ListOfFiles lof;
     private HashMap<String, ArrayList<String>> hMap;
-
+    InetAddress ipAddress ;
     PeerNode(String peerId){
         Random ran = new Random();
         this.peerWeight = ran.nextInt(60000);
@@ -49,6 +50,16 @@ public class PeerNode implements Serializable{
     HashMap<String, ArrayList<String>> getHashMapFilePeer( ) 
     {
             return hMap;
+    }
+
+    void setIPAddress(InetAddress ipAddress )
+    {
+        this.ipAddress=ipAddress;
+    }
+
+    InetAddress getIPAddress()
+    {
+         return ipAddress;
     }
 }
 

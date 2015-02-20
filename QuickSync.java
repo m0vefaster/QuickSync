@@ -11,12 +11,16 @@ public class QuickSync{
     public static ListOfPeers peerList;
     public static Sync sync;
     public static String serverPort;
+
     public static void main(String[] args){
+
         PeerNode self = new PeerNode(args[0], 1);
         peerList = new ListOfPeers(self);
+
         client1 = args[1];
 
         selfIp = args[0];
+
         /* Start UDP client thread */
         Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "10.10.10.10", args[0], peerList));
         udpClient.start();
@@ -31,11 +35,13 @@ public class QuickSync{
 
         /* Start a TCP receive thread */
         ServerSocket ss = null;
+
         try
         {
             serverPort = "60010";
             ss = new ServerSocket(Integer.parseInt(serverPort));
         }
+
         catch(Exception e)
         {
 
@@ -45,7 +51,7 @@ public class QuickSync{
             try {
                 s = ss.accept();
                 System.out.println("Server:Accepted Connection");
-                Thread server = new Thread(new TcpServer(ss, s));
+                Thread server = new Thread(new TcpServer(ss, s,peerList));
                 System.out.println("ClientServer:Created Thread for " +s. getRemoteSocketAddress());
                 server.start();
             } catch (Exception e) {
