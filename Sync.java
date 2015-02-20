@@ -43,6 +43,7 @@ public class Sync implements Runnable{
             {
                   JSONObject obj = JSONManager.getJSON(lof.getList());// make the object
                   Thread client = new Thread(new TcpClient(masterNode.getIPAddress().toString(), "60010", obj));
+                  client.start();
             }
                 
             /* Call seekFromPeer() on the list of files received from the controller */
@@ -96,7 +97,7 @@ public class Sync implements Runnable{
 
         while(itr.hasNext()){
             Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
-            System.out.println("Hash from controller " + entry.getKey());
+            //System.out.println("Hash from controller " + entry.getKey());
         }
     }
 
@@ -139,10 +140,10 @@ public class Sync implements Runnable{
         {
           PeerNode peerNode = it.next();
           ArrayList<String> lof = peerNode.getListOfFiles().getList();
-         System.out.println("***********lof:"+lof.toString());
+         //System.out.println("***********lof:"+lof.toString());
           for(i=0; i < lof.size();i++)
           {
-             System.out.println("***********hmFile:"+hmFilesPeers.toString());
+             //System.out.println("***********hmFile:"+hmFilesPeers.toString());
               if ( hmFilesPeers.containsKey(lof.get(i)))
                {
                    hmFilesPeers.get(lof.get(i)).add(peerNode.getId());  
