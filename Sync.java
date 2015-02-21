@@ -152,6 +152,9 @@ public class Sync implements Runnable{
         {
           PeerNode peerNode = it.next();
           ArrayList<String> lof = peerNode.getListOfFiles().getArrayListOfFiles();
+          if(lof==null)
+            continue;
+          
          //System.out.println("***********lof:"+lof.toString());
           for(i=0; i < lof.size();i++)
           {
