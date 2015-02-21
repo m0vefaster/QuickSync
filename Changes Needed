@@ -9,6 +9,8 @@ Major Issues
 - UDP Broadcast to UDP Unicast
 - Setup Cloud
 - Get Self IP
+- Change Comments
+
 
 Extensions
 - More Clients to be Supported (Change in UdpClient )
@@ -16,7 +18,9 @@ Extensions
 
 
 Maybe
--Make UDP Server and Client Extensible
+
+-Should Optimize by sending only incremental changes
+-
 
 
 
