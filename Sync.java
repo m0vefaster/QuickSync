@@ -24,7 +24,6 @@ public class Sync implements Runnable{
         
         
         /* Keep checking if any changes have been made to the shared directory */
-        int c=1;
         while(true){
             /* Update list fo file for self by periodic poling of the shared directory */
             lof.setList(lof.getList());
@@ -64,7 +63,7 @@ public class Sync implements Runnable{
             
             while(itr.hasNext()){
                 Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
-                arrayOfFiles.add(String.valueOf(entry.getKey()));
+                arrayOfFiles.add(0, String.valueOf(entry.getKey()));
                 ret = seekFromPeer(arrayOfFiles, entry.getValue().get(0));
                 if(ret == false){
                     System.out.println("Not seeking from peer. Error!");
@@ -72,7 +71,7 @@ public class Sync implements Runnable{
             }
             
             
-            if(peerList.getMaster() == null && c<3) /*I am the master*/
+            if(peerList.getMaster() == null) /*I am the master*/
             {
                 if(peerList.getList().size() !=0)
                 System.out.println("I am the master and number of nodes in the list are" + peerList.getList().size() );
@@ -91,7 +90,6 @@ public class Sync implements Runnable{
                     node = itr2.next();
                     Thread client = new Thread(new TcpClient(node.getIPAddress().toString(), "60010", obj));
                     client.start();
-                    c++;
                 }
                 
                 

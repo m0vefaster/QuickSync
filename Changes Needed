@@ -3,7 +3,7 @@ Changes Needed
 
 
 Major Issues
-- //Ask Peer Details after udp server receives the reply
+- //Ask Peer Details after udp server receives the reply ---> Redundant
 - Need a Name when file is sent!--->Done
 - Need to check after starting and removing files....
 - UDP Broadcast to UDP Unicast
@@ -20,7 +20,7 @@ Extensions
 Maybe
 
 -Should Optimize by sending only incremental changes
--
+-Optimize in Sync.java for controller to once act as a peer and once as a master in one while loop.
 
 
 
