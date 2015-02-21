@@ -3,76 +3,75 @@ import java.util.*;
 
 class ListOfPeers
 {
-	SortedSet<PeerNode> peerList = new TreeSet<PeerNode>(new Comp());
-    
-	PeerNode mySelf;
-     
-	ListOfPeers(PeerNode mySelf)
-	{
-          //Insert to Peer List cloud domain id
-	    this.mySelf = mySelf;
-	}
+    SortedSet<PeerNode> peerList = new TreeSet<PeerNode>(new Comp());
+
+    PeerNode mySelf;
+ 
+    ListOfPeers(PeerNode mySelf)
+    {
+      //Insert to Peer List cloud domain id
+        this.mySelf = mySelf;
+    }
 
     PeerNode getSelf()
-	{
-            return mySelf;
+    {
+        return mySelf;
     }
        
    class Comp implements Comparator<PeerNode>
    {
-
-		@Override
-		public int  compare(PeerNode pn1,PeerNode pn2) 
-		{
-			if( pn1.getWeight() > pn2.getWeight())
-				return 1;
-			return -1 ;
-		}
+@Override
+        public int  compare(PeerNode pn1,PeerNode pn2) 
+        {
+            if( pn1.getWeight() > pn2.getWeight())
+                return 1;
+            return -1 ;
+        }
    }	
 
    boolean addPeerNode(PeerNode newNode)
    {
-	     if(present(newNode))
+        if(present(newNode))
         {
-          System.out.println(peerList);
-    		  return false;
+            System.out.println(peerList);
+            return false;
         }
-	  
-	     peerList.add(newNode);	 
-       System.out.println(peerList);
-       return true;
+
+        peerList.add(newNode);	 
+        System.out.println(peerList);
+        return true;
    }
 
    boolean removePeerNode(PeerNode removeNode)
    {
-	  	if(!present(removeNode))
-			return false;
+    if(!present(removeNode))
+        return false;
 
-		peerList.remove(removeNode);
+    peerList.remove(removeNode);
     return true;
    }
 
    PeerNode getMaster()
    {
-	   //return peerList.size()==0? null :peerList.first();
-       if(peerList.size()>0  && (peerList.first().getWeight()< getSelf().getWeight()))
-		   return peerList.first();
+        //return peerList.size()==0? null :peerList.first();
+        if(peerList.size()>0  && (peerList.first().getWeight()< getSelf().getWeight()))
+            return peerList.first();
 
-	   return null;
+        return null;
    }
 
    boolean present(PeerNode node)
    {
       Iterator<PeerNode> itr = peerList.iterator();
 
-	  while(itr.hasNext())
-	  {
-            if(itr.next().getId()==node.getId())
-				return true;
+      while(itr.hasNext())
+      {
+        if(itr.next().getId()==node.getId())
+            return true;
 
-	  }
+      }
 
-	  return false;
+      return false;
    }
 
    PeerNode getPeerNode(String peerId){
