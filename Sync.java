@@ -81,7 +81,19 @@ public class Sync implements Runnable{
                  System.out.println("Looks like I am the only one here!");
 
                 peerList.getSelf().setHashMapFilePeer( getFilesToRequestPerPeerMaster(peerList));
+
+                JSONObject obj = JSONManager.getJSON(peerList.getSelf().getHashMapFilePeer());// make the object
+
+                Iterator<PeerNode> itr2 = peerList.getList().iterator();
+                PeerNode node;
+
+               while(itr2.hasNext()){
+                  node = itr2.next();
+                  Thread client = new Thread(new TcpClient(node.getIPAddress().toString(), "60010", obj));
+                  client.start();
+                 }
             }
+            
 
             try{
                 Thread.sleep(3000);

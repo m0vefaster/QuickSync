@@ -17,7 +17,7 @@ public class UdpClient implements Runnable
     private ListOfPeers peerList;
 
     UdpClient(int port, String broadcastAdd, String selfIp, ListOfPeers peerList){
-        
+
         System.out.println("Starting UDP client on port" + port);
         try{
             this.clientSocket = new DatagramSocket();
@@ -122,7 +122,7 @@ public class UdpClient implements Runnable
                 broadcastUdpPacket(buf, QuickSync.client1);
                 broadcastUdpPacket(buf, QuickSync.client2);
            try {
-                  Thread.sleep(5000); //milliseconds
+                  Thread.sleep(1000); //milliseconds
 
             } catch (InterruptedException e){
                 e.printStackTrace();
