@@ -48,17 +48,20 @@ public class TcpServer implements Runnable
                 Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", obj2
                   ));
               }
-              else if(obj.get("type").equals("File"))
+              else if(obj.get("type").toString().substring(0,4).equals("File"))
               {
+
                  System.out.println("Got an File from:"+s.getInetAddress().toString()); 
                 String fileContent = (String)obj.get("value");
                 //Store this File...
-                File file = new File(path+"newFileNeedName");
+                File file = new File(path+"/"+ obj.get("type").toString().substring(4));
                 //...Need the File Name
                 file.createNewFile();
                 FileOutputStream fos = new FileOutputStream(file);
                 BufferedOutputStream bos = new BufferedOutputStream(fos);
                 bos.write(fileContent.getBytes());
+                bos.close();
+
                 //File file = new File(path+"newFileNeedName");	
                 //Cannnnnt proceed
 
