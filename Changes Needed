@@ -3,10 +3,12 @@ Changes Needed
 
 
 Major Issues
--//Ask Peer Details after udp server receives the reply
--Need a Name when file is sent!
+- //Ask Peer Details after udp server receives the reply
+- Need a Name when file is sent!--->Done
 - Need to check after starting and removing files....
-
+- UDP Broadcast to UDP Unicast
+- Setup Cloud
+- Get Self IP
 
 Extensions
 - More Clients to be Supported (Change in UdpClient )
