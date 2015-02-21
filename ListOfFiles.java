@@ -38,7 +38,7 @@ class ListOfFiles implements Serializable
             if(listOfFiles[i].isFile())
             {
                 //System.out.println("File is:" + listOfFiles[i].getAbsolutePath());
-                list.add(path +"/" + listOfFiles[i].getName());
+                list.add(listOfFiles[i].getName());
             }
             else if(listOfFiles[i].isDirectory())
             {
