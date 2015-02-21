@@ -147,21 +147,32 @@ public class Sync implements Runnable{
         /* Condense hashmap from controller to a dense hashmap of actual files to get*/
         SortedSet<PeerNode> peerList = peers.getList();
         PeerNode mySelf = peers.getSelf();
-        int i;
+        
 
         
         HashMap<String, ArrayList<String>> hmFilesPeers	= new HashMap<String, ArrayList<String>>();
-	      peerList.add(mySelf);
+	      
         Iterator<PeerNode> it = peers.peerList.iterator();
         while (it.hasNext()) 
         {
           PeerNode peerNode = it.next();
-          ArrayList<String> lof = peerNode.getListOfFiles().getArrayListOfFiles();
-          if(lof==null)
-            continue;
+          addToHashMap(hmFilesPeers,peerNode);
+        }
+        
+        addToHashMap(hmFilesPeers,mySelf);
+        return hmFilesPeers;       
+        	
+    }
 
-         //System.out.println("***********lof:"+lof.toString());
-          for(i=0; i < lof.size();i++)
+
+    void addToHashMap(HashMap<String, ArrayList<String>> hmFilesPeers,PeerNode peerNode)
+    {
+      ArrayList<String> lof = peerNode.getListOfFiles().getArrayListOfFiles();
+        
+      if(lof==null)
+            return;
+      int i;   
+      for(i=0; i < lof.size();i++)
           {
              //System.out.println("***********hmFile:"+hmFilesPeers.toString());
               if ( hmFilesPeers.containsKey(lof.get(i)))
@@ -175,11 +186,6 @@ public class Sync implements Runnable{
                    hmFilesPeers.put(lof.get(i), newListOfPeers);
                }
           }
-        }
-        peerList.remove(mySelf);
-
-        return hmFilesPeers;       
-        	
     }
 
     HashMap<String, ArrayList<String>> getFilesToRequestPerPeer(HashMap<String,ArrayList<String>> hmFilesPeers){
