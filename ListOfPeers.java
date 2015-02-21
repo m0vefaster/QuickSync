@@ -99,13 +99,16 @@ class ListOfPeers
 
    PeerNode getPeerNodeFromIP(String ipAddress)
    {
+
+       ipAddress=ipAddress.substring(1,ipAddress.length());
+
        Iterator<PeerNode> itr = peerList.iterator();
 
        PeerNode node;
-
+       System.out.println("Size of peer list is :" + peerList.size());
        while(itr.hasNext()){
            node = itr.next();
-           System.out.println("\n" + node.getId() + "with  "+ node.getId());
+           System.out.println("\nMatched:" + node.getIPAddress() + ":with:"+ ipAddress);
            if(node.getIPAddress().equals(ipAddress)){
                System.out.println("Found Match---");
                return node;

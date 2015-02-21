@@ -46,7 +46,7 @@ public class TcpServer implements Runnable
                 //Send the file from ...
                 File file= new File(str);
                 JSONObject obj2 = JSONManager.getJSON(file);
-                Thread client = new Thread(new TcpClient(s.getInetAddress().toString(), "60010", obj2
+                Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", obj2
                   ));
               }
               else if(obj.get("type").equals("File"))
@@ -69,7 +69,7 @@ public class TcpServer implements Runnable
                  System.out.println("Got an ArrayList from:"+s.getInetAddress().toString()); 
                 ArrayList list = (ArrayList)obj.get("value");
                 //Uodate the peerList peerNode list of files
-                PeerNode peerNode = peerList.getPeerNodeFromIP(s.getInetAddress().toString());
+                PeerNode peerNode = peerList.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
 
                 if(peerNode ==null)
                 {

@@ -28,6 +28,7 @@ public class TcpClient implements Runnable
         File myFile;
         String file;
         Socket client=null;
+        
         try
         {
             System.out.println("Client:Connecting to " + serverName + " on port " + port);
