@@ -54,7 +54,9 @@ public class JSONManager {
             }
             final String content = sb.toString();
             System.out.println(content);
-            obj.put("type", "File"+file.getName());
+            String fileName = file.getAbsolutePath();
+        	fileName=fileName.substring(fileName.indexOf("QuickSync")+10);
+            obj.put("type", "File"+fileName);
             obj.put("value", content);
             
         } catch (IOException e) {
