@@ -14,8 +14,7 @@ public class QuickSync{
 
     public static void main(String[] args){
 
-        PeerNode self = new PeerNode(args[0]);
-        System.out.println("My weight.. %d" + self.getWeight());
+        PeerNode self = new PeerNode(args[0], Integer.parseInt(args[2]));
         peerList = new ListOfPeers(self);
 
         client1 = args[1];
