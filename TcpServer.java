@@ -43,10 +43,11 @@ public class TcpServer implements Runnable
                 System.out.println("Got an Control Message from:"+s.getInetAddress().toString()); 
                 String str = (String)obj.get("value");  
                 //Send the file from ...
-                File file= new File(str);
+                File file= new File(path+"/"+str);
                 JSONObject obj2 = JSONManager.getJSON(file);
                 Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", obj2
                   ));
+                client.start();
               }
               else if(obj.get("type").toString().substring(0,4).equals("File"))
               {
