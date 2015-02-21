@@ -25,7 +25,7 @@ class ListOfFiles implements Serializable
     ArrayList<String> getList ( )
     {
         list = new ArrayList<String>();
-        return getListHelper(list,path);
+        return removeAbsolutePath(getListHelper(list,path));
     }
     
     ArrayList<String> getListHelper (ArrayList<String> list, String path)
@@ -37,13 +37,11 @@ class ListOfFiles implements Serializable
         {
             if(listOfFiles[i].isFile())
             {
-                //System.out.println("File is:" + listOfFiles[i].getAbsolutePath());
-                list.add(listOfFiles[i].getName());
+                list.add(path+"/"+ listOfFiles[i].getName());
             }
             else if(listOfFiles[i].isDirectory())
             {
-                //System.out.println("Directory is:" + listOfFiles[i].getAbsolutePath());
-                //getListHelper(list,path+"/"+ listOfFiles[i].getName());
+                getListHelper(list,path+"/"+ listOfFiles[i].getName());
             }
         }
         
@@ -53,4 +51,21 @@ class ListOfFiles implements Serializable
     void setList(ArrayList<String> list){
         this.list = list;
     }
+
+    ArrayList<String> removeAbsolutePath(ArrayList<String> list)
+    { 
+      if(list==null)
+        return null;
+
+      for(int i=0;i<list.size();i++)
+      {
+        String fileName = list.get(i);
+        System.out.println("FIlename is:"+fileName);
+        fileName=fileName.substring(fileName.indexOf("QuickSync")+10);
+        list.set(i,fileName);
+      }
+      System.out.println("Returnning list:"+list);
+      return list;
+    }
+
 }
