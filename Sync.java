@@ -133,7 +133,8 @@ public class Sync implements Runnable{
         /* Insert code to open a client thread and ask the peer for the file */
         /* TODO: Change hard-coded port*/
         //Thread client = new Thread(new TcpClient(peer.getId(), "60010", fileName));
-        JSONObject obj = null;
+        JSONObject obj = JSONManager.getJSON(fileName.get(0));
+
         Thread client = new Thread(new TcpClient(peer.getId(), "60010", obj));
         client.start();
         System.out.println("Created client TCP connection to get:" + fileName.get(0));
