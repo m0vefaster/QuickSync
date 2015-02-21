@@ -108,10 +108,11 @@ public class TcpServer implements Runnable
             s.close();//Check!
        
             
-    }catch (Exception e) {
-          try{s.close();
-          System.out.println("Server: closing socket "+s.toString());
-            e.printStackTrace();}
+        }catch (Exception e) {
+          try{
+              s.close();
+              System.out.println("Server: closing socket "+s.toString());
+              e.printStackTrace();}
             catch(Exception ee)
             {
             }
@@ -136,5 +137,19 @@ public class TcpServer implements Runnable
         e.printStackTrace();
       }
       return obj;
+    }
+
+
+    void find(int x)
+    {
+        System.out.println("========Inside find" + x + "==========="); 
+        Iterator<PeerNode> it = peerList.getList().iterator();
+        while (it.hasNext())
+        {
+            PeerNode peerNode = it.next();
+            ArrayList<String> lof = peerNode.getListOfFiles().getList();
+            System.out.println("For peer node:"+peerNode.getId()+" list of files is:"+lof.toString());
+        }
+        System.out.println("========Leaving find()===========");
     }
 }

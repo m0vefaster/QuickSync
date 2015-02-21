@@ -12,15 +12,14 @@ public class Sync implements Runnable{
     ListOfPeers peerList;
    
     Sync(ListOfPeers peerList)
-	  {
-		   this.peerList = peerList;
+    {
+        this.peerList = peerList;
     }
 
     public void run(){
-
         boolean ret = false;
         //PeerNode controller = peerList.getMaster();
-    	  ListOfFiles lof = peerList.getSelf().getListOfFiles();
+        ListOfFiles lof = peerList.getSelf().getListOfFiles();
         ArrayList<String> arrayOfFiles = new ArrayList<String>();
 
 
@@ -152,7 +151,7 @@ public class Sync implements Runnable{
         while (it.hasNext()) 
         {
           PeerNode peerNode = it.next();
-          ArrayList<String> lof = peerNode.getListOfFiles().getList();
+          ArrayList<String> lof = peerNode.getListOfFiles();
          //System.out.println("***********lof:"+lof.toString());
           for(i=0; i < lof.size();i++)
           {
@@ -196,4 +195,17 @@ public class Sync implements Runnable{
         print(hmFilesPeers);  
         return hmFilesPeers;
     }
+
+    void find(int x)
+    {
+        System.out.println("========Inside find" + x + "==========="); 
+        Iterator<PeerNode> it = peerList.getList().iterator();
+        while (it.hasNext())
+        {
+            PeerNode peerNode = it.next();
+            ArrayList<String> lof = peerNode.getListOfFiles().getList();
+            System.out.println("For peer node:"+peerNode.getId()+" list of files is:"+lof.toString());
+        }
+        System.out.println("========Leaving find()===========");
+    } 
 }
