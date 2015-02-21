@@ -24,6 +24,7 @@ public class Sync implements Runnable{
 
 
         /* Keep checking if any changes have been made to the shared directory */
+        boolean sentHM=false;
         while(true){
             /* Update list fo file for self by periodic poling of the shared directory */
             lof.setList(lof.getList()); 
@@ -71,7 +72,7 @@ public class Sync implements Runnable{
             }
 
 
-            if(peerList.getMaster() == null) /*I am the master*/
+            if(peerList.getMaster() == null && !sentHM) /*I am the master*/
             {
                 if(peerList.getList().size() !=0)
                  System.out.println("I am the master and number of nodes in the list are" + peerList.getList().size() );
@@ -91,6 +92,8 @@ public class Sync implements Runnable{
                   Thread client = new Thread(new TcpClient(node.getIPAddress().toString(), "60010", obj));
                   client.start();
                  }
+
+                 sentHM=true;
             }
             
 
@@ -132,7 +135,7 @@ public class Sync implements Runnable{
         JSONObject obj = null;
         Thread client = new Thread(new TcpClient(peer.getId(), "60010", obj));
         client.start();
-        System.out.println("Created client TCP connection " + fileName.get(0));
+        System.out.println("Created client TCP connection to get:" + fileName.get(0));
 
         return true;
     }
@@ -154,7 +157,7 @@ public class Sync implements Runnable{
           ArrayList<String> lof = peerNode.getListOfFiles().getArrayListOfFiles();
           if(lof==null)
             continue;
-          
+
          //System.out.println("***********lof:"+lof.toString());
           for(i=0; i < lof.size();i++)
           {
