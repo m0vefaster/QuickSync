@@ -55,9 +55,26 @@ public class TcpServer implements Runnable
                 System.out.println("Got an File from:"+s.getInetAddress().toString());
                 String fileContent = (String)obj.get("value");
                 //Store this File...
-                File file = new File(path+"/"+ obj.get("type").toString().substring(4));
+                String receivedPath = obj.get("type").toString().substring(4);
+                System.out.println("Received Path" + receivedPath);
+                String[] splits = receivedPath.split("/");
+                int noOfSplits = splits.length;
+                String newPath = path;
+
+                while(noOfSplits > 1){
+                    newPath = newPath + "/" + splits[splits.length - noOfSplits];
+                    File theDir = new File(newPath);
+                    if(!theDir.exists()){
+                        theDir.mkdir();
+                        System.out.println("Created directory " + newPath);
+                    }
+                    noOfSplits--;
+                }
+                
+                File file = new File(path+"/"+ receivedPath);
                 //...Need the File Name
                 file.createNewFile();
+                System.out.println("Created file " + receivedPath);
                 FileOutputStream fos = new FileOutputStream(file);
                 BufferedOutputStream bos = new BufferedOutputStream(fos);
                 bos.write(fileContent.getBytes());
