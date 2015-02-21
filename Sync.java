@@ -109,13 +109,14 @@ public class Sync implements Runnable{
 
         while(itr.hasNext()){
             Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
-            //System.out.println("Hash from controller " + entry.getKey());
+            System.out.println("Hash from controller " + entry.getKey() + entry.getValue());
         }
     }
 
     boolean seekFromPeer(ArrayList<String> fileName, String peerId){
         PeerNode peer;
 
+        System.out.println(String.valueOf(fileName==null) + "-------- " +  peerId);
         if(fileName == null || peerId == null){
             return false;
         }
@@ -178,22 +179,22 @@ public class Sync implements Runnable{
         int i;
         PeerNode mySelf = peerList.getSelf();
         
-		//System.out.println("\n\nInside getFileToRequestPerPeer");
+		System.out.println("\n\nInside getFileToRequestPerPeer");
 
-		//print(hmFilesPeers);
+		print(hmFilesPeers);
          ArrayList<String> filesWithSelf=mySelf.getListOfFiles().getList();
           for(i=0;i<filesWithSelf.size();i++)
             {
-			   //System.out.println("\nMatching" + filesWithSelf.get(i) );	
+                   System.out.println("\nMatching" + filesWithSelf.get(i) );	
                if(hmFilesPeers.containsKey(filesWithSelf.get(i)))
-			   {
-			     //System.out.println("\nMatched" + filesWithSelf.indexOf(i) );
-                 hmFilesPeers.remove(filesWithSelf.get(i));
+               {
+                     System.out.println("\nMatched" + filesWithSelf.indexOf(i) );
+                     hmFilesPeers.remove(filesWithSelf.get(i));
                }
-			}
+            }
 
 		  
-		    // print(hmFilesPeers);  
+         print(hmFilesPeers);  
         return hmFilesPeers;
      }
  }
