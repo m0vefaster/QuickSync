@@ -18,7 +18,7 @@ class ListOfFiles implements Serializable
       this.list=list;
    }
 
-   ArrayList<String> getListOfFiles(){
+   ArrayList<String> getArrayListOfFiles(){
        return this.list;
    }
 
