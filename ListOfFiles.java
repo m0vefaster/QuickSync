@@ -35,7 +35,7 @@ class ListOfFiles implements Serializable
         
         for(int i=0;i< listOfFiles.length;i++)
         {
-            if(listOfFiles[i].isFile())
+            if(listOfFiles[i].isFile()  && listOfFiles[i].getName().charAt(0) != '.')
             {
                 list.add(path+"/"+ listOfFiles[i].getName());
             }

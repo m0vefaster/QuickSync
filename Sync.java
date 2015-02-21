@@ -64,7 +64,7 @@ public class Sync implements Runnable{
             
             while(itr.hasNext()){
                 Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
-                arrayOfFiles.add(String.valueOf(entry.getKey()));
+                arrayOfFiles.add(0,String.valueOf(entry.getKey()));
                 ret = seekFromPeer(arrayOfFiles, entry.getValue().get(0));
                 if(ret == false){
                     System.out.println("Not seeking from peer. Error!");
