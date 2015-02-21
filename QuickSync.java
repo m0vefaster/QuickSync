@@ -14,7 +14,7 @@ public class QuickSync{
 
     public static void main(String[] args){
 
-        PeerNode self = new PeerNode(args[0], 2);
+        PeerNode self = new PeerNode(args[0]);
         peerList = new ListOfPeers(self);
 
         client1 = args[1];
