@@ -35,10 +35,9 @@ public class TcpServer implements Runnable
     {
         System.out.println("Server running "+s.toString());
         try {
-            while(true)
-            {
-              JSONObject obj = getMessage(s); 
 
+              JSONObject obj = getMessage(s); 
+              //Check for NULL Object
               if(obj.get("type").equals("Control"))
               {
                 System.out.println("Got an Control Message from:"+s.getInetAddress().toString()); 
@@ -107,7 +106,7 @@ public class TcpServer implements Runnable
 
             //CLOSE SOCKET HERE 
             s.close();//Check!
-          } 
+       
             
     }catch (Exception e) {
           try{s.close();
@@ -122,6 +121,7 @@ public class TcpServer implements Runnable
 
     JSONObject getMessage(Socket s)
     {
+
       JSONObject obj = null;
       try
       {

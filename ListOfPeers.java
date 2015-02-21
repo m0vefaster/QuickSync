@@ -100,7 +100,6 @@ class ListOfPeers
    PeerNode getPeerNodeFromIP(String ipAddress)
    {
 
-       ipAddress=ipAddress.substring(1,ipAddress.length());
 
        Iterator<PeerNode> itr = peerList.iterator();
 
