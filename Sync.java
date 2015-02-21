@@ -151,7 +151,7 @@ public class Sync implements Runnable{
 
         
         HashMap<String, ArrayList<String>> hmFilesPeers	= new HashMap<String, ArrayList<String>>();
-	    
+	      peerList.add(mySelf);
         Iterator<PeerNode> it = peers.peerList.iterator();
         while (it.hasNext()) 
         {
@@ -176,7 +176,7 @@ public class Sync implements Runnable{
                }
           }
         }
-        
+        peerList.remove(mySelf);
 
         return hmFilesPeers;       
         	

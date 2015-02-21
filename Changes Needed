@@ -5,6 +5,8 @@ Changes Needed
 Major Issues
 -//Ask Peer Details after udp server receives the reply
 -Need a Name when file is sent!
+- Need to check after starting and removing files....
+
 
 Extensions
 - More Clients to be Supported (Change in UdpClient )
