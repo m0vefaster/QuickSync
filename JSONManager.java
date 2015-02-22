@@ -14,10 +14,11 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 public class JSONManager {
+
     public static JSONObject getJSON(ArrayList<String> files)
     {
         JSONObject obj = new JSONObject();
-        System.out.println("Making JSON from ArrayList");
+        System.out.println("JSONManager:getJSON:Making JSON from ArrayList");
         obj.put("type", "ArrayList");
         obj.put("value", files);
         return obj;
@@ -26,24 +27,26 @@ public class JSONManager {
     public static JSONObject getJSON(HashMap<String,ArrayList<String> > files)
     {
         JSONObject obj = new JSONObject();
-        System.out.println("Making JSON from HashMap");
+        System.out.println("JSONManager:getJSON:Making JSON from HashMap");
         obj.put("type", "HashMap");
         obj.put("value", files);
+        
         return obj;
     }
     
     public static JSONObject getJSON(String message)
     {
         JSONObject obj = new JSONObject();
-        System.out.println("Making JSON from Message");
+        System.out.println("JSONManager:getJSON:Making JSON from Message");
         obj.put("type", "Control");
         obj.put("value", message);
+
         return obj;
     }
     public static JSONObject getJSON(File file)
     {
         JSONObject obj = new JSONObject();
-        System.out.println("Making JSON from File");
+        System.out.println("JSONManager:getJSON:Making JSON from File");
         final String EoL = System.getProperty("line.separator");
         List<String> lines;
         try {
@@ -63,13 +66,13 @@ public class JSONManager {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
         return obj;
-        
-        
     }
+
     public static Object convertStringToJSON(String str)
     {
-        System.out.println("Converting String to JSON");
+        System.out.println("JSONManager:convertStringToJSON:Converting String to JSON");
         JSONParser parser=new JSONParser();
         JSONObject obj = null;
         try {
@@ -78,6 +81,7 @@ public class JSONManager {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+
         return obj;
     }
     

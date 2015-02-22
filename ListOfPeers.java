@@ -33,7 +33,7 @@ class ListOfPeers
     {
         if(present(newNode))
         {
-            System.out.println(peerList);
+            System.out.println("ListOfPeers:addPeerNode:Peer List is:"peerList);
             return false;
         }
         
@@ -63,18 +63,15 @@ class ListOfPeers
             {
               removePeerNode(node);
             }
-            
             return true;
-            
         }
-
         return false;
     }
+
     PeerNode getMaster()
     {
-        //return peerList.size()==0? null :peerList.first();
         if(peerList.size()>0  && (peerList.first().getWeight()< getSelf().getWeight()))
-        return peerList.first();
+          return peerList.first();
         
         return null;
     }
@@ -87,7 +84,6 @@ class ListOfPeers
         {
             if(itr.next().getId()==node.getId())
             return true;
-            
         }
         
         return false;
@@ -99,13 +95,11 @@ class ListOfPeers
         
         while(itr.hasNext()){
             node = itr.next();
-            System.out.println("\n" + node.getId() + "with  "+ peerId);
             if(node.getId().equals(peerId)){
-                System.out.println("Found Match---");
                 return node;
             }
         }
-        
+
         return null;
     }
     
@@ -117,17 +111,12 @@ class ListOfPeers
     
     PeerNode getPeerNodeFromIP(String ipAddress)
     {
-        
-        
         Iterator<PeerNode> itr = peerList.iterator();
-        
         PeerNode node;
-        System.out.println("Size of peer list is :" + peerList.size());
+        
         while(itr.hasNext()){
             node = itr.next();
-            System.out.println("\nMatched:" + node.getIPAddress() + ":with:"+ ipAddress);
             if(node.getIPAddress().equals(ipAddress)){
-                System.out.println("Found Match---");
                 return node;
             }
         }

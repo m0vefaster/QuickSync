@@ -18,7 +18,8 @@ class ListOfFiles implements Serializable
         this.list=list;
     }
     
-    ArrayList<String> getArrayListOfFiles(){
+    ArrayList<String> getArrayListOfFiles()
+    {
         return this.list;
     }
     
@@ -60,11 +61,10 @@ class ListOfFiles implements Serializable
       for(int i=0;i<list.size();i++)
       {
         String fileName = list.get(i);
-        System.out.println("FIlename is:"+fileName);
         fileName=fileName.substring(fileName.indexOf("QuickSync")+10);
         list.set(i,fileName);
       }
-      System.out.println("Returnning list:"+list);
+      
       return list;
     }
 

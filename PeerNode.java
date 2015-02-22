@@ -8,6 +8,7 @@ public class PeerNode implements Serializable{
     private ListOfFiles lof;
     private HashMap<String, ArrayList<String>> hMap;
     String ipAddress ;
+    
     PeerNode(String peerId){
         Random ran = new Random();
         this.peerWeight = ran.nextInt(60000);
