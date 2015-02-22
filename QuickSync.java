@@ -16,6 +16,35 @@ public class QuickSync{
         
         PeerNode self = new PeerNode(args[0], Integer.parseInt(args[2]));
         peerList = new ListOfPeers(self);
+        try{
+            Enumeration e = NetworkInterface.getNetworkInterfaces();
+            NetworkInterface intface = null;
+            while(e.hasMoreElements())
+            {
+                NetworkInterface n = (NetworkInterface) e.nextElement();
+                String interfaceName = n.getName();
+                if(interfaceName.equals("wlan0") || interfaceName.equals("en0")){
+                    intface = n;
+                }else if(interfaceName.equals("eth0")){
+                    intface = n;
+                }else{
+                    continue;
+                }
+                
+            }
+            if(intface != null){
+                Enumeration ee = intface.getInetAddresses();
+                while (ee.hasMoreElements())
+                {
+                    InetAddress i = (InetAddress) ee.nextElement();
+                    if(i.getHostAddress().indexOf(":") == -1){
+                        selfIp = i.getHostAddress();
+                    }
+                }
+            }
+            System.out.println(selfIp);
+        }catch(Exception e){
+        }
         
         client1 = args[1];
         
