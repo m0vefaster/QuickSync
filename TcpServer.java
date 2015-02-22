@@ -148,9 +148,10 @@ public class TcpServer implements Runnable
         try
         {
             InputStream inFromServer = s.getInputStream();
-            DataInputStream in = new DataInputStream(inFromServer);
-            String line,str = null;
-            line = in.readUTF();
+            //DataInputStream in = new DataInputStream(inFromServer);
+            ObjectInputStream in = new ObjectInputStream(inFromServer);
+            int length = in.readInt();
+            String line = (String)in.readObject();
             obj = (JSONObject)(JSONManager.convertStringToJSON(line));
         }
         catch(Exception e)

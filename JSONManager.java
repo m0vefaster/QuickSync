@@ -53,7 +53,7 @@ public class JSONManager {
                 sb.append(line).append(EoL);
             }
             final String content = sb.toString();
-            System.out.println(content);
+            //System.out.println(content);
             String fileName = file.getAbsolutePath();
         	fileName=fileName.substring(fileName.indexOf("QuickSync")+10);
             obj.put("type", "File"+fileName);
