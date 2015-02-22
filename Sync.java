@@ -78,6 +78,8 @@ public class Sync implements Runnable{
                     Thread client = new Thread(new TcpClient(node.getIPAddress().toString(), "60010", obj));
                     client.start();
                 }
+
+                System.out.println();
             }
             
             try

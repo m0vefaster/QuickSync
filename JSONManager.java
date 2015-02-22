@@ -30,7 +30,7 @@ public class JSONManager {
         System.out.println("JSONManager:getJSON:Making JSON from HashMap");
         obj.put("type", "HashMap");
         obj.put("value", files);
-        
+
         return obj;
     }
     
