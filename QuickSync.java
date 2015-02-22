@@ -13,7 +13,8 @@ public class QuickSync{
     public static String serverPort;
     
     public static void main(String[] args){
-        
+        int count = 0;
+        ArrayList<String> client = new ArrayList<String>();
         try{
             Enumeration e = NetworkInterface.getNetworkInterfaces();
             NetworkInterface intface = null;
@@ -48,10 +49,15 @@ public class QuickSync{
         self.setIPAddress(selfIp);
         peerList = new ListOfPeers(self);
 
-        client1 = args[0];
+        if(args.length > 2){
+            while(count < args.length -2){
+                client.add(args[0]);
+                count++;
+            }
+        }
         
         /* Start UDP client thread */
-        Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "10.10.10.10", args[0], peerList));
+        Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), args[0], client, peerList));
         udpClient.start();
         
         /* Start UDP server thread */
