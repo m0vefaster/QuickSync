@@ -49,15 +49,16 @@ public class QuickSync{
         self.setIPAddress(selfIp);
         peerList = new ListOfPeers(self);
 
+        /* By pass 2 arguments */
         if(args.length > 2){
-            while(count < args.length -2){
+            while(count < args.length - 2){
                 client.add(args[0]);
                 count++;
             }
         }
         
-        /* Start UDP client thread */
-        Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), args[0], client, peerList));
+        /* Start UDP client thread. Broadcast IP is hard-coded to "255.255.255.255" for now. Change if needed. */
+        Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "255.255.255.255", client, peerList));
         udpClient.start();
         
         /* Start UDP server thread */
