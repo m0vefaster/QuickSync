@@ -127,8 +127,10 @@ public class TcpClient implements Runnable
             //DataOutputStream out = new DataOutputStream(outToServer);
             //out.writeUTF(obj.toString());
             ObjectOutputStream out = new ObjectOutputStream(outToServer);
-            out.writeInt(obj.toString().length());
-            out.writeObject(obj.toString());
+            byte[] outputArray = obj.toString().getBytes();
+            int len = obj.toString().length();
+            out.writeObject(len);
+            out.writeObject(outputArray);
             out.close();
             client.close();
         }

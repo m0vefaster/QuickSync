@@ -150,8 +150,9 @@ public class TcpServer implements Runnable
             InputStream inFromServer = s.getInputStream();
             //DataInputStream in = new DataInputStream(inFromServer);
             ObjectInputStream in = new ObjectInputStream(inFromServer);
-            int length = in.readInt();
+            int length = (int)in.readObject();
             byte[] inputArray = new byte[length];
+            //byte[] inputArray = (byte[])in.readObject();
             inputArray = (byte[])in.readObject();
             String line = new String(inputArray);
             System.out.println("***********************************" + String.valueOf(length) + line);
