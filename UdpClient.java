@@ -15,8 +15,9 @@ public class UdpClient implements Runnable
     private int port;
     private String selfIp;
     private ListOfPeers peerList;
+    private ArrayList<String> client;
     
-    UdpClient(int port, String broadcastAdd, String selfIp, ListOfPeers peerList){
+    UdpClient(int port, String broadcastAdd, ArrayList<String> client, ListOfPeers peerList){
         
         System.out.println("Starting UDP client on port" + port);
         try{
@@ -28,20 +29,21 @@ public class UdpClient implements Runnable
         }
         this.broadcastAdd = broadcastAdd;
         this.port = port;
-        this.selfIp = selfIp;
+        this.client = client;
         this.peerList = peerList;
     }
     
-    void sendUdpPacket(byte[] data, InetAddress remoteIp){
+    void sendUdpPacket(byte[] data, String remoteIp){
         try{
-            DatagramPacket packet = new DatagramPacket(data, data.length, remoteIp, this.port);
+            DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(remoteIp), 61001);
             this.clientSocket.send(packet);
         } catch(Exception e){
             e.printStackTrace();
         }
     }
     
-    void broadcastUdpPacket(byte[] data, String ip){
+    //void broadcastUdpPacket(byte[] data, String ip){
+    void broadcastUdpPacket(byte[] data){
         /*
         try{
         Enumeration interfaces = NetworkInterface.getNetworkInterfaces();
@@ -70,8 +72,8 @@ public class UdpClient implements Runnable
         }
         */
         try{
-            //DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(broadcastAdd), 61001);
-            DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(ip), 61001);
+            DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(broadcastAdd), 61001);
+            //DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(ip), 61001);
             //DatagramPacket packet = new DatagramPacket(data, data.length, broadcast, 61001);
             this.clientSocket.send(packet);
         }catch(Exception e){
@@ -85,7 +87,6 @@ public class UdpClient implements Runnable
         byte[] buf = new byte[100];
         
         try{
-            System.out.println("Local Add "+ clientSocket.getInetAddress());
             //String ipPort = this.clientSocket.getLocalAddress()+":"+this.port;
             /*
             StringBuilder a = new StringBuilder();
@@ -111,6 +112,7 @@ public class UdpClient implements Runnable
             buf = b.toByteArray();
             //buf = data.getBytes();
             System.out.println("Created data");
+            System.out.println("----- "+ InetAddress.getByName(broadcastAdd) + broadcastAdd);
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -119,12 +121,20 @@ public class UdpClient implements Runnable
         /* Send Broadcast info */
         while(true){
             //for(i = 1; i <= 255; i++){
-            broadcastUdpPacket(buf, QuickSync.client1);
-            broadcastUdpPacket(buf, QuickSync.client2);
+            if(client.isEmpty() == true){
+                broadcastUdpPacket(buf);
+                System.out.println("Broadcasting .....");
+            }else{
+                Iterator itr = client.iterator();
+                while(itr.hasNext()){
+                    sendUdpPacket(buf, (String)itr.next());
+                }
+                System.out.println("Unicasting .....");
+            }
+
             try {
                 Thread.sleep(1000); //milliseconds
-                
-            } catch (InterruptedException e){
+            } catch (Exception e){
                 e.printStackTrace();
             }
             

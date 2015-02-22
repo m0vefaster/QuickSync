@@ -15,7 +15,8 @@ public class QuickSync{
     public static boolean isCloud=false;
 
     public static void main(String[] args){
-        
+        int count = 0;
+        ArrayList<String> client = new ArrayList<String>();
         try{
             Enumeration e = NetworkInterface.getNetworkInterfaces();
             NetworkInterface intface = null;
@@ -52,8 +53,7 @@ public class QuickSync{
         self.setIPAddress(selfIp);
         peerList = new ListOfPeers(self);
 
-        client1 = args[0];
-        cloudIP= args[2];
+        cloudIP= args[0];
 
 
         if(cloudIP.equals(selfIp))
@@ -62,8 +62,16 @@ public class QuickSync{
            isCloud = true; 
         }
 
-        /* Start UDP client thread */
-        Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "10.10.10.10", args[0], peerList));
+        /* By pass 2 arguments */
+        if(args.length > 2){
+            while(count < args.length - 2){
+                client.add(args[0]);
+                count++;
+            }
+        }
+        
+        /* Start UDP client thread. Broadcast IP is hard-coded to "255.255.255.255" for now. Change if needed. */
+        Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "255.255.255.255", client, peerList));
         udpClient.start();
         
         /* Start UDP server thread */
