@@ -151,7 +151,10 @@ public class TcpServer implements Runnable
             //DataInputStream in = new DataInputStream(inFromServer);
             ObjectInputStream in = new ObjectInputStream(inFromServer);
             int length = in.readInt();
-            String line = (String)in.readObject();
+            byte[] inputArray = new byte[length];
+            inputArray = (byte[])in.readObject();
+            String line = new String(inputArray);
+            System.out.println("***********************************" + String.valueOf(length) + line);
             obj = (JSONObject)(JSONManager.convertStringToJSON(line));
         }
         catch(Exception e)
