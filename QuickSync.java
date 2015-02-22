@@ -11,7 +11,9 @@ public class QuickSync{
     public static ListOfPeers peerList;
     public static Sync sync;
     public static String serverPort;
-    
+    public static String cloudIP;
+    public static boolean isCloud=false;
+
     public static void main(String[] args){
         int count = 0;
         ArrayList<String> client = new ArrayList<String>();
@@ -41,13 +43,24 @@ public class QuickSync{
                     }
                 }
             }
-            System.out.println(selfIp);
+            System.out.println("Self IP is:"+selfIp);
         }catch(Exception e){
         }
         
+        
+
         PeerNode self = new PeerNode(selfIp, Integer.parseInt(args[1]));
         self.setIPAddress(selfIp);
         peerList = new ListOfPeers(self);
+
+        cloudIP= args[0];
+
+
+        if(cloudIP.equals(selfIp))
+        {
+           System.out.println("I am the cloud");
+           isCloud = true; 
+        }
 
         /* By pass 2 arguments */
         if(args.length > 2){
@@ -83,13 +96,27 @@ public class QuickSync{
             
         }
         Socket s=null;
+
         while(true){
             try {
+                InetAddress cloudInetAddress = InetAddress.getByName(cloudIP);
+                if(!isCloud && cloudInetAddress.isReachable(1000))
+                {
+                    System.out.println("=========================Adding Cloud to Peer List");
+                    peerList.addPeerNode(new PeerNode(cloudIP,0)); 
+                }
+                else if (!isCloud )
+                {
+                    System.out.println("==========================Removing Cloud to Peer List");
+                    peerList.removePeerNode(cloudIP);
+                }
                 s = ss.accept();
                 System.out.println("Server:Accepted Connection");
                 Thread server = new Thread(new TcpServer(ss, s,peerList));
                 System.out.println("ClientServer:Created Thread for " +s. getRemoteSocketAddress());
-                    server.start();
+                server.start();
+                
+                
             } catch (Exception e) {
                 try{
                     s.close();

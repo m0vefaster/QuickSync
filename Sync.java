@@ -41,6 +41,11 @@ public class Sync implements Runnable{
             if(masterNode!=null)
             {
                 JSONObject obj = JSONManager.getJSON(lof.getList());// make the object
+                if(obj==null)
+                {
+                  System.out.println("Obj is null");
+                }
+                System.out.println("Master IP Address is:"+ masterNode.getIPAddress().toString());
                 System.out.println("Sending LOF to the controller**************************");
                 Thread client = new Thread(new TcpClient(masterNode.getIPAddress().toString(), "60010", obj));
                 client.start();
