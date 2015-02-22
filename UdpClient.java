@@ -67,6 +67,7 @@ public class UdpClient implements Runnable
             o.writeObject(data);
             buf = b.toByteArray();
             System.out.println("UdpClient:run: Created data");
+            System.out.println();
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -88,6 +89,5 @@ public class UdpClient implements Runnable
                 e.printStackTrace();
             }
         }
-        System.out.println();
     }
 }
