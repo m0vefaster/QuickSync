@@ -11,7 +11,9 @@ public class QuickSync{
     public static ListOfPeers peerList;
     public static Sync sync;
     public static String serverPort;
-    
+    public static String cloudIP;
+    public static boolean isCloud=false;
+
     public static void main(String[] args){
         
         try{
@@ -40,16 +42,26 @@ public class QuickSync{
                     }
                 }
             }
-            System.out.println(selfIp);
+            System.out.println("Self IP is:"+selfIp);
         }catch(Exception e){
         }
         
+        
+
         PeerNode self = new PeerNode(selfIp, Integer.parseInt(args[1]));
         self.setIPAddress(selfIp);
         peerList = new ListOfPeers(self);
 
         client1 = args[0];
-        
+        cloudIP= args[2];
+
+
+        if(cloudIP.equals(selfIp))
+        {
+           System.out.println("I am the cloud");
+           isCloud = true; 
+        }
+
         /* Start UDP client thread */
         Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "10.10.10.10", args[0], peerList));
         udpClient.start();
@@ -76,13 +88,27 @@ public class QuickSync{
             
         }
         Socket s=null;
+
         while(true){
             try {
+                InetAddress cloudInetAddress = InetAddress.getByName(cloudIP);
+                if(!isCloud && cloudInetAddress.isReachable(1000))
+                {
+                    System.out.println("=========================Adding Cloud to Peer List");
+                    peerList.addPeerNode(new PeerNode(cloudIP,0)); 
+                }
+                else if (!isCloud )
+                {
+                    System.out.println("==========================Removing Cloud to Peer List");
+                    peerList.removePeerNode(cloudIP);
+                }
                 s = ss.accept();
                 System.out.println("Server:Accepted Connection");
                 Thread server = new Thread(new TcpServer(ss, s,peerList));
                 System.out.println("ClientServer:Created Thread for " +s. getRemoteSocketAddress());
-                    server.start();
+                server.start();
+                
+                
             } catch (Exception e) {
                 try{
                     s.close();

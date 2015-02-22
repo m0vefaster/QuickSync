@@ -42,6 +42,7 @@ class ListOfPeers
         return true;
     }
     
+
     boolean removePeerNode(PeerNode removeNode)
     {
         if(!present(removeNode))
@@ -51,6 +52,24 @@ class ListOfPeers
         return true;
     }
     
+    boolean removePeerNode(String ipAddress)
+    {
+        Iterator<PeerNode> itr = peerList.iterator();
+        
+        while(itr.hasNext())
+        {
+          PeerNode node = itr.next() ;
+            if(node.getIPAddress().equals(ipAddress))
+            {
+              removePeerNode(node);
+            }
+            
+            return true;
+            
+        }
+
+        return false;
+    }
     PeerNode getMaster()
     {
         //return peerList.size()==0? null :peerList.first();
