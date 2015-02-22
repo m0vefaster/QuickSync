@@ -30,17 +30,17 @@ public class TcpServer implements Runnable
         this.s = s;
         this.peerList = peerList;
     }
+
     @Override
     public void run()
     {
-        System.out.println("Server running "+s.toString());
+        System.out.println("TcpServer:run: Server running "+s.toString());
         try {
-            
             JSONObject obj = getMessage(s);
             //Check for NULL Object
             if(obj.get("type").equals("Control"))
             {
-                System.out.println("Got an Control Message from:"+s.getInetAddress().toString());
+                System.out.println("TcpServer:run: Got an Control Message from:"+s.getInetAddress().toString());
                 String str = (String)obj.get("value");
                 //Send the file from ...
                 File file= new File(path+"/"+str);
@@ -52,11 +52,10 @@ public class TcpServer implements Runnable
             else if(obj.get("type").toString().substring(0,4).equals("File"))
             {
                 
-                System.out.println("Got an File from:"+s.getInetAddress().toString());
+                System.out.println("TcpServer:run: Got an File from:"+s.getInetAddress().toString());
                 String fileContent = (String)obj.get("value");
                 //Store this File...
                 String receivedPath = obj.get("type").toString().substring(4);
-                System.out.println("Received Path" + receivedPath);
                 String[] splits = receivedPath.split("/");
                 int noOfSplits = splits.length;
                 String newPath = path;
@@ -66,34 +65,27 @@ public class TcpServer implements Runnable
                     File theDir = new File(newPath);
                     if(!theDir.exists()){
                         theDir.mkdir();
-                        System.out.println("Created directory " + newPath);
                     }
                     noOfSplits--;
                 }
                 
                 File file = new File(path+"/"+ receivedPath);
-                //...Need the File Name
                 file.createNewFile();
-                System.out.println("Created file " + receivedPath);
                 FileOutputStream fos = new FileOutputStream(file);
                 BufferedOutputStream bos = new BufferedOutputStream(fos);
                 bos.write(fileContent.getBytes());
                 bos.close();
-                
-                //File file = new File(path+"newFileNeedName");
-                //Cannnnnt proceed
-                
             }
             else if(obj.get("type").equals("ArrayList"))
             {
-                System.out.println("Got an ArrayList from:"+s.getInetAddress().toString());
+                System.out.println("TcpServer:run: Got an ArrayList from:"+s.getInetAddress().toString());
                 ArrayList list = (ArrayList)obj.get("value");
                 //Uodate the peerList peerNode list of files
                 PeerNode peerNode = peerList.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
                 
                 if(peerNode ==null)
                 {
-                    System.out.println("\nCouldn't find the PeerNode");
+                    System.out.println("TcpServer:run: \nCouldn't find the PeerNode");
                 }
                 else
                 {
@@ -103,36 +95,21 @@ public class TcpServer implements Runnable
             }
             else if(obj.get("type").equals("HashMap"))
             {
-                System.out.println("Got an HashMap from:"+s.getInetAddress().toString());
+                System.out.println("TcpServer:run: Got an HashMap from:"+s.getInetAddress().toString());
                 HashMap map = (HashMap)obj.get("value");
                 peerList.getSelf().setHashMapFilePeer(map);
             }
             else
             {
-                System.out.println("Got an Invalid Message from:"+s.getInetAddress().toString());
-                System.out.println("Invalid type");
+                System.out.println("TcpServer:run: Got an Invalid Message from:"+s.getInetAddress().toString());
             }
-            /*  myFile = new File(str);
-            JSONObject toSend = JSONManager.getJSON(myFile);
-            System.out.println("---"+toSend.toString());
-            byte[] mybytearray = new byte[(int) myFile.length()];
-            //BufferedInputStream bis = new BufferedInputStream(new FileInputStream(myFile));
-            //bis.read(mybytearray, 0, mybytearray.length);
-            OutputStream os = s.getOutputStream();
-            os.write(toSend.toString().getBytes(), 0, toSend.toString().length());
-            os.flush();
-            System.out.println("Server: Sent file " + str);
-            }*/
-            
             
             //CLOSE SOCKET HERE
-            s.close();//Check!
-            
-            
+            s.close();
         }catch (Exception e) {
             try{
                 s.close();
-                System.out.println("Server: closing socket "+s.toString());
+                System.out.println("TcpServer:run: closing socket "+s.toString());
             e.printStackTrace();}
             catch(Exception ee)
             {
@@ -148,14 +125,11 @@ public class TcpServer implements Runnable
         try
         {
             InputStream inFromServer = s.getInputStream();
-            //DataInputStream in = new DataInputStream(inFromServer);
             ObjectInputStream in = new ObjectInputStream(inFromServer);
             int length = (int)in.readObject();
             byte[] inputArray = new byte[length];
-            //byte[] inputArray = (byte[])in.readObject();
             inputArray = (byte[])in.readObject();
             String line = new String(inputArray);
-            System.out.println("***********************************" + String.valueOf(length) + line);
             obj = (JSONObject)(JSONManager.convertStringToJSON(line));
         }
         catch(Exception e)
