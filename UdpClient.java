@@ -88,5 +88,6 @@ public class UdpClient implements Runnable
                 e.printStackTrace();
             }
         }
+        System.out.println();
     }
 }

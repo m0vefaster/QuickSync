@@ -48,7 +48,7 @@ public class TcpClient implements Runnable
                     {
                         e.printStackTrace();
                     }
-                    anye.printStackTrace();
+                    //anye.printStackTrace();
                 }
             }while(client==null);
             System.out.println("TcpClient:run: Client:Just connected to " + client.getRemoteSocketAddress());
@@ -66,6 +66,7 @@ public class TcpClient implements Runnable
             {
             }
         }
+        System.out.println();
     }
     
     void start ()
