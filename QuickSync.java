@@ -14,8 +14,6 @@ public class QuickSync{
     
     public static void main(String[] args){
         
-        PeerNode self = new PeerNode(args[0], Integer.parseInt(args[2]));
-        peerList = new ListOfPeers(self);
         try{
             Enumeration e = NetworkInterface.getNetworkInterfaces();
             NetworkInterface intface = null;
@@ -46,9 +44,11 @@ public class QuickSync{
         }catch(Exception e){
         }
         
-        client1 = args[1];
-        
-        selfIp = args[0];
+        PeerNode self = new PeerNode(selfIp, Integer.parseInt(args[1]));
+        self.setIPAddress(selfIp);
+        peerList = new ListOfPeers(self);
+
+        client1 = args[0];
         
         /* Start UDP client thread */
         Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "10.10.10.10", args[0], peerList));
