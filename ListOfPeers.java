@@ -33,7 +33,7 @@ class ListOfPeers
     {
         if(present(newNode))
         {
-            System.out.println("ListOfPeers:addPeerNode:Peer List is:"peerList);
+            System.out.println("ListOfPeers:addPeerNode:Peer List is: " + peerList);
             return false;
         }
         
@@ -113,7 +113,7 @@ class ListOfPeers
     {
         Iterator<PeerNode> itr = peerList.iterator();
         PeerNode node;
-        
+
         while(itr.hasNext()){
             node = itr.next();
             if(node.getIPAddress().equals(ipAddress)){
