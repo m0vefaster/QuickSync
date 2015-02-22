@@ -49,7 +49,6 @@ public class QuickSync{
         }
 
         PeerNode self = new PeerNode(selfIp, Integer.parseInt(args[1]));
-        self.setIPAddress(selfIp);
         peerList = new ListOfPeers(self);
 
         cloudIP= args[0];
