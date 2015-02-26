@@ -8,16 +8,18 @@ import org.json.simple.parser.ParseException;
 
 public class UdpServer implements Runnable
 {
-    private DatagramSocket serverSocket;
+    //private DatagramSocket serverSocket;
+    private MulticastSocket serverSocket;
     private int port;
     private ListOfPeers peerList;
     
     UdpServer(int port, ListOfPeers peerList){
         try{
-            this.serverSocket = new DatagramSocket(port);
-            this.serverSocket.setBroadcast(true);
-            InetAddress addr = InetAddress.getLocalHost();
-            String ipAddress = addr.getHostAddress();
+            serverSocket = new MulticastSocket(port);
+            //this.serverSocket.setBroadcast(true);
+            //InetAddress addr = InetAddress.getLocalHost();
+            //String ipAddress = addr.getHostAddress();
+            serverSocket.joinGroup(InetAddress.getByName("235.1.1.1"));
             this.peerList = peerList;
         }catch(Exception e){
             e.printStackTrace();

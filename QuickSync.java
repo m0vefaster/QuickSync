@@ -69,7 +69,8 @@ public class QuickSync{
         }
         
         /* Start UDP client thread. Broadcast IP is hard-coded to "255.255.255.255" for now. Change if needed. */
-        Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "255.255.255.255", client, peerList));
+        //Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "255.255.255.255", client, peerList));
+        Thread udpClient = new Thread(new UdpClient("235.1.1.1", client, peerList));
         udpClient.start();
         
         /* Start UDP server thread */
