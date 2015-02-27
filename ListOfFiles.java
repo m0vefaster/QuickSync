@@ -32,10 +32,10 @@ class ListOfFiles implements Serializable
         }
         else
         {
-            ArrayList<String> list2;
+            ArrayList<String> list2,temp;
             list2 = new ArrayList<String>();
             list2 = removeAbsolutePath(getListHelper(list2,path));
-
+            temp =list2;
             if(list2==null)
             {
                 list=null;
@@ -48,8 +48,9 @@ class ListOfFiles implements Serializable
                 list2.remove(list.get(i));
             }
 
-            list=list2;
-            return list;
+            list=temp;
+
+            return list2;
         }
     }
     
