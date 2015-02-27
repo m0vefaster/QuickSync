@@ -27,15 +27,17 @@ class ListOfFiles implements Serializable
     {
         if(list==null)
         {
+         System.out.println("The list is null");
          list = new ArrayList<String>();
          return removeAbsolutePath(getListHelper(list,path));
         }
         else
         {
-            ArrayList<String> list2,temp;
+            ArrayList<String> list2;
             list2 = new ArrayList<String>();
             list2 = removeAbsolutePath(getListHelper(list2,path));
-            temp =list2;
+            System.out.println("The list2 is:"+list2);
+            ArrayList temp = new ArrayList<String>(list2);
             if(list2==null)
             {
                 list=null;
@@ -48,8 +50,8 @@ class ListOfFiles implements Serializable
                 list2.remove(list.get(i));
             }
 
-            list=temp;
-
+            list= new ArrayList<String>(temp);
+            System.out.println("The list is reinitialized to:"+list);
             return list2;
         }
     }
