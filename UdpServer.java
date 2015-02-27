@@ -73,6 +73,5 @@ public class UdpServer implements Runnable
                 e.printStackTrace();
             }
         }
-        System.out.println();
     }
 }
