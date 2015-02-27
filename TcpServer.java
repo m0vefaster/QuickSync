@@ -39,7 +39,7 @@ public class TcpServer implements Runnable
         try {
             JSONObject obj = getMessage(s);
 
-            if(count++%10 == 0){
+            if(count++%100 == 0){
                 System.out.println("TcpServer:run: Running TcpServer\n");
             }
 
