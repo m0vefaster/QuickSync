@@ -74,7 +74,7 @@ public class Sync implements Runnable{
                 
                 listOfPeers.getSelf().setHashMapFilePeer( getFilesToRequestPerPeerMaster(listOfPeers));
                 System.out.println("Sync.java: Global Hashmap of controller");
-                print(listOfPeers.getSelf().getHashMapFilePeer();
+                print(listOfPeers.getSelf().getHashMapFilePeer());
 
                 SortedSet<PeerNode> peerList =listOfPeers.getList();
                 Iterator<PeerNode> it = peerList.iterator();
