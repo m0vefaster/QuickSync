@@ -171,6 +171,11 @@ public class Sync implements Runnable{
     
     HashMap<String, ArrayList<String>> getFilesToRequestPerPeer(HashMap<String,ArrayList<String>> hmFilesPeers,ArrayList<String> filesWithPeer)
     {
+        if(filesWithPeer==null)
+        {
+            return hmFilesPeers;
+        }
+        
         int i;
         for(i=0;i<filesWithPeer.size();i++)
         {
