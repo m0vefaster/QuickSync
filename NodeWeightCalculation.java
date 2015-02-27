@@ -40,11 +40,11 @@ class NodeWeightCalculation
     return value;
   }
 
-  public static void main(String[] args)
+  public static int getWeight()
   {
     String os = System.getProperty("os.name").toLowerCase();
     Double cpu=0.0;
-    Integer battery=0, state=0;
+    Integer battery=1, state=0;
     try{
       switch(os)
       {
@@ -94,7 +94,7 @@ class NodeWeightCalculation
             {
               value = line.split(":")[1];
               value = value.replaceAll("[^\\.0123456789]","");
-              cpu = 100 * Double.parseDouble(value);
+              cpu = 1000 * Double.parseDouble(value);
             }
           }
           System.out.println(cpu+" " + battery+" " +state);
@@ -104,11 +104,12 @@ class NodeWeightCalculation
           System.out.println("4");
           break;
       }
+
     }
     catch(IOException e)
     {
       e.printStackTrace();
     }
-
+    return (int)(cpu + (state*1000)/battery);
   }
 }
