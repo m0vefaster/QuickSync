@@ -19,6 +19,7 @@ public class JSONManager {
     {
         JSONObject obj = new JSONObject();
         System.out.println("JSONManager:getJSON:Making JSON from ArrayList");
+        System.out.println("The ArrayList is"+files);
         obj.put("type", "ArrayList");
         obj.put("value", files);
         return obj;
@@ -28,6 +29,7 @@ public class JSONManager {
     {
         JSONObject obj = new JSONObject();
         System.out.println("JSONManager:getJSON:Making JSON from HashMap");
+        System.out.println("The HashMap is:"+files);
         obj.put("type", "HashMap");
         obj.put("value", files);
 
