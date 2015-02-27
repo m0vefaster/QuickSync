@@ -90,7 +90,13 @@ public class UdpClient implements Runnable
         }
         
         /* Send Broadcast info */
+        int counter = 1;
         while(true){
+
+               if((counter++) % 100 ==0 )
+                {
+                     System.out.println("UdpClient:run:Udp Client Running");
+                }
             sendUdpPacket(buf, multicastAdd);
             /*
             if(client.isEmpty() == true){
