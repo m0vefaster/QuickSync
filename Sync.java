@@ -34,8 +34,16 @@ public class Sync implements Runnable{
                 JSONObject obj = JSONManager.getJSON(lof.getList());// make the object
                 if(obj==null)
                 {
-                  System.out.println("Sync:run:Obj is null");
-                  continue;
+                    System.out.println("Sync:run:Obj is null");
+                    try
+                    {
+                    Thread.sleep(3000);
+                    }
+
+                    catch(Exception e)
+                    {
+                    }
+                    continue;
                 }
                 Thread client = new Thread(new TcpClient(masterNode.getIPAddress().toString(), "60010", obj));
                 client.start();
@@ -69,6 +77,15 @@ public class Sync implements Runnable{
                 else
                     {
                         System.out.println("Sync:run:Looks like I am the only one here!");
+                        try
+                        {
+                            Thread.sleep(3000);
+                        }
+
+                        catch(Exception e)
+                        {
+                        }
+
                         continue;
                     }
                 
