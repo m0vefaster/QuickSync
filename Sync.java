@@ -78,7 +78,6 @@ public class Sync implements Runnable{
                 {
                     PeerNode peerNode = it.next();
                     HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer(),peerNode.getListOfFiles().getArrayListOfFiles());
-                    System.out.println("File list is ");
                     peerNode.getListOfFiles().printFileList();
 
                     System.out.println("Sync.java: Hashmap from controller to " + peerNode.getId());

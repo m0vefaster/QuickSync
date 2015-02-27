@@ -101,7 +101,7 @@ class ListOfFiles implements Serializable
 
         Iterator<String> itr = list.iterator();
         String file;
-        System.out.println("\nThe File list is:");
+        System.out.print("\nThe File list is:");
         while(itr.hasNext()){
             file = itr.next();
             System.out.print(file+",");
