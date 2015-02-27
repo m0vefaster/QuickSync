@@ -92,4 +92,16 @@ class ListOfFiles implements Serializable
       return list;
     }
 
+    void printFileList()
+    {
+        Iterator<String> itr = list.iterator();
+        String file;
+        System.out.println("\nThe File list is:");
+        while(itr.hasNext()){
+            file = itr.next();
+            System.out.print(file+",");
+        }
+        System.out.println();
+    }
+
 }

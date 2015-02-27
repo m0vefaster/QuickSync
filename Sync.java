@@ -78,6 +78,11 @@ public class Sync implements Runnable{
                 {
                     PeerNode peerNode = it.next();
                     HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer(),peerNode.getListOfFiles().getArrayListOfFiles());
+                    System.out.println("File list is ");
+                    peerNode.getListOfFiles().printFileList();
+
+                    System.out.println("Sync.java: Hashmap from controller to " + peerNode.getId());
+                    print(hmFilesPeers);
                     JSONObject obj = JSONManager.getJSON(listOfPeers.getSelf().getHashMapFilePeer());// make the object
                     Thread client = new Thread(new TcpClient(peerNode.getIPAddress().toString(), "60010", obj));
                     client.start();
@@ -104,7 +109,9 @@ public class Sync implements Runnable{
         
         while(itr.hasNext()){
             Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
+            System.out.print(entry.getKey() + ", ");
         }
+        System.out.println();
     }
     
     boolean seekFromPeer(String fileName, String peerId){
