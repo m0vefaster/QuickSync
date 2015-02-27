@@ -32,9 +32,15 @@ public class UdpServer implements Runnable
         String data = new String();
         DatagramPacket recvPacket = new DatagramPacket(recvBuf, recvBuf.length);
         
+        int counter = 1;
         /* Start listening on the UDP server port */
         while(true){
             try{
+
+                if((counter++) % 100 ==0 )
+                {
+                     System.out.println("UdpServer:run:Udp Server Running");
+                }
                 this.serverSocket.receive(recvPacket);
                 
                 if(recvPacket.getAddress().getHostAddress().toString().compareTo(peerList.getSelf().getId()) == 0 ||
