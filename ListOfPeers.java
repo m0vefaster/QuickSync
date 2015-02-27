@@ -129,7 +129,7 @@ class ListOfPeers
     {
         Iterator<PeerNode> itr = peerList.iterator();
         PeerNode node;
-        System.out.println("\nThe Peer list is:");
+        System.out.println("\n************************The Peer list is:");
         while(itr.hasNext()){
             node = itr.next();
             System.out.print(node.getId()+",");

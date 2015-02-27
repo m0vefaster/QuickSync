@@ -57,7 +57,7 @@ public class Sync implements Runnable{
                 }
             }
             
-            
+            listOfPeers.printPeerList();
             if(listOfPeers.getMaster() == null) /*I am the master*/
             {
                 /* Get your own Lof */
