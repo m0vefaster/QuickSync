@@ -59,26 +59,20 @@ class NodeWeightCalculation
           break;
         case "mac os x":
           //Processor Speed
-          String command = "system_profiler|grep 'Speed\\|Charge'";
+          String command = "system_profiler SPPowerDataType";
+          String command2 = "system_profiler SPHardwareDataType";
 
           Process proc = Runtime.getRuntime().exec(command);
+          Process proc2 = Runtime.getRuntime().exec(command2);
 
-          BufferedReader reader = 
-              new BufferedReader(new InputStreamReader(proc.getInputStream()));
+          BufferedReader reader = new BufferedReader(new InputStreamReader(proc.getInputStream()));
+          BufferedReader reader2 = new BufferedReader(new InputStreamReader(proc2.getInputStream()));
 
           String line = "";
           String value;
           while((line = reader.readLine()) != null) 
           {
-            if(line.contains("Processor Speed"))
-            {
-              value = line.split(":")[1];
-              value = value.replaceAll("[^\\.0123456789]","");
-              cpu = Double.parseDouble(value);
-                          
-
-            }
-            else if(line.contains("Charge"))
+            if(line.contains("Charge"))
             {
               if(line.contains("Charge Remaining"))
               {
@@ -91,8 +85,16 @@ class NodeWeightCalculation
                 value = line.split(":")[1];
                 value = value.replaceAll("[^\\.0123456789]","");
                 battery = Integer.parseInt(value);
-
               }
+            }
+          }
+          while((line = reader2.readLine()) != null) 
+          {
+            if(line.contains("Processor Speed"))
+            {
+              value = line.split(":")[1];
+              value = value.replaceAll("[^\\.0123456789]","");
+              cpu = 100 * Double.parseDouble(value);
             }
           }
           System.out.println(cpu+" " + battery+" " +state);
