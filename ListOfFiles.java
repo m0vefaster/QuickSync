@@ -22,7 +22,14 @@ class ListOfFiles implements Serializable
     {
         return this.list;
     }
-    
+
+
+    ArrayList<String> getListMaster( )
+    {
+        list = new ArrayList<String>();
+        return removeAbsolutePath(getListHelper(list,path));
+    }
+
     ArrayList<String> getList ( )
     {
         if(list==null)
