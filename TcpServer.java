@@ -34,9 +34,15 @@ public class TcpServer implements Runnable
     @Override
     public void run()
     {
+        int count =0;
         System.out.println("TcpServer:run: Server running "+s.toString());
         try {
             JSONObject obj = getMessage(s);
+
+            if(count++%10 == 0){
+                System.out.println("TcpServer:run: Running TcpServer\n");
+            }
+
             //Check for NULL Object
             if(obj.get("type").equals("Control"))
             {

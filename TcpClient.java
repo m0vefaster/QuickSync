@@ -27,6 +27,7 @@ public class TcpClient implements Runnable
         File myFile;
         String file;
         Socket client=null;
+        int count =0;
         
         try
         {
@@ -34,6 +35,10 @@ public class TcpClient implements Runnable
             client =null ;
             do
             {
+                if(count++%10 == 0){
+                    System.out.println("TcpClient:run: Running TcpClient\n");
+                }
+
                 try
                 {
                     client = new Socket(serverName, port);
