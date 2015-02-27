@@ -8,13 +8,16 @@ class ListOfFiles implements Serializable
     static String folder = "QuickSync";
     static String path = homeDir + "/" + folder ;
     ArrayList<String> list;
+    int count=1;
     
     ListOfFiles( )
     {
+        System.out.println("===============================Construncting with LOF as empty");
     }
     
     ListOfFiles(ArrayList<String> list)
     {
+        System.out.println("===============================Construncting with LOF with list");
         this.list=list;
     }
     
@@ -26,12 +29,22 @@ class ListOfFiles implements Serializable
 
     ArrayList<String> getListMaster( )
     {
+        System.out.println("===============================Entering getListMaster");
+        count=1;
         list = new ArrayList<String>();
         return removeAbsolutePath(getListHelper(list,path));
     }
 
     ArrayList<String> getList ( )
     {
+        if(count==1)
+        {
+            System.out.println("First time the list is:"+list);
+            list=null;
+            count++;
+        }
+
+        
         if(list==null)
         {
          System.out.println("The list is null");
@@ -84,6 +97,7 @@ class ListOfFiles implements Serializable
     }
     
     void setList(ArrayList<String> list){
+        System.out.println("Entering Set List function");
         this.list = list;
     }
 
