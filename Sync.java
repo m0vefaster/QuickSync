@@ -45,7 +45,7 @@ public class Sync implements Runnable{
             //HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer());
             
 
-            Set mappingSet = listOfPeers.getSelf().getHashMapFilePeer().entrySet();
+            Set mappingSet = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer(),listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles()).entrySet();
             Iterator itr =  mappingSet.iterator();
             
             while(itr.hasNext()){
@@ -120,7 +120,7 @@ public class Sync implements Runnable{
     
     boolean seekFromPeer(String fileName, String peerId){
         PeerNode peer;
-
+        System.out.println("FileName is:"+fileName + " and Peer Id is:"+peerId);
         if(fileName == null || peerId == null){
             return false;
         }
