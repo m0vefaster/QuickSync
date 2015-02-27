@@ -39,7 +39,7 @@ public class UdpServer implements Runnable
 
                 if((counter++) % 100 ==0 )
                 {
-                     System.out.println("UdpServer:run:Udp Server Running");
+                     System.out.println("***************UdpServer:run:Udp Server Running");
                 }
                 this.serverSocket.receive(recvPacket);
                 

@@ -95,7 +95,7 @@ public class UdpClient implements Runnable
 
                if((counter++) % 100 ==0 )
                 {
-                     System.out.println("UdpClient:run:Udp Client Running");
+                     System.out.println("***************UdpClient:run:Udp Client Running");
                 }
             sendUdpPacket(buf, multicastAdd);
             /*

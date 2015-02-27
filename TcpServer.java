@@ -40,7 +40,7 @@ public class TcpServer implements Runnable
             JSONObject obj = getMessage(s);
 
             if(count++%100 == 0){
-                System.out.println("TcpServer:run: Running TcpServer\n");
+                //System.out.println("TcpServer:run: Running TcpServer\n");
             }
 
             //Check for NULL Object

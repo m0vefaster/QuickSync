@@ -31,12 +31,12 @@ public class TcpClient implements Runnable
         
         try
         {
-            System.out.println("TcpClient:run: Connecting to " + serverName + " on port " + port);
+            //System.out.println("TcpClient:run: Connecting to " + serverName + " on port " + port);
             client =null ;
             do
             {
                 if(count++%10 == 0){
-                    System.out.println("TcpClient:run: Running TcpClient\n");
+                    //System.out.println("TcpClient:run: Running TcpClient\n");
                 }
 
                 try
