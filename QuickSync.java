@@ -17,8 +17,8 @@ public class QuickSync{
 
     public static void main(String[] args){
 
-		int count = 0;
-		System.setProperty("java.net.preferIPv4Stack" , "true");
+        int count = 0;
+        System.setProperty("java.net.preferIPv4Stack" , "true");
 
         ArrayList<String> client = new ArrayList<String>();
         try{
@@ -73,9 +73,9 @@ public class QuickSync{
         }*/
         
         /* Start UDP client thread. Broadcast IP is hard-coded to "255.255.255.255" for now. Change if needed. */
-        //Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "255.255.255.255", client, peerList));
+        Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "255.255.255.255", client, peerList));
         //Thread udpClient = new Thread(new UdpClient("FF7E:230::1234", client, peerList));
-        Thread udpClient = new Thread(new UdpClient("235.1.1.1", client, peerList));
+        //Thread udpClient = new Thread(new UdpClient("235.1.1.1", client, peerList));
         udpClient.start();
         
         /* Start UDP server thread */

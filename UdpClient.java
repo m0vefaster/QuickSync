@@ -11,14 +11,14 @@ import org.json.simple.parser.ParseException;
 public class UdpClient implements Runnable
 {
     private DatagramSocket clientSocket;
-    private String multicastAdd;
-    //private String broadcastAdd;
-    //private int port;
+    //private String multicastAdd;
+    private String broadcastAdd;
+    private int port;
     private String selfIp;
     private ListOfPeers peerList;
     private ArrayList<String> client;
     
-    /*
+    
     UdpClient(int port, String broadcastAdd, ArrayList<String> client, ListOfPeers peerList){
         
         System.out.println("UdpClient:UdpClient: Starting UDP client on port" + port);
@@ -34,8 +34,8 @@ public class UdpClient implements Runnable
         this.client = client;
         this.peerList = peerList;
     }
-    */
-
+    
+    /*
     UdpClient(String multicastAdd, ArrayList<String> client, ListOfPeers peerList){
         System.out.println("UdpClient:UdpClient: Starting UDP client ");
         try{
@@ -48,6 +48,8 @@ public class UdpClient implements Runnable
         this.client = client;
         this.peerList = peerList;
     }
+    */
+
     void sendUdpPacket(byte[] data, String remoteIp){
         try{
             DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(remoteIp), 61001);
@@ -57,7 +59,7 @@ public class UdpClient implements Runnable
         }
     }
     
-    /*
+    
     void broadcastUdpPacket(byte[] data){
         try{
             DatagramPacket packet = new DatagramPacket(data, data.length, InetAddress.getByName(broadcastAdd), 61001);
@@ -66,7 +68,7 @@ public class UdpClient implements Runnable
             e.printStackTrace();
         }
     }
-    */
+    
     
     public void run(){
         int i ;
@@ -93,11 +95,12 @@ public class UdpClient implements Runnable
         int counter = 1;
         while(true){
 
-               if((counter++) % 100 ==0 )
-                {
-                     System.out.println("***************UdpClient:run:Udp Client Running");
-                }
-            sendUdpPacket(buf, multicastAdd);
+           if((counter++) % 100 ==0 )
+            {
+                 System.out.println("***************UdpClient:run:Udp Client Running");
+            }
+            broadcastUdpPacket(buf);
+            //sendUdpPacket(buf, multicastAdd);
             /*
             if(client.isEmpty() == true){
                 broadcastUdpPacket(buf);
