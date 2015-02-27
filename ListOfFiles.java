@@ -95,6 +95,10 @@ class ListOfFiles implements Serializable
 
     void printFileList()
     {
+        if(list == null){
+            return;
+        }
+
         Iterator<String> itr = list.iterator();
         String file;
         System.out.println("\nThe File list is:");
