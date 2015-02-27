@@ -51,8 +51,7 @@ public class TcpServer implements Runnable
                 //Send the file from ...
                 File file= new File(path+"/"+str);
                 JSONObject obj2 = JSONManager.getJSON(file);
-                Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", obj2
-                ));
+                Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", obj2));
                 client.start();
             }
             else if(obj.get("type").toString().substring(0,4).equals("File"))
@@ -95,7 +94,10 @@ public class TcpServer implements Runnable
                 }
                 else
                 {
-                    ListOfFiles lof= new ListOfFiles(list);
+                    ListOfFiles lof= peerNode.getListOfFiles();
+                    ArrayList list1 = lof.getArrayListOfFiles();
+                    list1.addAll(list);
+                    lof.setList(list1);
                     peerNode.setListOfFiles(lof);
                 }
             }
