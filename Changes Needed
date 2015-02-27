@@ -17,7 +17,9 @@ Major Issues
 -Broadcast to Multicast -Brajesh
 -Algorithm -All 26th Feb Onwards
 
-
+- List of Files change
+- Hash Map only sending the missing fles from peers and the peer to fetch the peer
+- Peer Removal special case Master Removal and making list of files as null 
 
 Extensions
 - More Clients to be Supported (Change in UdpClient ) ->Done

@@ -9,27 +9,24 @@ public class Sync implements Runnable{
     ListOfFiles files;
     SendList toBeSent;
     PeerFileList fileList;
-    ListOfPeers peerList;
+    ListOfPeers listOfPeers;
     
-    Sync(ListOfPeers peerList)
+    Sync(ListOfPeers listOfPeers)
     {
-        this.peerList = peerList;
+        this.listOfPeers = listOfPeers;
     }
     
     public void run()
     {
         boolean ret = false;
-        ListOfFiles lof = peerList.getSelf().getListOfFiles();
+        ListOfFiles lof = listOfPeers.getSelf().getListOfFiles();
         ArrayList<String> arrayOfFiles = new ArrayList<String>();
         
         
         /* Keep checking if any changes have been made to the shared directory */
         while(true){
-
-            /* Update list fo file for self by periodic poling of the shared directory */
-            lof.setList(lof.getList());
             
-            PeerNode masterNode = peerList.getMaster();
+            PeerNode masterNode = listOfPeers.getMaster();
             
             //Send to Controller
             if(masterNode!=null)
@@ -38,44 +35,51 @@ public class Sync implements Runnable{
                 if(obj==null)
                 {
                   System.out.println("Sync:run:Obj is null");
+                  continue;
                 }
                 Thread client = new Thread(new TcpClient(masterNode.getIPAddress().toString(), "60010", obj));
                 client.start();
             }
             
             /* Call seekFromPeer() on the list of files received from the controller */
-            HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(peerList.getSelf().getHashMapFilePeer());
+            //HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer());
             
 
-            Set mappingSet = hmFilesPeers.entrySet();
+            Set mappingSet = listOfPeers.getSelf().getHashMapFilePeer().entrySet();
             Iterator itr =  mappingSet.iterator();
             
             while(itr.hasNext()){
                 Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
-                arrayOfFiles.add(0,
-                String.valueOf(entry.getKey()));
-                ret = seekFromPeer(arrayOfFiles, entry.getValue().get(0));
+                ret = seekFromPeer(String.valueOf(entry.getKey()), entry.getValue().get(0));//Instead of Index 0 seek from peer based on Algo.
                 if(ret == false){
-                    System.out.println("Sync:run:Seeking from Peer failed");
+                    System.out.println("Sync:run:Seeking from Peer failed\n");
+                    listOfPeers.printPeerList();
                 }
             }
             
             
-            if(peerList.getMaster() == null) /*I am the master*/
+            if(listOfPeers.getMaster() == null) /*I am the master*/
             {
-                if(peerList.getList().size() !=0)
-                  System.out.println("Sync:run:I am the master and number of nodes in the list are" + peerList.getList().size() );
+                if(listOfPeers.getList().size() !=0)
+                  System.out.println("Sync:run:I am the master and number of nodes in the list are" + listOfPeers.getList().size() );
                 
                 else
-                    System.out.println("Sync:run:Looks like I am the only one here!");
+                    {
+                        System.out.println("Sync:run:Looks like I am the only one here!");
+                        continue;
+                    }
                 
-                peerList.getSelf().setHashMapFilePeer( getFilesToRequestPerPeerMaster(peerList));
-                JSONObject obj = JSONManager.getJSON(peerList.getSelf().getHashMapFilePeer());// make the object
-                Iterator<PeerNode> itr2 = peerList.getList().iterator();
-                PeerNode node;
-                while(itr2.hasNext()){
-                    node = itr2.next();
-                    Thread client = new Thread(new TcpClient(node.getIPAddress().toString(), "60010", obj));
+                listOfPeers.getSelf().setHashMapFilePeer( getFilesToRequestPerPeerMaster(listOfPeers));
+
+                SortedSet<PeerNode> peerList =listOfPeers.getList();
+                Iterator<PeerNode> it = peerList.iterator();
+
+                while (it.hasNext())
+                {
+                    PeerNode peerNode = it.next();
+                    HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer(),peerNode.getListOfFiles().getArrayListOfFiles());
+                    JSONObject obj = JSONManager.getJSON(listOfPeers.getSelf().getHashMapFilePeer());// make the object
+                    Thread client = new Thread(new TcpClient(peerNode.getIPAddress().toString(), "60010", obj));
                     client.start();
                 }
 
@@ -103,20 +107,20 @@ public class Sync implements Runnable{
         }
     }
     
-    boolean seekFromPeer(ArrayList<String> fileName, String peerId){
+    boolean seekFromPeer(String fileName, String peerId){
         PeerNode peer;
 
         if(fileName == null || peerId == null){
             return false;
         }
         
-        peer = peerList.getPeerNode(peerId);
+        peer = listOfPeers.getPeerNode(peerId);
         
         if(peer == null){
             return false;
         }
 
-        JSONObject obj = JSONManager.getJSON(fileName.get(0));
+        JSONObject obj = JSONManager.getJSON(fileName);
         Thread client = new Thread(new TcpClient(peer.getId(), "60010", obj));
         client.start();
         
@@ -165,17 +169,14 @@ public class Sync implements Runnable{
         }
     }
     
-    HashMap<String, ArrayList<String>> getFilesToRequestPerPeer(HashMap<String,ArrayList<String>> hmFilesPeers)
+    HashMap<String, ArrayList<String>> getFilesToRequestPerPeer(HashMap<String,ArrayList<String>> hmFilesPeers,ArrayList<String> filesWithPeer)
     {
         int i;
-        PeerNode mySelf = peerList.getSelf();
-        
-        ArrayList<String> filesWithSelf=mySelf.getListOfFiles().getList();
-        for(i=0;i<filesWithSelf.size();i++)
+        for(i=0;i<filesWithPeer.size();i++)
         {
-            if(hmFilesPeers.containsKey(filesWithSelf.get(i)))
+            if(hmFilesPeers.containsKey(filesWithPeer.get(i)))
             {
-                hmFilesPeers.remove(filesWithSelf.get(i));
+                hmFilesPeers.remove(filesWithPeer.get(i));
             }
         }
         
@@ -185,7 +186,7 @@ public class Sync implements Runnable{
     void find(int x)
     {
         System.out.println("Sync:run:========Inside find" + x + "===========");
-        Iterator<PeerNode> it = peerList.getList().iterator();
+        Iterator<PeerNode> it = listOfPeers.getList().iterator();
         while (it.hasNext())
         {
             PeerNode peerNode = it.next();

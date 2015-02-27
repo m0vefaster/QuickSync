@@ -123,4 +123,17 @@ class ListOfPeers
         
         return null;
     }
+
+
+    void printPeerList()
+    {
+        Iterator<PeerNode> itr = peerList.iterator();
+        PeerNode node;
+        System.out.println("\nThe Peer list is:");
+        while(itr.hasNext()){
+            node = itr.next();
+            System.out.print(node.getId()+",");
+        }
+        System.out.println();
+    }
 }
