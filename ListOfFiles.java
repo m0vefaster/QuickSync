@@ -104,13 +104,13 @@ class ListOfFiles implements Serializable
 
     void printFileList()
     {
+        System.out.print("\nThe File list is:");
         if(list == null){
             return;
         }
 
         Iterator<String> itr = list.iterator();
         String file;
-        System.out.print("\nThe File list is:");
         while(itr.hasNext()){
             file = itr.next();
             System.out.print(file+",");

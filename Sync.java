@@ -60,6 +60,9 @@ public class Sync implements Runnable{
             
             if(listOfPeers.getMaster() == null) /*I am the master*/
             {
+                /* Get your own Lof */
+                lof.getListMaster();
+
                 if(listOfPeers.getList().size() !=0)
                   System.out.println("Sync:run:I am the master and number of nodes in the list are" + listOfPeers.getList().size() );
                 
@@ -70,6 +73,8 @@ public class Sync implements Runnable{
                     }
                 
                 listOfPeers.getSelf().setHashMapFilePeer( getFilesToRequestPerPeerMaster(listOfPeers));
+                System.out.println("Sync.java: Global Hashmap of controller");
+                print(listOfPeers.getSelf().getHashMapFilePeer();
 
                 SortedSet<PeerNode> peerList =listOfPeers.getList();
                 Iterator<PeerNode> it = peerList.iterator();
