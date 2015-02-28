@@ -52,11 +52,11 @@ public class QuickSync{
         }catch(Exception e){
         }
 
+        hostName = args[0]; //Change it to get automatic hostname
         PeerNode self = new PeerNode(hostName, Integer.parseInt(JOptionPane.showInputDialog("Enter Weight:")), selfIp);
         peerList = new ListOfPeers(self);
 
         cloudIP=  JOptionPane.showInputDialog("Enter CloudIP");
-        hostName = args[0]; //Change it to get automatic hostname
 
 
         if(cloudIP.equals(selfIp))
