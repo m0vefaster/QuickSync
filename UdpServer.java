@@ -44,6 +44,8 @@ public class UdpServer implements Runnable
                 }
                 this.serverSocket.receive(recvPacket);
                 
+                System.out.println(recvPacket.getAddress().getHostAddress().toString()+ " " + peerList.getSelf());
+
                 if(recvPacket.getAddress().getHostAddress().toString().compareTo(peerList.getSelf().getIPAddress()) == 0 ||
                 recvPacket.getAddress().getHostAddress().toString().compareTo("127.0.0.1") == 0){
                     continue;
@@ -64,7 +66,7 @@ public class UdpServer implements Runnable
                     continue;
                 }
                 
-                PeerNode peer = new PeerNode(components[0], Integer.parseInt(components[1]), recvPacket.getAddress().getHostAddress());
+                PeerNode peer = new PeerNode(components[0], recvPacket.getAddress().getHostAddress(), Integer.parseInt(components[1]));
                 
                 /* Store the sender info in the linked list */
                 peerList.addPeerNode(peer);

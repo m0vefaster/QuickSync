@@ -53,7 +53,7 @@ public class QuickSync{
         }
 
         hostName = args[0]; //Change it to get automatic hostname
-        PeerNode self = new PeerNode(hostName, Integer.parseInt(JOptionPane.showInputDialog("Enter Weight:")), selfIp);
+        PeerNode self = new PeerNode(hostName, selfIp, Integer.parseInt(JOptionPane.showInputDialog("Enter Weight:")));
         peerList = new ListOfPeers(self);
 
         cloudIP=  JOptionPane.showInputDialog("Enter CloudIP");
@@ -110,7 +110,7 @@ public class QuickSync{
                 if(!isCloud && cloudInetAddress.isReachable(1000))
                 {
                     System.out.println("\nQuickSync:main:Adding Cloud to Peer List");
-                    peerList.addPeerNode(new PeerNode(cloudIP,0,cloudIP)); 
+                    peerList.addPeerNode(new PeerNode(cloudIP,cloudIP, 0)); 
                 }
                 else if (!isCloud )
                 {

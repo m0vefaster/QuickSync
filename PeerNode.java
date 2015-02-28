@@ -18,7 +18,7 @@ public class PeerNode implements Serializable{
         this.ipAddress=ipAddress;
     }
     
-    PeerNode(String peerId, int peerWeight,String ipAdress){
+    PeerNode(String peerId, String ipAddress, int peerWeight){
         this.peerId = peerId;
         this.peerWeight = peerWeight;
         lof = new ListOfFiles();
