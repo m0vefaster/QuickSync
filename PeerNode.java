@@ -15,15 +15,15 @@ public class PeerNode implements Serializable{
         this.peerId = peerId;
         lof = new ListOfFiles();
         hMap = new HashMap<String, ArrayList<String>>();
-        ipAddress=peerId;
+        this.ipAddress=ipAddress;
     }
     
-    PeerNode(String peerId, int peerWeight){
+    PeerNode(String peerId, int peerWeight,String ipAdress){
         this.peerId = peerId;
         this.peerWeight = peerWeight;
         lof = new ListOfFiles();
         hMap = new HashMap<String, ArrayList<String>>();
-        ipAddress=peerId;
+        this.ipAddress=ipAddress;
     }
     
     public String getId()

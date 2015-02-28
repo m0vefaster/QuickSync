@@ -52,14 +52,14 @@ class ListOfPeers
         return true;
     }
     
-    boolean removePeerNode(String ipAddress)
+    boolean removePeerNode(String peerId)
     {
         Iterator<PeerNode> itr = peerList.iterator();
         
         while(itr.hasNext())
         {
           PeerNode node = itr.next() ;
-            if(node.getIPAddress().equals(ipAddress))
+            if(node.getId().equals(peerId))
             {
               removePeerNode(node);
             }
