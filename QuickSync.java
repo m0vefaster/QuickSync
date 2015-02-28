@@ -110,7 +110,7 @@ public class QuickSync{
                 if(!isCloud && cloudInetAddress.isReachable(1000))
                 {
                     System.out.println("\nQuickSync:main:Adding Cloud to Peer List");
-                    peerList.addPeerNode(new PeerNode(cloudIP,0)); 
+                    peerList.addPeerNode(new PeerNode(cloudIP,0,cloudIP)); 
                 }
                 else if (!isCloud )
                 {
