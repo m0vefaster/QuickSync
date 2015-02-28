@@ -31,21 +31,21 @@ public class Sync implements Runnable{
             //Send to Controller
             if(masterNode!=null)
             {
-                JSONObject obj = JSONManager.getJSON(lof.getList());// make the object
-                if(obj==null)
-                {
-                    System.out.println("Sync:run:Obj is null");
-                    try
+                if(lof.getArrayListOfFiles().size() != 0){
+                    JSONObject obj = JSONManager.getJSON(lof.getList());// make the object
+                    if(obj==null)
                     {
-                    Thread.sleep(3000);
-                    }
+                        System.out.println("Sync:run:Obj is null");
+                        try
+                        {
+                        Thread.sleep(3000);
+                        }
 
-                    catch(Exception e)
-                    {
+                        catch(Exception e)
+                        {
+                        }
+                        continue;
                     }
-                    continue;
-                }
-                if(lof.getArrayListOfFiles() != null){
                     Thread client = new Thread(new TcpClient(masterNode.getIPAddress().toString(), "60010", obj));
                     client.start();
                 }
@@ -111,7 +111,7 @@ public class Sync implements Runnable{
 
                     System.out.print("Sync.java: Hashmap from controller to " + peerNode.getId());
                     print(hmFilesPeers);
-                    if(hmFilesPeers != null){
+                    if(!hmFilesPeers.isEmpty()){
                         JSONObject obj = JSONManager.getJSON(hmFilesPeers);// make the object
                         Thread client = new Thread(new TcpClient(peerNode.getIPAddress().toString(), "60010", obj));
                         client.start();
