@@ -14,6 +14,11 @@ public class QuickSync{
     public static String serverPort;
     public static String cloudIP;
     public static boolean isCloud=false;
+    
+    public static void reinitialize(PeerNode node)
+    {
+      node.setListOfFiles(null);
+    }
 
     public static void main(String[] args){
 
@@ -112,8 +117,43 @@ public class QuickSync{
                 }
                 else if (!isCloud )
                 {
-                    System.out.println("\nQuickSync:main:Removing Cloud to Peer List");
-                    peerList.removePeerNode(cloudIP);
+                    System.out.println("\nQuickSync:main:Removing Cloud from Peer List");
+                    if(peerList.getList().contains(cloudIP))
+                    {
+                      reinitialize(peerList.getSelf());
+                      peerList.removePeerNode(cloudIP);
+                    }
+                }
+                for(PeerNode p: peerList.getList())
+                {
+                  InetAddress peerAddress = InetAddress.getByName(p.getIPAddress());
+                  if(!peerAddress.isReachable(1000))
+                  {
+                    //if that is the master, reinitialize
+                    if(peerList.getMaster() == p)
+                    {
+                      //reinitialize
+                      reinitialize(peerList.getSelf());
+                    }
+                    else if(peerList.getMaster() == peerList.getSelf())
+                    {
+                      //master, so remove from hashmap as well
+                      HashMap<String, ArrayList<String> > hmap = peerList.getSelf().getHashMapFilePeer();
+                      Set mappingSet = hmap.entrySet();
+                      Iterator itr =  mappingSet.iterator();
+                      while(itr.hasNext())
+                      {
+                        Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
+                        ArrayList<String> tempArr = entry.getValue();
+                        if(tempArr.contains(p.getId()))
+                          tempArr.remove(p.getId());
+                        if(tempArr.isEmpty())
+                          hmap.remove(entry);
+                      }
+                      peerList.getSelf().setHashMapFilePeer(hmap);
+                    }
+                    peerList.removePeerNode(p);
+                  }
                 }
                 s = ss.accept();
                 System.out.println("\nQuickSync:main:Server Accepted Connection");
