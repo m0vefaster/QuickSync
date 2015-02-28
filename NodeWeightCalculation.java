@@ -13,6 +13,21 @@ import java.io.InputStreamReader;
 class NodeWeightCalculation 
 {
   //public String getOs()
+  public static int getSysLatency()
+  {
+    long t3 = System.currentTimeMillis();
+    try 
+    {
+      Process p2 = Runtime.getRuntime().exec("ping -n 1 www.google.com");
+      p2.waitFor();
+    }
+    catch (Exception e) 
+    {
+      e.printStackTrace();
+    }
+    t3 = System.currentTimeMillis()-t3;
+    return (int) t3; 
+  }
   public static String matchFromFile(String file, String pattern)
   {   
     Pattern regexp = Pattern.compile(pattern, Pattern.MULTILINE);
@@ -45,6 +60,7 @@ class NodeWeightCalculation
     String os = System.getProperty("os.name").toLowerCase();
     Double cpu=0.0;
     Integer battery=1, state=0;
+    long sysLatency = getSysLatency();
     try{
       switch(os)
       {
@@ -110,6 +126,6 @@ class NodeWeightCalculation
     {
       e.printStackTrace();
     }
-    return (int)(cpu + (state*1000)/battery);
+    return (int)(cpu + (state*1000)/battery + 1000/sysLatency);
   }
 }
