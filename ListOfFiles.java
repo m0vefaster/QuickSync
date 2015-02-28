@@ -75,7 +75,6 @@ class ListOfFiles implements Serializable
 
     void printFileList()
     {
-        System.out.print("\nThe File list is:");
         if(list == null){
             return;
         }
