@@ -94,14 +94,7 @@ public class TcpServer implements Runnable
                 }
                 else
                 {
-                    ListOfFiles lof= peerNode.getListOfFiles();
-                    ArrayList list1 = lof.getArrayListOfFiles();
-                    if(list1 != null){
-                        list1.addAll(list);
-                    }else{
-                        list1 = list;
-                    }
-                    lof.setList(list1);
+                    ListOfFiles lof= new ListOfFiles(list);
                     peerNode.setListOfFiles(lof);
                 }
             }
