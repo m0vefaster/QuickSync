@@ -49,11 +49,6 @@ public class UdpServer implements Runnable
                     continue;
                 }
                 
-                /* Check if it is from the same client. Parse peerList */
-                if(peerList.getPeerNode(recvPacket.getAddress().getHostAddress()) != null){
-                    continue;
-                }
-                
                 ByteArrayInputStream b = new ByteArrayInputStream(recvPacket.getData());
                 ObjectInputStream o = new ObjectInputStream(b);
                 data = (String)o.readObject();
@@ -63,12 +58,17 @@ public class UdpServer implements Runnable
                 }
                 
                 String[] components = data.split(":");
-                PeerNode peer = new PeerNode(components[0], Integer.parseInt(components[1]));
-                peer.setIPAddress(recvPacket.getAddress().getHostAddress());
+
+                /* Check if it is from the same client. Parse peerList */
+                if(peerList.getPeerNode(components[0]) != null){
+                    continue;
+                }
+                
+                PeerNode peer = new PeerNode(components[0], Integer.parseInt(components[1]), recvPacket.getAddress().getHostAddress());
                 
                 /* Store the sender info in the linked list */
                 peerList.addPeerNode(peer);
-                System.out.println("UdpServer:run: Added to peer list size " + recvPacket.getAddress().getHostAddress());
+                System.out.println("UdpServer:run: Added to peer list size " + components[0]);
             }catch(Exception e){
                 e.printStackTrace();
             }

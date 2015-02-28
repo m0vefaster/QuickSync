@@ -13,6 +13,7 @@ public class QuickSync{
     public static Sync sync;
     public static String serverPort;
     public static String cloudIP;
+    public static String hostName;
     public static boolean isCloud=false;
 
     public static void main(String[] args){
@@ -51,10 +52,11 @@ public class QuickSync{
         }catch(Exception e){
         }
 
-        PeerNode self = new PeerNode(selfIp, Integer.parseInt(JOptionPane.showInputDialog("Enter Weight:")));
+        PeerNode self = new PeerNode(hostName, Integer.parseInt(JOptionPane.showInputDialog("Enter Weight:")), selfIp);
         peerList = new ListOfPeers(self);
 
         cloudIP=  JOptionPane.showInputDialog("Enter CloudIP");
+        hostName = args[0]; //Change it to get automatic hostname
 
 
         if(cloudIP.equals(selfIp))
@@ -127,6 +129,10 @@ public class QuickSync{
                 }catch(Exception e1){}
             }
         }
+    }
+
+    static String getCloudIp(){
+        return cloudIP;
     }
 }
 
