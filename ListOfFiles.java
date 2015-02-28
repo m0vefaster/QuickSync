@@ -11,12 +11,11 @@ class ListOfFiles implements Serializable
     
     ListOfFiles( )
     {
-        System.out.println("===============================Construncting with LOF as empty");
+
     }
     
     ListOfFiles(ArrayList<String> list)
     {
-        System.out.println("===============================Construncting with LOF with list");
         this.list=list;
     }
     
@@ -27,8 +26,6 @@ class ListOfFiles implements Serializable
 
     ArrayList<String> getList ( )
     {
-
-         System.out.println("The list is null");
          list = new ArrayList<String>();
          return removeAbsolutePath(getListHelper(list,path));
     }
@@ -54,7 +51,6 @@ class ListOfFiles implements Serializable
     }
     
     void setList(ArrayList<String> list){
-        System.out.println("Entering Set List function");
         this.list = list;
     }
 
@@ -75,7 +71,7 @@ class ListOfFiles implements Serializable
 
     void printFileList()
     {
-        System.out.print("\nThe File list is:");
+        System.out.print("ListOfFiles:printFileList:The File list is:");
         if(list == null){
             return;
         }
