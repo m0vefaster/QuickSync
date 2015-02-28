@@ -27,7 +27,7 @@ public class Sync implements Runnable{
         while(true){
             
             PeerNode masterNode = listOfPeers.getMaster();
-            
+            lof.getList();
             //Send to Controller
             if(masterNode!=null)
             {
@@ -54,6 +54,10 @@ public class Sync implements Runnable{
             
 
             Set mappingSet = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer(),listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles()).entrySet();
+            System.out.println("Sync:run:Printing mappingSet:" + mappingSet);
+            System.out.println("Sync:run:Printing Global HashMap:" );
+            print(listOfPeers.getSelf().getHashMapFilePeer());
+            System.out.println("Sync:run:Prinintg Array List:"+listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles());
             Iterator itr =  mappingSet.iterator();
             
             while(itr.hasNext()){
@@ -69,7 +73,6 @@ public class Sync implements Runnable{
             if(listOfPeers.getMaster() == null) /*I am the master*/
             {
                 /* Get your own Lof */
-                lof.getList();
 
                 if(listOfPeers.getList().size() !=0)
                   System.out.println("Sync:run:I am the master and number of nodes in the list are" + listOfPeers.getList().size() );
@@ -160,6 +163,7 @@ public class Sync implements Runnable{
     
     HashMap<String, ArrayList<String>> getFilesToRequestPerPeerMaster(ListOfPeers peers){
         /* Condense hashmap from controller to a dense hashmap of actual files to get*/
+
         SortedSet<PeerNode> peerList = peers.getList();
         PeerNode mySelf = peers.getSelf();
         HashMap<String, ArrayList<String>> hmFilesPeers = new HashMap<String, ArrayList<String>>();
@@ -206,16 +210,18 @@ public class Sync implements Runnable{
             return hmFilesPeers;
         }
         
+
         int i;
+        HashMap<String,ArrayList<String>> incrementalHashMap = new HashMap<String,ArrayList<String>>(hmFilesPeers);
         for(i=0;i<filesWithPeer.size();i++)
         {
-            if(hmFilesPeers.containsKey(filesWithPeer.get(i)))
+            if(incrementalHashMap.containsKey(filesWithPeer.get(i)))
             {
-                hmFilesPeers.remove(filesWithPeer.get(i));
+                incrementalHashMap.remove(filesWithPeer.get(i));
             }
         }
         
-        return hmFilesPeers;
+        return incrementalHashMap;
     }
     
     void find(int x)
