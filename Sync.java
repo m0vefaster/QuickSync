@@ -69,7 +69,7 @@ public class Sync implements Runnable{
             if(listOfPeers.getMaster() == null) /*I am the master*/
             {
                 /* Get your own Lof */
-                lof.getListMaster();
+                lof.getList();
 
                 if(listOfPeers.getList().size() !=0)
                   System.out.println("Sync:run:I am the master and number of nodes in the list are" + listOfPeers.getList().size() );
