@@ -45,8 +45,10 @@ public class Sync implements Runnable{
                     }
                     continue;
                 }
-                Thread client = new Thread(new TcpClient(masterNode.getIPAddress().toString(), "60010", obj));
-                client.start();
+                if(lof.getListOfFiles() != null){
+                    Thread client = new Thread(new TcpClient(masterNode.getIPAddress().toString(), "60010", obj));
+                    client.start();
+                }
             }
             
             /* Call seekFromPeer() on the list of files received from the controller */
@@ -109,9 +111,11 @@ public class Sync implements Runnable{
 
                     System.out.print("Sync.java: Hashmap from controller to " + peerNode.getId());
                     print(hmFilesPeers);
-                    JSONObject obj = JSONManager.getJSON(hmFilesPeers);// make the object
-                    Thread client = new Thread(new TcpClient(peerNode.getIPAddress().toString(), "60010", obj));
-                    client.start();
+                    if(hmFilesPeers != null){
+                        JSONObject obj = JSONManager.getJSON(hmFilesPeers);// make the object
+                        Thread client = new Thread(new TcpClient(peerNode.getIPAddress().toString(), "60010", obj));
+                        client.start();
+                    }
                 }
 
                 System.out.println();
