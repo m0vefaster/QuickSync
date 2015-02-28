@@ -44,7 +44,7 @@ public class UdpServer implements Runnable
                 }
                 this.serverSocket.receive(recvPacket);
                 
-                if(recvPacket.getAddress().getHostAddress().toString().compareTo(peerList.getSelf().getId()) == 0 ||
+                if(recvPacket.getAddress().getHostAddress().toString().compareTo(peerList.getSelf().getIPAddress()) == 0 ||
                 recvPacket.getAddress().getHostAddress().toString().compareTo("127.0.0.1") == 0){
                     continue;
                 }
