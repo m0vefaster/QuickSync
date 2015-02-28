@@ -109,7 +109,7 @@ public class Sync implements Runnable{
 
                     System.out.print("Sync.java: Hashmap from controller to " + peerNode.getId());
                     print(hmFilesPeers);
-                    JSONObject obj = JSONManager.getJSON(listOfPeers.getSelf().getHashMapFilePeer());// make the object
+                    JSONObject obj = JSONManager.getJSON(hmFilesPeers);// make the object
                     Thread client = new Thread(new TcpClient(peerNode.getIPAddress().toString(), "60010", obj));
                     client.start();
                 }
