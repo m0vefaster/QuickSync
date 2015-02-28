@@ -8,7 +8,6 @@ class ListOfFiles implements Serializable
     static String folder = "QuickSync";
     static String path = homeDir + "/" + folder ;
     ArrayList<String> list;
-    int count=1;
     
     ListOfFiles( )
     {
@@ -26,54 +25,12 @@ class ListOfFiles implements Serializable
         return this.list;
     }
 
-
-    ArrayList<String> getListMaster( )
-    {
-        System.out.println("===============================Entering getListMaster");
-        count=1;
-        list = new ArrayList<String>();
-        return removeAbsolutePath(getListHelper(list,path));
-    }
-
     ArrayList<String> getList ( )
     {
-        if(count==1)
-        {
-            System.out.println("First time the list is:"+list);
-            list=null;
-            count++;
-        }
 
-        
-        if(list==null)
-        {
          System.out.println("The list is null");
          list = new ArrayList<String>();
          return removeAbsolutePath(getListHelper(list,path));
-        }
-        else
-        {
-            ArrayList<String> list2;
-            list2 = new ArrayList<String>();
-            list2 = removeAbsolutePath(getListHelper(list2,path));
-            System.out.println("The list2 is:"+list2);
-            ArrayList temp = new ArrayList<String>(list2);
-            if(list2==null)
-            {
-                list=null;
-                return list;
-            }
-
-            int i;
-            for(i=0;i<list.size();i++)
-            {
-                list2.remove(list.get(i));
-            }
-
-            list= new ArrayList<String>(temp);
-            System.out.println("The list is reinitialized to:"+list);
-            return list2;
-        }
     }
     
     ArrayList<String> getListHelper (ArrayList<String> list, String path)
