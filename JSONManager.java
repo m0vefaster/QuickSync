@@ -52,7 +52,8 @@ public class JSONManager {
         final String EoL = System.getProperty("line.separator");
         List<String> lines;
         try {
-            lines = Files.readAllLines(Paths.get(file.getAbsolutePath()), Charset.defaultCharset());
+            lines = Files.readAllLines(Paths.get(file.getAbsolutePath()), Charset.forName("ISO-8859-1"));
+            //defaultCharset());
             StringBuilder sb = new StringBuilder();
             for (String line : lines) {
                 sb.append(line).append(EoL);
