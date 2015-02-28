@@ -45,7 +45,7 @@ public class Sync implements Runnable{
                     }
                     continue;
                 }
-                if(lof.getListOfFiles() != null){
+                if(lof.getArrayListOfFiles() != null){
                     Thread client = new Thread(new TcpClient(masterNode.getIPAddress().toString(), "60010", obj));
                     client.start();
                 }
