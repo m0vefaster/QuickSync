@@ -71,7 +71,7 @@ public class Sync implements Runnable{
             
             while(itr.hasNext()){
                 Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
-                ret = seekFromPeer(String.valueOf(entry.getKey()), entry.getValue().get(0), masterNode.isCloud());//Instead of Index 0 seek from peer based on Algo.
+                ret = seekFromPeer(String.valueOf(entry.getKey()), entry.getValue(), masterNode.isCloud());//Instead of Index 0 seek from peer based on Algo.
                 if(ret == false){
                     System.out.println("Sync:run:Seeking from Peer failed\n");
                     listOfPeers.printPeerList();
@@ -151,18 +151,22 @@ public class Sync implements Runnable{
         System.out.println();
     }
     
-    boolean seekFromPeer(String fileName, String peerId, boolean isCloud){
-        PeerNode peer;
-        System.out.println("FileName is:"+fileName + " and Peer Id is:"+peerId);
-        if(fileName == null || peerId == null){
+    boolean seekFromPeer(String fileName, ArrayList<String> peerIds, boolean isCloud){
+        PeerNode peer = null;
+        System.out.println("FileName is:"+fileName + " and Peer Id is:"+peerIds);
+        if(fileName == null || peerIds == null){
             return false;
         }
-        
-        peer = listOfPeers.getPeerNode(peerId);
-        
-        if(peer == null){
-            return false;
+        for(String peerId: peerIds)
+        {
+            peer = listOfPeers.getPeerNode(peerId);
+            if(peer != null){
+                break;
+            }
+            
         }
+        if(peer==null)
+            return false;
 
         JSONObject obj = JSONManager.getJSON(fileName);
         if(isCloud == true){
