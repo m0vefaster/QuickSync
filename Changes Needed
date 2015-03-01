@@ -39,6 +39,11 @@ Optimizations
 - Change for ID
 - Changes for getId and getIp
 - Make repo for cloud
-- 
 
+================
+
+1. Changing encoding ...
+2. Add CLASSPATH file in all NOdes
+3. Files are not updated when Peer Leaves...change code for hashmap
+4. Close client socket to cloud ..if cloud goes.
 
