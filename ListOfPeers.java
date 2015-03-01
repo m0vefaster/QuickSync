@@ -22,16 +22,14 @@ class ListOfPeers
     class Comp implements Comparator<PeerNode>
     {
         @Override
-        public int compare(PeerNode pn1, PeerNode pn2)
+        public int  compare(PeerNode pn1,PeerNode pn2)
         {
-            if( pn2.getWeight() > pn1.getWeight())
-                return -1;
-            if(pn1.getWeight() == pn2.getWeight())
-                return 0;
-            return 1 ;
+            if( pn1.getWeight() > pn2.getWeight())
+            return 1;
+            return -1 ;
         }
     }
-
+    
     boolean addPeerNode(PeerNode newNode)
     {
         if(present(newNode))
@@ -140,19 +138,54 @@ class ListOfPeers
         System.out.println();
     }
 
-    PeerNode getPeerNodeFromSocket(Socket s)
-    {
-        Iterator<PeerNode> itr = peerList.iterator();
+   PeerNode getPeerNodeFromSocket(Socket s)
+   {
+    Iterator<PeerNode> itr = peerList.iterator();
         PeerNode node;
         while(itr.hasNext()){
             node = itr.next();
-            System.out.println("Comparing roginal Socket:"+s +":with:"+node.getSocket());
+        System.out.println("Comparing roginal Socket:"+s +":with:"+node.getSocket());
             if(node.getSocket() == s ) {
-                System.out.println("Found a match for socket as PeerNode :"+ node.getId());
-            return node;
+        System.out.println("Found a match for socket as PeerNode :"+ node.getId());
+                return node;
             }
+
         }
+
         return null;
-    }
+   }    
+
+
+    void updateHashMapBeforeRemovingNode(PeerNode nodeToBeRemoved)
+   {
+      HashMap<String, ArrayList<String>> hmFilesPeers = mySelf.getHashMapFilePeer();
+      Set mappingSet = hmFilesPeers.entrySet();
+      String removeNodeId=nodeToBeRemoved.getId();  
+      Iterator itr =  mappingSet.iterator();
+      System.out.println("=================Node Id is :"+removeNodeId);
+      System.out.println("==================HashMap before removal---"+hmFilesPeers);  
+      while(itr.hasNext()){
+            Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
+            ArrayList<String> allPeers = entry.getValue();
+            int i=0;
+              while(i<allPeers.size())
+                {
+                System.out.println("inside looping i=:" + i+  "and finding peer node with ID:"+allPeers.get(i));
+                    PeerNode node = getPeerNode(allPeers.get(i));
+                    if(node!=null && node.getId().equals(removeNodeId))
+                        {
+                System.out.println("removed node" + node.getId());
+                            allPeers.remove(node.getId());
+                break;
+                        }
+                    else
+                        i++;
+                }
+        }
+    
+        System.out.println("=====================HashMap after removal---"+hmFilesPeers); 
+
+   }
+
 
 }
