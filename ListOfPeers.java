@@ -49,7 +49,7 @@ class ListOfPeers
     boolean removePeerNode(PeerNode removeNode)
     {
         if(!present(removeNode))
-        return false;
+            return false;
         
         peerList.remove(removeNode);
         return true;

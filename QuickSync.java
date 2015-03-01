@@ -15,10 +15,10 @@ public class QuickSync{
     public static String cloudIP;
     public static String hostName;
     public static boolean isCloud=false;
+    public static int count;
 
     public static void main(String[] args){
 
-        int count = 0;
         InetAddress cloudInetAddress = null;
         System.setProperty("java.net.preferIPv4Stack" , "true");
 
@@ -122,22 +122,19 @@ public class QuickSync{
         }
         Socket s=null;
 
+        count = 0;
         /*Server listening for Incoming Connections and will spawn new Servers*/
         while(true){
             try {
                 cloudInetAddress = InetAddress.getByName(cloudIP);
                 peerList.printPeerList();
-                if(!isCloud && cloudInetAddress.isReachable(1000) && peerList.getPeerNodeFromIP(cloudIP) == null)
+                if(!isCloud && cloudInetAddress.isReachable(1000) && peerList.getPeerNodeFromIP(cloudIP) == null && count == 0)
                 {
-                    System.out.println("\nQuickSync:main:Adding Cloud to Peer List");
-                    PeerNode cloudNode = new PeerNode(cloudIP, cloudIP, 0);
-                    cloudNode.setIsCloud(true);
-                    peerList.addPeerNode(cloudNode);
-
                     /* Start TCP client for the cloud */
                     System.out.println("\nQuickSync:main: Starting Client cloud thread");
                     Thread toCloudClient = new Thread(new TcpClientCloud(cloudIP, "60011", peerList));
                     toCloudClient.start();
+                    count = 1;
                 }
                 s = ss.accept();
                 System.out.println("\nQuickSync:main:Server Accepted Connection");

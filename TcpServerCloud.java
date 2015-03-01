@@ -6,9 +6,7 @@ import java.io.OutputStreamWriter;
 import java.io.InputStream;
 import java.io.DataInputStream;
 import java.io.*;
-import java.net.ServerSocket;
-import java.net.Socket;
-import java.net.UnknownHostException;
+import java.net.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
@@ -99,6 +97,7 @@ public class TcpServerCloud implements Runnable
                 //s.close();
             }catch (Exception e) {
                 try{
+                    System.out.println("*********************" + e.getClass());
                     if(e instanceof EOFException){
                         PeerNode nodeToBeRemoved = listOfPeers.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
                         System.out.println("Removing PeerNode:" + nodeToBeRemoved.getId() + ":" + listOfPeers.removePeerNode(nodeToBeRemoved));
@@ -131,8 +130,39 @@ public class TcpServerCloud implements Runnable
             String line = new String(inputArray);
             obj = (JSONObject)(JSONManager.convertStringToJSON(line));
         }
-        catch(Exception e)
+        catch(EOFException e)
         {
+            try{
+                    System.out.println("*********************" + e.getClass());
+                    PeerNode nodeToBeRemoved = listOfPeers.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
+                    System.out.println("Removing PeerNode:" + nodeToBeRemoved.getId() + ":" + listOfPeers.removePeerNode(nodeToBeRemoved));
+                    listOfPeers.printPeerList();
+                    listOfPeers.getSelf().setSocket(null);
+                    s.close();
+                    System.out.println("TcpServerCloud: closing cloud socket");
+                    QuickSync.count = 0;
+                    e.printStackTrace();
+                }catch(Exception ee)
+                {
+                }
+        }
+        catch(SocketException e)
+        {
+            try{
+                    System.out.println("*********************" + e.getClass());
+                    PeerNode nodeToBeRemoved = listOfPeers.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
+                    System.out.println("Removing PeerNode:" + nodeToBeRemoved.getId() + ":" + listOfPeers.removePeerNode(nodeToBeRemoved));
+                    listOfPeers.printPeerList();
+                    listOfPeers.getSelf().setSocket(null);
+                    s.close();
+                    System.out.println("TcpServerCloud: closing cloud socket");
+                    QuickSync.count = 0;
+                    e.printStackTrace();
+                }catch(Exception ee)
+                {
+                }
+        }
+        catch(Exception e){
             e.printStackTrace();
         }
         return obj;

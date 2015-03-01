@@ -52,6 +52,12 @@ public class TcpClientCloud implements Runnable
                 }
             }while(client==null);
             System.out.println("Client:Just connected to cloud" + client.getRemoteSocketAddress());
+
+            System.out.println("\nQuickSync:main:Adding Cloud to Peer List");
+            PeerNode cloudNode = new PeerNode(serverName, serverName, 0);
+            cloudNode.setIsCloud(true);
+            listOfPeers.addPeerNode(cloudNode);
+
             self.setSocket(client);
 
             String data = self.getId() + ":" + String.valueOf(self.getWeight());
