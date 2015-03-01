@@ -45,6 +45,16 @@ public class JSONManager {
 
         return obj;
     }
+    
+    public static JSONObject getJSON(String message, String type)
+    {
+        JSONObject obj = new JSONObject();
+        System.out.println("JSONManager:getJSON:Making JSON from Message");
+        obj.put("type", type);
+        obj.put("value", message);
+        return obj;
+    }
+
     public static JSONObject getJSON(File file)
     {
         JSONObject obj = new JSONObject();
