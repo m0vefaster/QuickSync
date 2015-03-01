@@ -1,5 +1,6 @@
 import java.io.*;
 import java.util.*;
+import java.net.*;
 
 class ListOfPeers
 {
@@ -21,14 +22,16 @@ class ListOfPeers
     class Comp implements Comparator<PeerNode>
     {
         @Override
-        public int  compare(PeerNode pn1,PeerNode pn2)
+        public int compare(PeerNode pn1, PeerNode pn2)
         {
-            if( pn1.getWeight() > pn2.getWeight())
-            return 1;
-            return -1 ;
+            if( pn2.getWeight() > pn1.getWeight())
+                return -1;
+            if(pn1.getWeight() == pn2.getWeight())
+                return 0;
+            return 1 ;
         }
     }
-    
+
     boolean addPeerNode(PeerNode newNode)
     {
         if(present(newNode))
@@ -136,4 +139,20 @@ class ListOfPeers
         }
         System.out.println();
     }
+
+    PeerNode getPeerNodeFromSocket(Socket s)
+    {
+        Iterator<PeerNode> itr = peerList.iterator();
+        PeerNode node;
+        while(itr.hasNext()){
+            node = itr.next();
+            System.out.println("Comparing roginal Socket:"+s +":with:"+node.getSocket());
+            if(node.getSocket() == s ) {
+                System.out.println("Found a match for socket as PeerNode :"+ node.getId());
+            return node;
+            }
+        }
+        return null;
+    }
+
 }

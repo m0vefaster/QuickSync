@@ -68,7 +68,11 @@ public class TcpClientCloud implements Runnable
         {
             e.printStackTrace();
             try{
-                //client.close();
+                PeerNode nodeToBeRemoved = listOfPeers.getPeerNodeFromSocket(client);
+                System.out.println("Removing PeerNode:" + nodeToBeRemoved.getId() + ":" + listOfPeers.removePeerNode(nodeToBeRemoved));
+                listOfPeers.printPeerList();
+                client.close();
+                System.out.println("TcpClientCloud: closing cloud socket");
             }
             catch (Exception ee)
             {
