@@ -169,7 +169,7 @@ public class Sync implements Runnable{
             return false;
 
         JSONObject obj = JSONManager.getJSON(fileName);
-        if(isCloud == true){
+        if(peer.isCloud() == true){
             sendMessage(obj, listOfPeers.getSelf().getSocket());
             System.out.println("Sync:run:Sending control message to cloud");
         }else{
