@@ -49,9 +49,11 @@ public class Sync implements Runnable{
                     }
                     if(masterNode.isCloud()){
                         sendMessage(obj, listOfPeers.getSelf().getSocket());
+                        System.out.println("Sync:run:Sending arraylist to cloud");
                     }else{
                         Thread client = new Thread(new TcpClient(masterNode.getIPAddress(), "60010", obj));
                         client.start();
+                        System.out.println("Sync:run:Starting Client thread !!!!!!!!!!!!!");
                     }
                 }
             }
@@ -248,6 +250,9 @@ public class Sync implements Runnable{
 
     void sendMessage(JSONObject obj, Socket client)
     {
+        if(client == null){
+            return;
+        }
         try
         {
             OutputStream outToServer = client.getOutputStream();
@@ -256,8 +261,8 @@ public class Sync implements Runnable{
             int len = obj.toString().length();
             out.writeObject(len);
             out.writeObject(outputArray);
-            out.close();
-            client.close();
+            //client.shutdownOutput();
+            //out.close();
         }
         catch(Exception e)
         {

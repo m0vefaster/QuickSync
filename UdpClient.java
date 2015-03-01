@@ -100,7 +100,7 @@ public class UdpClient implements Runnable
                  System.out.println("***************UdpClient:run:Udp Client Running");
             }
             broadcastUdpPacket(buf);
-            sendUdpPacket(buf, QuickSync.getCloudIp());
+            //sendUdpPacket(buf, QuickSync.getCloudIp());
             //sendUdpPacket(buf, multicastAdd);
             /*
             if(client.isEmpty() == true){

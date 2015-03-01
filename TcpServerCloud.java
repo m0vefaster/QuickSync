@@ -32,6 +32,7 @@ public class TcpServerCloud implements Runnable
     @Override
     public void run()
     {
+        System.out.println("TcpServer:run: Socket closed? "+s.isClosed());
         System.out.println("TcpServer:run: Server running "+s.toString());
         while(true){
             try {
@@ -90,10 +91,10 @@ public class TcpServerCloud implements Runnable
                 //s.close();
             }catch (Exception e) {
                 try{
-                    s.close();
-                    System.out.println("TcpServer:run: closing socket "+s.toString());
-                e.printStackTrace();}
-                catch(Exception ee)
+                    //s.close();
+                    //System.out.println("TcpServer:run: closing socket "+s.toString());
+                    e.printStackTrace();
+                }catch(Exception ee)
                 {
                 }
             }

@@ -62,12 +62,14 @@ public class QuickSync{
 
 
 
+        /*
         if(cloudIP.equals(selfIp))
         {
            System.out.println("\nQuickSync:main:I am the cloud");
            isCloud = true; 
            self.setIsCloud(true);
         }
+        */
 
         /* By pass 2 arguments */
     		/*
@@ -98,7 +100,7 @@ public class QuickSync{
         {
             cloudInetAddress = InetAddress.getByName(cloudIP);
             if(!isCloud && cloudInetAddress.isReachable(1000)){
-                Thread toCloudClient = new Thread(new TcpClientCloud(cloudIP, "66666", self));
+                Thread toCloudClient = new Thread(new TcpClientCloud(cloudIP, "60011", self));
                 toCloudClient.start();
             }
         }catch(Exception e){
@@ -125,7 +127,9 @@ public class QuickSync{
                 if(!isCloud && cloudInetAddress.isReachable(1000))
                 {
                     System.out.println("\nQuickSync:main:Adding Cloud to Peer List");
-                    peerList.addPeerNode(new PeerNode(cloudIP,cloudIP, 0)); 
+                    PeerNode cloudNode = new PeerNode(cloudIP,cloudIP, 0);
+                    cloudNode.setIsCloud(true);
+                    peerList.addPeerNode(cloudNode); 
                 }
                 else if (!isCloud )
                 {
