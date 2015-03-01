@@ -21,12 +21,12 @@ public class TcpServerCloud implements Runnable
     static String homeDir = System.getProperty("user.home");
     static String folder = "QuickSync";
     static String path = homeDir + "/" + folder ;
-    PeerNode self;
+    private ListOfPeers listOfPeers;
     
-    public TcpServerCloud(Socket s, PeerNode self)
+    public TcpServerCloud(Socket s, ListOfPeers listOfPeers)
     {
         this.s = s;
-        this.self = self;
+        this.listOfPeers = listOfPeers;
     }
 
     @Override
@@ -34,6 +34,7 @@ public class TcpServerCloud implements Runnable
     {
         System.out.println("TcpServer:run: Socket closed? "+s.isClosed());
         System.out.println("TcpServer:run: Server running "+s.toString());
+        PeerNode self = listOfPeers.getSelf();
         while(true){
             try {
                 JSONObject obj = getMessage(s);
@@ -41,13 +42,20 @@ public class TcpServerCloud implements Runnable
                 //Check for NULL Object
                 if(obj.get("type").equals("Control"))
                 {
-                    System.out.println("TcpServer:run: Got an Control Message from:"+s.getInetAddress().toString());
                     String str = (String)obj.get("value");
+                    System.out.println("TcpServer:run: Got an Control Message from:"+s.getInetAddress().toString() + " message: " + str);
                     //Send the file from ...
                     File file= new File(path+"/"+str);
                     JSONObject obj2 = JSONManager.getJSON(file);
-                    Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", obj2));
-                    client.start();
+
+                    PeerNode node = listOfPeers.getPeerNode(s.getInetAddress().getHostAddress());
+                    if(node.isCloud()){
+                        sendMessage(obj2, self.getSocket());
+                        System.out.println("TcpServerCloud:run:Sending file " + str + " to cloud");
+                    }else{
+                        Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", obj2));
+                        client.start();
+                    }
                 }
                 else if(obj.get("type").toString().substring(0,4).equals("File"))
                 {
@@ -122,7 +130,28 @@ public class TcpServerCloud implements Runnable
         }
         return obj;
     }
-    
+
+     void sendMessage(JSONObject obj, Socket client)
+    {
+        if(client == null){
+            return;
+        }
+        try
+        {
+            OutputStream outToServer = client.getOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(outToServer);
+            byte[] outputArray = obj.toString().getBytes();
+            int len = obj.toString().length();
+            out.writeObject(len);
+            out.writeObject(outputArray);
+            //client.shutdownOutput();
+            //out.close();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }   
     
     /*
     void find(int x)

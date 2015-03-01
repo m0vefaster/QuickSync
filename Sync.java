@@ -71,7 +71,7 @@ public class Sync implements Runnable{
             
             while(itr.hasNext()){
                 Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
-                ret = seekFromPeer(String.valueOf(entry.getKey()), entry.getValue().get(0));//Instead of Index 0 seek from peer based on Algo.
+                ret = seekFromPeer(String.valueOf(entry.getKey()), entry.getValue().get(0), masterNode.isCloud());//Instead of Index 0 seek from peer based on Algo.
                 if(ret == false){
                     System.out.println("Sync:run:Seeking from Peer failed\n");
                     listOfPeers.printPeerList();
@@ -151,7 +151,7 @@ public class Sync implements Runnable{
         System.out.println();
     }
     
-    boolean seekFromPeer(String fileName, String peerId){
+    boolean seekFromPeer(String fileName, String peerId, boolean isCloud){
         PeerNode peer;
         System.out.println("FileName is:"+fileName + " and Peer Id is:"+peerId);
         if(fileName == null || peerId == null){
@@ -165,8 +165,13 @@ public class Sync implements Runnable{
         }
 
         JSONObject obj = JSONManager.getJSON(fileName);
-        Thread client = new Thread(new TcpClient(peer.getIPAddress(), "60010", obj));
-        client.start();
+        if(isCloud == true){
+            sendMessage(obj, listOfPeers.getSelf().getSocket());
+            System.out.println("Sync:run:Sending control message to cloud");
+        }else{
+            Thread client = new Thread(new TcpClient(peer.getIPAddress(), "60010", obj));
+            client.start();
+        }
         
         return true;
     }

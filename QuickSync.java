@@ -100,7 +100,7 @@ public class QuickSync{
         {
             cloudInetAddress = InetAddress.getByName(cloudIP);
             if(!isCloud && cloudInetAddress.isReachable(1000)){
-                Thread toCloudClient = new Thread(new TcpClientCloud(cloudIP, "60011", self));
+                Thread toCloudClient = new Thread(new TcpClientCloud(cloudIP, "60011", peerList));
                 toCloudClient.start();
             }
         }catch(Exception e){

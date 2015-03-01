@@ -13,13 +13,13 @@ public class TcpClientCloud implements Runnable
     int port;
     private Thread t;
     private String threadName = "ClientToCloud";
-    private PeerNode self;
+    private ListOfPeers listOfPeers;
 
-    TcpClientCloud (String serverName, String port, PeerNode self)
+    TcpClientCloud (String serverName, String port, ListOfPeers listOfPeers)
     {
         this.serverName = serverName;
         this.port = Integer.parseInt(port);
-        this.self = self;
+        this.listOfPeers = listOfPeers;
     }
     
     public void run()
@@ -28,6 +28,7 @@ public class TcpClientCloud implements Runnable
         String file;
         Socket client = null;
         int count = 0;
+        PeerNode self = listOfPeers.getSelf();
         
         try
         {
@@ -60,7 +61,7 @@ public class TcpClientCloud implements Runnable
             System.out.println("TcpCient:run: Socket closed? "+ client.isClosed());
             
             /* Start TCP server for cloud */
-            Thread fromCloud = new Thread(new TcpServerCloud(client, self));
+            Thread fromCloud = new Thread(new TcpServerCloud(client, listOfPeers));
             fromCloud.start();
         }
         catch(Exception e)
