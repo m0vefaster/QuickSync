@@ -53,7 +53,7 @@ public class PeerNode implements Serializable{
         return socket;
     }
 
-    public boolean getIsCloud()
+    public boolean isCloud()
     {
         return isCloud;
     }

@@ -48,7 +48,7 @@ public class Sync implements Runnable{
                         continue;
                     }
                     if(masterNode.isCloud()){
-                        sendMessage(listOfPeers.getSelf().getSocket(), obj);
+                        sendMessage(obj, listOfPeers.getSelf().getSocket());
                     }else{
                         Thread client = new Thread(new TcpClient(masterNode.getIPAddress(), "60010", obj));
                         client.start();

@@ -53,7 +53,7 @@ public class TcpClientCloud implements Runnable
             System.out.println("Client:Just connected to cloud" + client.getRemoteSocketAddress());
             self.setSocket(client);
 
-            String data = self().getId() + ":" + String.valueOf(self().getWeight());
+            String data = self.getId() + ":" + String.valueOf(self.getWeight());
             JSONObject JSONobj = JSONManager.getJSON(data, "Init");
             sendMessage(JSONobj, client);
             

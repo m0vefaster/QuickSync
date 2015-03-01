@@ -79,7 +79,7 @@ public class TcpServerCloud implements Runnable
                 {
                     System.out.println("TcpServer:run: Got an HashMap from:"+s.getInetAddress().toString());
                     HashMap map = (HashMap)obj.get("value");
-                    self().setHashMapFilePeer(map);
+                    self.setHashMapFilePeer(map);
                 }
                 else
                 {
@@ -123,6 +123,7 @@ public class TcpServerCloud implements Runnable
     }
     
     
+    /*
     void find(int x)
     {
         System.out.println("========Inside find" + x + "===========");
@@ -135,4 +136,5 @@ public class TcpServerCloud implements Runnable
         }
         System.out.println("========Leaving find()===========");
     }
+    */
 }
