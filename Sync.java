@@ -1,4 +1,5 @@
 import java.io.*;
+import java.net.*;
 import java.util.*;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
@@ -46,8 +47,12 @@ public class Sync implements Runnable{
                         }
                         continue;
                     }
-                    Thread client = new Thread(new TcpClient(masterNode.getIPAddress(), "60010", obj));
-                    client.start();
+                    if(masterNode.isCloud()){
+                        sendMessage(listOfPeers.getSelf().getSocket(), obj);
+                    }else{
+                        Thread client = new Thread(new TcpClient(masterNode.getIPAddress(), "60010", obj));
+                        client.start();
+                    }
                 }
             }
             
@@ -239,5 +244,24 @@ public class Sync implements Runnable{
             System.out.println("For peer node:"+peerNode.getId()+" list of files is:"+lof.toString());
         }
         System.out.println("Sync:run:========Leaving find()===========");
+    }
+
+    void sendMessage(JSONObject obj, Socket client)
+    {
+        try
+        {
+            OutputStream outToServer = client.getOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(outToServer);
+            byte[] outputArray = obj.toString().getBytes();
+            int len = obj.toString().length();
+            out.writeObject(len);
+            out.writeObject(outputArray);
+            out.close();
+            client.close();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
     }
 }

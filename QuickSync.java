@@ -19,6 +19,7 @@ public class QuickSync{
     public static void main(String[] args){
 
         int count = 0;
+        InetAddress cloudInetAddress;
         System.setProperty("java.net.preferIPv4Stack" , "true");
 
         ArrayList<String> client = new ArrayList<String>();
@@ -74,10 +75,7 @@ public class QuickSync{
             }
         }*/
         
-        /* Start UDP client thread. Broadcast IP is hard-coded to "255.255.255.255" for now. Change if needed. */
         Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "255.255.255.255", client, peerList));
-        //Thread udpClient = new Thread(new UdpClient("FF7E:230::1234", client, peerList));
-        //Thread udpClient = new Thread(new UdpClient("235.1.1.1", client, peerList));
         udpClient.start();
         
         /* Start UDP server thread */
@@ -87,6 +85,17 @@ public class QuickSync{
         /* Start Sync thread */
         Thread sync = new Thread(new Sync(peerList));
         sync.start();
+
+        /* Start TCP client for the cloud */
+        try
+        {
+            cloudInetAddress = InetAddress.getByName(cloudIP);
+            if(!isCloud && cloudInetAddress.isReachable(1000)){
+                Thread toCloudClient = new Thread(new TcpClientCloud(cloudIP, "66666", self));
+                toCloudClient.start();
+            }
+        }catch(Exception e){
+        }
         
         /* Start a TCP receive thread */
         ServerSocket ss = null;
@@ -106,7 +115,6 @@ public class QuickSync{
         /*Server listening for Incoming Connections and will spawn new Servers*/
         while(true){
             try {
-                InetAddress cloudInetAddress = InetAddress.getByName(cloudIP);
                 if(!isCloud && cloudInetAddress.isReachable(1000))
                 {
                     System.out.println("\nQuickSync:main:Adding Cloud to Peer List");
