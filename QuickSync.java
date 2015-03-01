@@ -57,6 +57,7 @@ public class QuickSync{
         cloudIP=  args[1];//JOptionPane.showInputDialog("Enter CloudIP");
         Integer weight = Integer.parseInt(args[2]);
         PeerNode self = new PeerNode(hostName, selfIp, weight);//Integer.parseInt(JOptionPane.showInputDialog("Enter Weight:")));
+
         peerList = new ListOfPeers(self);
 
 
@@ -65,6 +66,7 @@ public class QuickSync{
         {
            System.out.println("\nQuickSync:main:I am the cloud");
            isCloud = true; 
+           self.setIsCloud(true);
         }
 
         /* By pass 2 arguments */
