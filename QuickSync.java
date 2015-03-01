@@ -95,7 +95,7 @@ public class QuickSync{
         Thread sync = new Thread(new Sync(peerList));
         sync.start();
 
-        /* Start TCP client for the cloud */
+        /*
         try
         {
             cloudInetAddress = InetAddress.getByName(cloudIP);
@@ -104,7 +104,7 @@ public class QuickSync{
                 toCloudClient.start();
             }
         }catch(Exception e){
-        }
+        }*/
         
         /* Start a TCP receive thread */
         ServerSocket ss = null;
@@ -113,6 +113,7 @@ public class QuickSync{
         {
             serverPort = "60010";
             ss = new ServerSocket(Integer.parseInt(serverPort));
+            ss.setSoTimeout(2000);
         }
         
         catch(Exception e)
@@ -124,17 +125,19 @@ public class QuickSync{
         /*Server listening for Incoming Connections and will spawn new Servers*/
         while(true){
             try {
-                if(!isCloud && cloudInetAddress.isReachable(1000))
+                cloudInetAddress = InetAddress.getByName(cloudIP);
+                peerList.printPeerList();
+                if(!isCloud && cloudInetAddress.isReachable(1000) && peerList.getPeerNodeFromIP(cloudIP) == null)
                 {
                     System.out.println("\nQuickSync:main:Adding Cloud to Peer List");
-                    PeerNode cloudNode = new PeerNode(cloudIP,cloudIP, 0);
+                    PeerNode cloudNode = new PeerNode(cloudIP, cloudIP, 0);
                     cloudNode.setIsCloud(true);
-                    peerList.addPeerNode(cloudNode); 
-                }
-                else if (!isCloud )
-                {
-                    System.out.println("\nQuickSync:main:Removing Cloud to Peer List");
-                    peerList.removePeerNode(cloudIP);
+                    peerList.addPeerNode(cloudNode);
+
+                    /* Start TCP client for the cloud */
+                    System.out.println("\nQuickSync:main: Starting Client cloud thread");
+                    Thread toCloudClient = new Thread(new TcpClientCloud(cloudIP, "60011", peerList));
+                    toCloudClient.start();
                 }
                 s = ss.accept();
                 System.out.println("\nQuickSync:main:Server Accepted Connection");

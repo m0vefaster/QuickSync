@@ -99,9 +99,14 @@ public class TcpServerCloud implements Runnable
                 //s.close();
             }catch (Exception e) {
                 try{
-                    //s.close();
-                    //System.out.println("TcpServer:run: closing socket "+s.toString());
+                    PeerNode nodeToBeRemoved = listOfPeers.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
+                    System.out.println("Removing PeerNode:" + nodeToBeRemoved.getId() + ":" + listOfPeers.removePeerNode(nodeToBeRemoved));
+                    listOfPeers.printPeerList();
+                    listOfPeers.getSelf().setSocket(null);
+                    s.close();
+                    System.out.println("TcpServerCloud: closing cloud socket");
                     e.printStackTrace();
+                    break;
                 }catch(Exception ee)
                 {
                 }
