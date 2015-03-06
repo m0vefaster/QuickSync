@@ -53,12 +53,22 @@ public class QuickSync{
         }catch(Exception e){
         }
 
-        hostName = args[0]; //Change it to get automatic hostname
-        cloudIP=  args[1];//JOptionPane.showInputDialog("Enter CloudIP");
-        Integer weight = Integer.parseInt(args[2]);
-        PeerNode self = new PeerNode(hostName, selfIp, weight);//Integer.parseInt(JOptionPane.showInputDialog("Enter Weight:")));
 
+        try
+        {
+        Random rand = new Random(); 
+        hostName = InetAddress.getLocalHost().getHostName();//args[0]; //Change it to get automatic hostname
+        cloudIP=  InetAddress.getByName("ec2-52-10-100-25.us-west-2.compute.amazonaws.com").getHostAddress();// args[1];//JOptionPane.showInputDialog("Enter CloudIP");
+        Integer weight = rand.nextInt(5000) + 1;//Integer.parseInt(args[2]);
+        
+        PeerNode self = new PeerNode(hostName, selfIp, weight);//Integer.parseInt(JOptionPane.showInputDialog("Enter Weight:")));
         peerList = new ListOfPeers(self);
+        System.out.println("Node Details:\n"+hostName+"\n"+cloudIP+"\n"+weight+"\n\n");
+        }
+        catch (Exception e)
+        {
+
+        }
 
 
 
