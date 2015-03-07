@@ -83,7 +83,7 @@ public class Sync implements Runnable{
 
                 if(listOfPeers.getList().size() !=0)
                   //System.out.println("Sync:run:I am the master and number of nodes in the list are" + listOfPeers.getList().size() );
-                
+               {} 
                 else
                     {
                         //System.out.println("Sync:run:Looks like I am the only one here!");
