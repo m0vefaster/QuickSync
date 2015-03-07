@@ -40,7 +40,7 @@ public class UdpServer implements Runnable
 
                 if((counter++) % 100 ==0 )
                 {
-                     System.out.println("***************UdpServer:run:Udp Server Running");
+                     //System.out.println("***************UdpServer:run:Udp Server Running");
                 }
                 this.serverSocket.receive(recvPacket);
                 
@@ -68,7 +68,7 @@ public class UdpServer implements Runnable
                 
                 /* Store the sender info in the linked list */
                 peerList.addPeerNode(peer);
-                System.out.println("UdpServer:run: Added to peer list size " + components[0]);
+                //System.out.println("UdpServer:run: Added to peer list size " + components[0]);
             }catch(Exception e){
                 e.printStackTrace();
             }

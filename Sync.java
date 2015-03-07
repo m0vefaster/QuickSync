@@ -34,7 +34,7 @@ public class Sync implements Runnable{
                     JSONObject obj = JSONManager.getJSON(lof.getList());// make the object
                     if(obj==null)
                     {
-                        System.out.println("Sync:run:Obj is null");
+                        //System.out.println("Sync:run:Obj is null");
                         try
                         {
                         Thread.sleep(3000);
@@ -47,11 +47,11 @@ public class Sync implements Runnable{
                     }
                     if(masterNode.isCloud()){
                         sendMessage(obj, listOfPeers.getSelf().getSocket());
-                        System.out.println("Sync:run:Sending arraylist to cloud");
+                        //System.out.println("Sync:run:Sending arraylist to cloud");
                     }else{
                         Thread client = new Thread(new TcpClient(masterNode.getIPAddress(), "60010", obj));
                         client.start();
-                        System.out.println("Sync:run:Starting Client thread !!!!!!!!!!!!!");
+                        //System.out.println("Sync:run:Starting Client thread !!!!!!!!!!!!!");
                     }
                 }
             }
@@ -61,17 +61,17 @@ public class Sync implements Runnable{
             
 
             Set mappingSet = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer(),listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles()).entrySet();
-            System.out.println("Sync:run:Printing mappingSet:" + mappingSet);
-            System.out.println("Sync:run:Printing Global HashMap:" );
+            //System.out.println("Sync:run:Printing mappingSet:" + mappingSet);
+            //System.out.println("Sync:run:Printing Global HashMap:" );
             print(listOfPeers.getSelf().getHashMapFilePeer());
-            System.out.println("Sync:run:Prinintg Array List:"+listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles());
+            //System.out.println("Sync:run:Prinintg Array List:"+listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles());
             Iterator itr =  mappingSet.iterator();
             
             while(itr.hasNext()){
                 Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
                 ret = seekFromPeer(String.valueOf(entry.getKey()), entry.getValue(), masterNode==null ? listOfPeers.getSelf().isCloud() : masterNode.isCloud());//Instead of Index 0 seek from peer based on Algo.
                 if(ret == false){
-                    System.out.println("Sync:run:Seeking from Peer failed\n");
+                    //System.out.println("Sync:run:Seeking from Peer failed\n");
                     listOfPeers.printPeerList();
                 }
             }
@@ -82,11 +82,11 @@ public class Sync implements Runnable{
                 /* Get your own Lof */
 
                 if(listOfPeers.getList().size() !=0)
-                  System.out.println("Sync:run:I am the master and number of nodes in the list are" + listOfPeers.getList().size() );
+                  //System.out.println("Sync:run:I am the master and number of nodes in the list are" + listOfPeers.getList().size() );
                 
                 else
                     {
-                        System.out.println("Sync:run:Looks like I am the only one here!");
+                        //System.out.println("Sync:run:Looks like I am the only one here!");
                         try
                         {
                             Thread.sleep(3000);
@@ -100,7 +100,7 @@ public class Sync implements Runnable{
                     }
                 
                 listOfPeers.getSelf().setHashMapFilePeer( getFilesToRequestPerPeerMaster(listOfPeers));
-                System.out.println("Sync.java: Global Hashmap of controller");
+                //System.out.println("Sync.java: Global Hashmap of controller");
                 print(listOfPeers.getSelf().getHashMapFilePeer());
 
                 SortedSet<PeerNode> peerList =listOfPeers.getList();
@@ -111,10 +111,10 @@ public class Sync implements Runnable{
                     PeerNode peerNode = it.next();
                     HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer(),peerNode.getListOfFiles().getArrayListOfFiles());
 
-                    System.out.print("\nThe File list of " + peerNode.getId() + "is:");
+                    //System.out.print("\nThe File list of " + peerNode.getId() + "is:");
                     peerNode.getListOfFiles().printFileList();
 
-                    System.out.print("Sync.java: Hashmap from controller to " + peerNode.getId());
+                    //System.out.print("Sync.java: Hashmap from controller to " + peerNode.getId());
                     print(hmFilesPeers);
                     if(!hmFilesPeers.isEmpty()){
                         JSONObject obj = JSONManager.getJSON(hmFilesPeers);// make the object
@@ -123,7 +123,7 @@ public class Sync implements Runnable{
                     }
                 }
 
-                System.out.println();
+                //System.out.println();
             }
             
             try
@@ -144,14 +144,14 @@ public class Sync implements Runnable{
         
         while(itr.hasNext()){
             Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
-            System.out.print(entry.getKey() + ", ");
+            //System.out.print(entry.getKey() + ", ");
         }
-        System.out.println();
+        //System.out.println();
     }
     
     boolean seekFromPeer(String fileName, ArrayList<String> peerIds, boolean isCloud){
         PeerNode peer = null;
-        System.out.println("FileName is:"+fileName + " and Peer Id is:"+peerIds);
+        //System.out.println("FileName is:"+fileName + " and Peer Id is:"+peerIds);
         if(fileName == null || peerIds == null){
             return false;
         }
@@ -169,7 +169,7 @@ public class Sync implements Runnable{
         JSONObject obj = JSONManager.getJSON(fileName);
         if(peer.isCloud() == true){
             sendMessage(obj, listOfPeers.getSelf().getSocket());
-            System.out.println("Sync:run:Sending control message to cloud");
+            //System.out.println("Sync:run:Sending control message to cloud");
         }else{
             Thread client = new Thread(new TcpClient(peer.getIPAddress(), "60010", obj));
             client.start();
@@ -244,15 +244,15 @@ public class Sync implements Runnable{
     
     void find(int x)
     {
-        System.out.println("Sync:run:========Inside find" + x + "===========");
+        //System.out.println("Sync:run:========Inside find" + x + "===========");
         Iterator<PeerNode> it = listOfPeers.getList().iterator();
         while (it.hasNext())
         {
             PeerNode peerNode = it.next();
             ArrayList<String> lof = peerNode.getListOfFiles().getList();
-            System.out.println("For peer node:"+peerNode.getId()+" list of files is:"+lof.toString());
+            //System.out.println("For peer node:"+peerNode.getId()+" list of files is:"+lof.toString());
         }
-        System.out.println("Sync:run:========Leaving find()===========");
+        //System.out.println("Sync:run:========Leaving find()===========");
     }
 
     void sendMessage(JSONObject obj, Socket client)

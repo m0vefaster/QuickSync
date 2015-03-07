@@ -7,8 +7,6 @@ import javax.swing.JOptionPane;
 
 public class QuickSync{
     public static String selfIp;
-    public static String client1;
-    public static String client2;
     public static ListOfPeers peerList;
     public static Sync sync;
     public static String serverPort;
@@ -49,7 +47,7 @@ public class QuickSync{
                     }
                 }
             }
-            System.out.println("\nQuickSync:main:Self IP is:"+selfIp);
+            //System.out.println("\nQuickSync:main:Self IP is:"+selfIp);
         }catch(Exception e){
         }
 
@@ -63,7 +61,7 @@ public class QuickSync{
         
         PeerNode self = new PeerNode(hostName, selfIp, weight);//Integer.parseInt(JOptionPane.showInputDialog("Enter Weight:")));
         peerList = new ListOfPeers(self);
-        System.out.println("Node Details:\n"+hostName+"\n"+cloudIP+"\n"+weight+"\n\n");
+        //System.out.println("Node Details:\n"+hostName+"\n"+cloudIP+"\n"+weight+"\n\n");
         }
         catch (Exception e)
         {
@@ -141,15 +139,15 @@ public class QuickSync{
                 if(!isCloud && cloudInetAddress.isReachable(1000) && peerList.getPeerNodeFromIP(cloudIP) == null && count == 0)
                 {
                     /* Start TCP client for the cloud */
-                    System.out.println("\nQuickSync:main: Starting Client cloud thread");
+                    //System.out.println("\nQuickSync:main: Starting Client cloud thread");
                     Thread toCloudClient = new Thread(new TcpClientCloud(cloudIP, "60011", peerList));
                     toCloudClient.start();
                     count = 1;
                 }
                 s = ss.accept();
-                System.out.println("\nQuickSync:main:Server Accepted Connection");
+                //System.out.println("\nQuickSync:main:Server Accepted Connection");
                 Thread server = new Thread(new TcpServer(ss, s,peerList));
-                System.out.println("ClientServer:Created Thread for " +s. getRemoteSocketAddress());
+                //System.out.println("ClientServer:Created Thread for " +s. getRemoteSocketAddress());
                 server.start();   
             } 
             catch (Exception e) {

@@ -47,3 +47,6 @@ Optimizations
 3. Files are not updated when Peer Leaves...change code for hashmap
 4. Close client socket to cloud ..if cloud goes.
 
+==================(03/07)===========
+1. Peer removal updates cloud and others (iff time permits. Highly doubt that)
+2. 
