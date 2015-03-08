@@ -122,24 +122,17 @@ public class PeerNode implements Serializable{
 
 
     
-     void sendMessage(JSONObject obj)
+    synchronized void sendMessage(JSONObject obj)
     {
-        if(socket == null){
+        if(socket == null || obj == null){
             return;
         }
         try
         {
-            if(obj==null)
-				System.out.println("Obj is null in sendMessage");
-			byte[] outputArray = obj.toString().getBytes();
-
-            int len = obj.toString().length();
-            System.out.println("---------\nLen of Message is:"+len);
-			if(out==null)
-				System.out.println("out is null");
-		//	out.writeObject(len);
-            out.writeObject(outputArray);
-			//out.flush();
+            Message msg = new Message(obj);
+            out.writeObject(msg);
+            //out.reset();
+            //out.flush();
             //client.shutdownOutput();
             //out.close();
         }

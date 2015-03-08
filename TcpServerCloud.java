@@ -149,14 +149,10 @@ public class TcpServerCloud implements Runnable
         JSONObject obj = null;
         PeerNode self = listOfPeers.getSelf();
         ObjectInputStream in = self.getInputStream();
-        ObjectOutputStream out = self.getOutputStream();
         try
         {
-            int length = 25000;//(int)in.readObject();
-            byte[] inputArray = new byte[length];
-            inputArray = (byte[])in.readObject();
-            String line = new String(inputArray);
-            obj = (JSONObject)(JSONManager.convertStringToJSON(line));
+            Message obj2 = (Message)in.readObject();
+            obj = (JSONObject)(obj2.obj);
         }
         catch(EOFException e)
         {
