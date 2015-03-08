@@ -152,7 +152,7 @@ public class TcpServerCloud implements Runnable
         ObjectOutputStream out = self.getOutputStream();
         try
         {
-            int length = (int)in.readObject();
+            int length = 25000;//(int)in.readObject();
             byte[] inputArray = new byte[length];
             inputArray = (byte[])in.readObject();
             String line = new String(inputArray);

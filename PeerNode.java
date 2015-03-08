@@ -129,11 +129,17 @@ public class PeerNode implements Serializable{
         }
         try
         {
-            byte[] outputArray = obj.toString().getBytes();
+            if(obj==null)
+				System.out.println("Obj is null in sendMessage");
+			byte[] outputArray = obj.toString().getBytes();
 
             int len = obj.toString().length();
-            out.writeObject(len);
+            System.out.println("---------\nLen of Message is:"+len);
+			if(out==null)
+				System.out.println("out is null");
+		//	out.writeObject(len);
             out.writeObject(outputArray);
+			//out.flush();
             //client.shutdownOutput();
             //out.close();
         }
