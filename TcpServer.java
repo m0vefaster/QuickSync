@@ -125,7 +125,8 @@ public class TcpServer implements Runnable
             
             //CLOSE SOCKET HERE
             s.close();
-        }catch (Exception e) {
+    }catch(StreamCorruptedException ee){
+     }catch (Exception e) {
             try{
                 s.close();
                 //System.out.println("TcpServer:run: closing socket "+s.toString());
