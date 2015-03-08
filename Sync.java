@@ -86,12 +86,11 @@ public class Sync implements Runnable{
             /* Call seekFromPeer() on the list of files received from the controller */
             //HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer());
             
+            /*
 
             Set mappingSet = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer(),listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles()).entrySet();
-            //System.out.println("Sync:run:Printing mappingSet:" + mappingSet);
-            //System.out.println("Sync:run:Printing Global HashMap:" );
-            //print(listOfPeers.getSelf().getHashMapFilePeer());
-            //System.out.println("Sync:run:Prinintg Array List:"+listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles());
+   
+            /*Collection.shuffle(mappingSet);
             Iterator itr =  mappingSet.iterator();
             
             while(itr.hasNext()){
@@ -101,7 +100,29 @@ public class Sync implements Runnable{
                     //System.out.println("Sync:run:Seeking from Peer failed\n");
                     //listOfPeers.printPeerList();
                 }
-            }
+            }*/
+
+
+             //Alogrithm 2 -> Randomized
+             HashMap<String,ArrayList<String>> mappingSet = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer(),listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles());
+             
+             ArrayList<String> randList = new ArrayList<String>();
+             for(String k : mappingSet.keySet()) 
+             {
+             randList.add(k);
+             }
+
+             Collections.shuffle(randList);
+             for(int j=0;j<randList.size();j++)
+             {
+                ArrayList<String> randPeerList = mappingSet.get(randList.get(j));
+                ret = seekFromPeer(randList.get(j), randPeerList, masterNode==null ? listOfPeers.getSelf().isCloud() : masterNode.isCloud());//Instead of Index 0 seek from peer based on Algo.
+                if(ret == false){
+                    //System.out.println("Sync:run:Seeking from Peer failed\n");
+                    //listOfPeers.printPeerList();
+                }
+             }
+
             
             //listOfPeers.printPeerList();
             if(listOfPeers.getMaster() == null) /*I am the master*/
@@ -285,7 +306,7 @@ public class Sync implements Runnable{
         }
         System.out.println("Sync:run:========Leaving find()===========");
     }
-
+/*
     ArrayList<String> randomizeHashMap(HashMap<String, ArrayList<String>> hmap)
     {
         if(hmap==null)
@@ -298,4 +319,6 @@ public class Sync implements Runnable{
         return list;
 
     }
+    */
+
 }
