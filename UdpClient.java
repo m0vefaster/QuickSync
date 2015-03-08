@@ -37,7 +37,7 @@ public class UdpClient implements Runnable
     
     /*
     UdpClient(String multicastAdd, ArrayList<String> client, ListOfPeers peerList){
-        System.out.println("UdpClient:UdpClient: Starting UDP client ");
+        //System.out.println("UdpClient:UdpClient: Starting UDP client ");
         try{
             clientSocket = new DatagramSocket();
         }

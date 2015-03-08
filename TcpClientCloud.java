@@ -51,9 +51,9 @@ public class TcpClientCloud implements Runnable
                     }
                 }
             }while(client==null);
-            //System.out.println("Client:Just connected to cloud" + client.getRemoteSocketAddress());
+            System.out.println("Client:Just connected to cloud" + client.getRemoteSocketAddress());
 
-            //System.out.println("\nQuickSync:main:Adding Cloud to Peer List");
+            System.out.println("\nQuickSync:main:Adding Cloud to Peer List");
             PeerNode cloudNode = new PeerNode(serverName, serverName, 0);
             cloudNode.setIsCloud(true);
             listOfPeers.addPeerNode(cloudNode);
@@ -63,8 +63,8 @@ public class TcpClientCloud implements Runnable
             String data = self.getId() + ":" + String.valueOf(self.getWeight());
             JSONObject JSONobj = JSONManager.getJSON(data, "Init");
             sendMessage(JSONobj, client);
-            //System.out.println("Client:Sent Init to cloud");
-            //System.out.println("TcpCient:run: Socket closed? "+ client.isClosed());
+            System.out.println("Client:Sent Init to cloud");
+            System.out.println("TcpCient:run: Socket closed? "+ client.isClosed());
             
             /* Start TCP server for cloud */
             Thread fromCloud = new Thread(new TcpServerCloud(client, listOfPeers));
@@ -80,18 +80,18 @@ public class TcpClientCloud implements Runnable
                 listOfPeers.printPeerList();
                 client.close();
                 */
-                //System.out.println("TcpClientCloud: Exiting clientCloud thread");
+                System.out.println("TcpClientCloud: Exiting clientCloud thread");
             }
             catch (Exception ee)
             {
             }
         }
-        //System.out.println();
+        System.out.println();
     }
     
     void start ()
     {
-        //System.out.println("TcpClient:start: Starting " +  threadName );
+        System.out.println("TcpClient:start: Starting " +  threadName );
         if (t == null)
         {
             t = new Thread (this, threadName);

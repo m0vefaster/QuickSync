@@ -31,12 +31,12 @@ public class TcpClient implements Runnable
         
         try
         {
-            //System.out.println("TcpClient:run: Connecting to " + serverName + " on port " + port);
+            System.out.println("TcpClient:run: Connecting to " + serverName + " on port " + port);
             client =null ;
             do
             {
                 if(count++%10 == 0){
-                    //System.out.println("TcpClient:run: Running TcpClient\n");
+                    System.out.println("TcpClient:run: Running TcpClient\n");
                 }
 
                 try
@@ -56,7 +56,7 @@ public class TcpClient implements Runnable
                     //anye.printStackTrace();
                 }
             }while(client==null);
-            //System.out.println("TcpClient:run: Client:Just connected to " + client.getRemoteSocketAddress());
+            System.out.println("TcpClient:run: Client:Just connected to " + client.getRemoteSocketAddress());
             sendMessage(obj, client);
                
             client.close();
@@ -71,12 +71,12 @@ public class TcpClient implements Runnable
             {
             }
         }
-        //System.out.println();
+        System.out.println();
     }
     
     void start ()
     {
-        //System.out.println("TcpClient:start: Starting " +  threadName );
+        System.out.println("TcpClient:start: Starting " +  threadName );
         if (t == null)
         {
             t = new Thread (this, threadName);
