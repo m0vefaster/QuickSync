@@ -12,6 +12,10 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.util.*;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 public class TcpServerCloud implements Runnable
 {
@@ -81,6 +85,14 @@ public class TcpServerCloud implements Runnable
                     BufferedOutputStream bos = new BufferedOutputStream(fos);
                     bos.write(fileContent.getBytes());
                     bos.close();
+			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+	     
+			final TimeZone utc = TimeZone.getTimeZone("UTC");
+			dateFormatter.setTimeZone(utc);
+	     
+			String t = dateFormatter.format(new java.util.Date());
+			System.out.println("From cloud" + self.getListOfFiles().getArrayListOfFiles().size() + " " + t);
+
                 }
                 else if(obj.get("type").equals("HashMap"))
                 {
