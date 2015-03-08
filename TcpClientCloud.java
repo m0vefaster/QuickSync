@@ -61,6 +61,16 @@ public class TcpClientCloud implements Runnable
 
             self.setSocket(client);
 
+            /* Create out and in streams */
+            OutputStream outToServer = client.getOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(outToServer);
+            InputStream inFromServer = client.getInputStream();
+            ObjectInputStream in = new ObjectInputStream(inFromServer);
+
+            self.setOutputStream(out);
+            self.setInputStream(in);
+
+
             //System.out.println("Client:Sent Init to cloud");
             //System.out.println("TcpCient:run: Socket closed? "+ client.isClosed());
             

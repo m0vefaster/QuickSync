@@ -24,18 +24,10 @@ public class TcpServerCloud implements Runnable
     static String folder = "QuickSync";
     static String path = homeDir + "/" + folder ;
     private ListOfPeers listOfPeers;
-    InputStream inFromServer = null;
-    ObjectInputStream in = null;
-    OutputStream outToServer = null;
-    ObjectOutputStream out = null;
     
     public TcpServerCloud(Socket s, ListOfPeers listOfPeers)
     {
       try {
-	outToServer = s.getOutputStream();
-        out = new ObjectOutputStream(outToServer);
-        inFromServer = s.getInputStream();
-        in = new ObjectInputStream(inFromServer);
         this.s = s;
         this.listOfPeers = listOfPeers;
       }
@@ -55,7 +47,7 @@ public class TcpServerCloud implements Runnable
         /* Send your Init */
         String data = self.getId() + ":" + String.valueOf(self.getWeight());
         JSONObject JSONobj = JSONManager.getJSON(data, "Init");
-        sendMessage(JSONobj);
+        self.sendMessage(JSONobj);
         while(true){
             try {
                 JSONObject obj = getMessage();
@@ -71,7 +63,7 @@ public class TcpServerCloud implements Runnable
 
                     PeerNode node = listOfPeers.getPeerNode(s.getInetAddress().getHostAddress());
                     if(node.isCloud()){
-                        sendMessage(obj2);
+                        self.sendMessage(obj2);
                         System.out.println("TcpServerCloud:run:Sending file " + str + " to cloud");
                     }else{
                         Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", obj2));
@@ -155,6 +147,9 @@ public class TcpServerCloud implements Runnable
     {
         
         JSONObject obj = null;
+        PeerNode self = listOfPeers.getSelf();
+        ObjectInputStream in = self.getInputStream();
+        ObjectOutputStream out = self.getOutputStream();
         try
         {
             int length = (int)in.readObject();
@@ -201,26 +196,7 @@ public class TcpServerCloud implements Runnable
         return obj;
     }
 
-     void sendMessage(JSONObject obj)
-    {
-        if(s == null){
-            return;
-        }
-        try
-        {
-            byte[] outputArray = obj.toString().getBytes();
-
-            int len = obj.toString().length();
-            out.writeObject(len);
-            out.writeObject(outputArray);
-            //client.shutdownOutput();
-            //out.close();
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }   
+       
     
     /*
     void find(int x)

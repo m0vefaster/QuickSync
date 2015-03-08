@@ -25,6 +25,7 @@ public class Sync implements Runnable{
         boolean ret = false;
         ListOfFiles lof = listOfPeers.getSelf().getListOfFiles();
         ArrayList<String> arrayOfFiles = new ArrayList<String>();
+        PeerNode self = listOfPeers.getSelf();
         
         
         /* Keep checking if any changes have been made to the shared directory */
@@ -64,7 +65,7 @@ public class Sync implements Runnable{
                         continue;
                     }
                     if(masterNode.isCloud()){
-                        sendMessage(obj, listOfPeers.getSelf().getSocket());
+                        self.sendMessage(obj);
                         //System.out.println("Sync:run:Sending arraylist to cloud");
                     }else{
                         Thread client = new Thread(new TcpClient(masterNode.getIPAddress(), "60010", obj));
@@ -196,7 +197,7 @@ public class Sync implements Runnable{
 
         JSONObject obj = JSONManager.getJSON(fileName);
         if(peer.isCloud() == true){
-            sendMessage(obj, listOfPeers.getSelf().getSocket());
+            listOfPeers.getSelf().sendMessage(obj);
             //System.out.println("Sync:run:Sending control message to cloud");
         }else{
             Thread client = new Thread(new TcpClient(peer.getIPAddress(), "60010", obj));
@@ -283,6 +284,7 @@ public class Sync implements Runnable{
         System.out.println("Sync:run:========Leaving find()===========");
     }
 
+    /*
     void sendMessage(JSONObject obj, Socket client)
     {
         if(client == null){
@@ -304,4 +306,5 @@ public class Sync implements Runnable{
             e.printStackTrace();
         }
     }
+    */
 }

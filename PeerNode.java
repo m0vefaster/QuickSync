@@ -1,6 +1,10 @@
 import java.io.*;
 import java.util.*;
 import java.net.*;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
 
 public class PeerNode implements Serializable{
     private String peerId;
@@ -10,6 +14,8 @@ public class PeerNode implements Serializable{
     private boolean isCloud;
     private HashMap<String, ArrayList<String>> hMap;
     String ipAddress ;
+    ObjectInputStream in = null;
+    ObjectOutputStream out = null;
 
     PeerNode(String peerId){
         Random ran = new Random();
@@ -97,5 +103,45 @@ public class PeerNode implements Serializable{
     {
         return ipAddress;
     }
+
+    void setOutputStream(ObjectOutputStream out){
+        this.out = out;
+    }
+
+    ObjectOutputStream getOutputStream(){
+        return out;
+    }
+
+    void setInputStream(ObjectInputStream in){
+        this.in = in;
+    }
+
+    ObjectInputStream getInputStream(){
+        return in;
+    }
+
+
+    
+     void sendMessage(JSONObject obj)
+    {
+        if(socket == null){
+            return;
+        }
+        try
+        {
+            byte[] outputArray = obj.toString().getBytes();
+
+            int len = obj.toString().length();
+            out.writeObject(len);
+            out.writeObject(outputArray);
+            //client.shutdownOutput();
+            //out.close();
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+    }
+
 }
 
