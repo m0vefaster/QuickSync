@@ -4,6 +4,10 @@ import java.net.*;
 import java.lang.*;
 import java.util.*;
 import javax.swing.JOptionPane;
+import java.sql.Timestamp;
+import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 public class QuickSync{
     public static String selfIp;
@@ -130,6 +134,12 @@ public class QuickSync{
             
         }
         Socket s=null;
+
+        SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+        final TimeZone utc = TimeZone.getTimeZone("UTC");
+        dateFormatter.setTimeZone(utc);
+        String t = dateFormatter.format(new java.util.Date());
+        System.out.println("Started at "+ t);
 
         count = 0;
         /*Server listening for Incoming Connections and will spawn new Servers*/

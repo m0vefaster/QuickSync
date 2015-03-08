@@ -102,7 +102,8 @@ public class TcpServerCloud implements Runnable
 			dateFormatter.setTimeZone(utc);
 	     
 			String t = dateFormatter.format(new java.util.Date());
-			System.out.println("From cloud" + self.getListOfFiles().getArrayListOfFiles().size() + " " + t);
+                        System.out.println("From cloud" + listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles().size() + " " + t + " ----- peer IP -- :" + s.getInetAddress().getHostAddress()+ " File -- " + receivedPath);
+			//System.out.println("From cloud" + self.getListOfFiles().getArrayListOfFiles().size() + " " + t);
 
                 }
                 else if(obj.get("type").equals("HashMap"))
