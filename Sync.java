@@ -7,10 +7,13 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.text.SimpleDateFormat;
+import java.util.TimeZone;
 
 public class Sync implements Runnable{
     ListOfFiles files;
     ListOfPeers listOfPeers;
+    int count1=0,count2=0;
     boolean firstTime=true;
     Sync(ListOfPeers listOfPeers)
     {
@@ -36,8 +39,14 @@ public class Sync implements Runnable{
 		         if(firstTime)
 				 {
 					 firstTime=false;
-				 	java.util.Date date= new java.util.Date();
-                	Timestamp t = new Timestamp(date.getTime());
+				 	//java.util.Date date= new java.util.Date();
+		                	//Timestamp t = new Timestamp(date.getTime());
+					SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+
+					final TimeZone utc = TimeZone.getTimeZone("UTC");
+					dateFormatter.setTimeZone(utc);
+
+					String t = dateFormatter.format(new java.util.Date());
 					System.out.println("Init "+ t);
 				 }
                     JSONObject obj = JSONManager.getJSON(lof.getList());// make the object
@@ -64,7 +73,15 @@ public class Sync implements Runnable{
                     }
                 }
             }
-            
+            count2=lof.getArrayListOfFiles().size();
+            if(count2!=count1)
+            {
+                java.util.Date date= new java.util.Date();
+                Timestamp t = new Timestamp(date.getTime());
+                System.out.println("\n Number of Files Received till"+ t + "is:"+ count2);
+                count1=count2;
+            }
+ 
             /* Call seekFromPeer() on the list of files received from the controller */
             //HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer());
             

@@ -44,7 +44,6 @@ public class TcpServerCloud implements Runnable
                     //System.out.println("TcpServer:run: Got an Control Message from:"+s.getInetAddress().toString() + " message: " + str);
                     //Send the file from ...
                     File file= new File(path+"/"+str);
-		System.out.println("Incoming req for:  "+path+"/"+str);
                     JSONObject obj2 = JSONManager.getJSON(file);
 
                     PeerNode node = listOfPeers.getPeerNode(s.getInetAddress().getHostAddress());
@@ -177,7 +176,6 @@ public class TcpServerCloud implements Runnable
         }
         try
         {
-	    System.out.println("sent:"+obj.get("type"));
             OutputStream outToServer = client.getOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(outToServer);
             byte[] outputArray = obj.toString().getBytes();
