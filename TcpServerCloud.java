@@ -139,7 +139,7 @@ public class TcpServerCloud implements Runnable
                 {
                 }
             }
-            System.out.println();        
+            //System.out.println();        
         }
     }
     
