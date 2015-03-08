@@ -284,27 +284,16 @@ public class Sync implements Runnable{
         System.out.println("Sync:run:========Leaving find()===========");
     }
 
-    /*
-    void sendMessage(JSONObject obj, Socket client)
+    ArrayList<String> randomizeHashMap(HashMap<String, ArrayList<String>> hmap)
     {
-        if(client == null){
-            return;
-        }
-        try
-        {
-            OutputStream outToServer = client.getOutputStream();
-            ObjectOutputStream out = new ObjectOutputStream(outToServer);
-            byte[] outputArray = obj.toString().getBytes();
-            int len = obj.toString().length();
-            out.writeObject(len);
-            out.writeObject(outputArray);
-            //client.shutdownOutput();
-            //out.close();
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
+        if(hmap==null)
+            return null;
+
+        Set keyset = map.keySet().toArray();
+        ArrayList<String> list = new ArrayList<String>(keySet);
+
+        Collections.shuffle(list);
+        return list;
+
     }
-    */
 }
