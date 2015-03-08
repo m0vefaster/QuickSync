@@ -110,6 +110,7 @@ public class TcpServerCloud implements Runnable
                 //s.close();
             }catch(StreamCorruptedException ee){
 		System.out.println("StreamCorruptedException !!!!!!");
+                ee.printStackTrace();
 	    }catch (Exception e) {
                 try{
                     System.out.println("*********************" + e.getClass());
