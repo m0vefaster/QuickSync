@@ -178,6 +178,7 @@ public class Sync implements Runnable{
         PeerNode peer = null;
         //System.out.println("FileName is:"+fileName + " and Peer Id is:"+peerIds);
         if(fileName == null || peerIds == null){
+		System.out.println("Seek from peer; " + fileName + " " + peerIds);
             return false;
         }
         for(String peerId: peerIds)
@@ -188,8 +189,10 @@ public class Sync implements Runnable{
             }
             
         }
-        if(peer==null)
+        if(peer==null){
+		System.out.println("Seek from peer; Peer not found for peerId " + peerIds);
             return false;
+	}
 
         JSONObject obj = JSONManager.getJSON(fileName);
         if(peer.isCloud() == true){
