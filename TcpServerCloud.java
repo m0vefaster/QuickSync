@@ -116,7 +116,7 @@ public class TcpServerCloud implements Runnable
                     if(e instanceof EOFException){
                         PeerNode nodeToBeRemoved = listOfPeers.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
                         System.out.println("Removing PeerNode:" + nodeToBeRemoved.getId() + ":" + listOfPeers.removePeerNode(nodeToBeRemoved));
-                        listOfPeers.printPeerList();
+                        //listOfPeers.printPeerList();
                         listOfPeers.getSelf().setSocket(null);
                         s.close();
                         System.out.println("TcpServerCloud: closing cloud socket");
@@ -151,7 +151,7 @@ public class TcpServerCloud implements Runnable
                     System.out.println("*********************" + e.getClass());
                     PeerNode nodeToBeRemoved = listOfPeers.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
                     System.out.println("Removing PeerNode:" + nodeToBeRemoved.getId() + ":" + listOfPeers.removePeerNode(nodeToBeRemoved));
-                    listOfPeers.printPeerList();
+//                    listOfPeers.printPeerList();
                     listOfPeers.getSelf().setSocket(null);
                     s.close();
                     System.out.println("TcpServerCloud: closing cloud socket");
@@ -167,7 +167,7 @@ public class TcpServerCloud implements Runnable
                     System.out.println("*********************" + e.getClass());
                     PeerNode nodeToBeRemoved = listOfPeers.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
                     System.out.println("Removing PeerNode:" + nodeToBeRemoved.getId() + ":" + listOfPeers.removePeerNode(nodeToBeRemoved));
-                    listOfPeers.printPeerList();
+//                    listOfPeers.printPeerList();
                     listOfPeers.getSelf().setSocket(null);
                     s.close();
                     System.out.println("TcpServerCloud: closing cloud socket");
