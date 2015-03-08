@@ -51,6 +51,11 @@ public class TcpServerCloud implements Runnable
         System.out.println("TcpServer:run: Socket closed? "+s.isClosed());
         System.out.println("TcpServer:run: Server running "+s.toString());
         PeerNode self = listOfPeers.getSelf();
+
+        /* Send your Init */
+        String data = self.getId() + ":" + String.valueOf(self.getWeight());
+        JSONObject JSONobj = JSONManager.getJSON(data, "Init");
+        sendMessage(JSONobj);
         while(true){
             try {
                 JSONObject obj = getMessage();

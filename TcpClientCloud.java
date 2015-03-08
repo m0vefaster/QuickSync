@@ -14,8 +14,6 @@ public class TcpClientCloud implements Runnable
     private Thread t;
     private String threadName = "ClientToCloud";
     private ListOfPeers listOfPeers;
-    OutputStream outToServer = null;
-    ObjectOutputStream out = null;
     Socket client = null;
 
     TcpClientCloud (String serverName, String port, ListOfPeers listOfPeers)
@@ -41,8 +39,6 @@ public class TcpClientCloud implements Runnable
                 try
                 {
                     client = new Socket(serverName, port);
-		    outToServer = client.getOutputStream();
-		    out = new ObjectOutputStream(outToServer);
                 }
                 catch (Exception anye)
                 {
@@ -65,9 +61,6 @@ public class TcpClientCloud implements Runnable
 
             self.setSocket(client);
 
-            String data = self.getId() + ":" + String.valueOf(self.getWeight());
-            JSONObject JSONobj = JSONManager.getJSON(data, "Init");
-            sendMessage(JSONobj);
             //System.out.println("Client:Sent Init to cloud");
             //System.out.println("TcpCient:run: Socket closed? "+ client.isClosed());
             
@@ -104,6 +97,7 @@ public class TcpClientCloud implements Runnable
         }
     }
 
+    /*
     void sendMessage(JSONObject obj)
     {
         if(client == null){
@@ -123,4 +117,5 @@ public class TcpClientCloud implements Runnable
             e.printStackTrace();
         }
     }
+    */
 }
