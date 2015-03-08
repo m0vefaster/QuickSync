@@ -182,7 +182,9 @@ public class Sync implements Runnable{
 		//System.out.println("Seek from peer; " + fileName + " " + peerIds);
             return false;
         }
-        for(String peerId: peerIds)
+        ArrayList<String> peerIdDup = new ArrayList<String>(peerIds);
+        Collections.shuffle(peerIdDup);
+        for(String peerId: peerIdDup)
         {
             peer = listOfPeers.getPeerNode(peerId);
             if(peer != null){
