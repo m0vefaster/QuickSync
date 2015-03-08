@@ -61,7 +61,7 @@ public class QuickSync{
         
         PeerNode self = new PeerNode(hostName, selfIp, weight);//Integer.parseInt(JOptionPane.showInputDialog("Enter Weight:")));
         peerList = new ListOfPeers(self);
-        //System.out.println("Node Details:\n"+hostName+"\n"+cloudIP+"\n"+weight+"\n\n");
+        System.out.println("Node Details:\n"+hostName+"\n"+cloudIP+"\n"+weight+"\n\n");
         }
         catch (Exception e)
         {
