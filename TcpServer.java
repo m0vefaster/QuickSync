@@ -126,6 +126,7 @@ public class TcpServer implements Runnable
             //CLOSE SOCKET HERE
             s.close();
     }catch(StreamCorruptedException ee){
+            ee.printStackTrace();
      }catch (Exception e) {
             try{
                 s.close();

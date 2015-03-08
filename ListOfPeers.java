@@ -132,12 +132,12 @@ class ListOfPeers
     {
         Iterator<PeerNode> itr = peerList.iterator();
         PeerNode node;
-        System.out.print("\n************************The Peer list is:");
+        //System.out.print("\n************************The Peer list is:");
         while(itr.hasNext()){
             node = itr.next();
-            System.out.print(node.getId()+",");
+            //System.out.print(node.getId()+",");
         }
-        System.out.println();
+        //System.out.println();
     }
 
    PeerNode getPeerNodeFromSocket(Socket s)
