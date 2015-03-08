@@ -5,6 +5,8 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
+import java.sql.Timestamp;
+import java.util.Date;
 
 public class Sync implements Runnable{
     ListOfFiles files;
@@ -31,6 +33,9 @@ public class Sync implements Runnable{
             if(masterNode!=null)
             {
                 if(lof.getArrayListOfFiles().size() != 0){
+		java.util.Date date= new java.util.Date();
+                Timestamp t = new Timestamp(date.getTime());
+		System.out.println("Init "+ t);
                     JSONObject obj = JSONManager.getJSON(lof.getList());// make the object
                     if(obj==null)
                     {
