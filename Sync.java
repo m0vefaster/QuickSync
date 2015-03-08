@@ -87,10 +87,10 @@ public class Sync implements Runnable{
             
 
             Set mappingSet = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer(),listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles()).entrySet();
-            System.out.println("Sync:run:Printing mappingSet:" + mappingSet);
-            System.out.println("Sync:run:Printing Global HashMap:" );
+            //System.out.println("Sync:run:Printing mappingSet:" + mappingSet);
+            //System.out.println("Sync:run:Printing Global HashMap:" );
             print(listOfPeers.getSelf().getHashMapFilePeer());
-            System.out.println("Sync:run:Prinintg Array List:"+listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles());
+            //System.out.println("Sync:run:Prinintg Array List:"+listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles());
             Iterator itr =  mappingSet.iterator();
             
             while(itr.hasNext()){
@@ -125,8 +125,8 @@ public class Sync implements Runnable{
                     }
                 
                 listOfPeers.getSelf().setHashMapFilePeer( getFilesToRequestPerPeerMaster(listOfPeers));
-                System.out.println("Sync.java: Global Hashmap of controller");
-                print(listOfPeers.getSelf().getHashMapFilePeer());
+                //System.out.println("Sync.java: Global Hashmap of controller");
+                //print(listOfPeers.getSelf().getHashMapFilePeer());
 
                 SortedSet<PeerNode> peerList =listOfPeers.getList();
                 Iterator<PeerNode> it = peerList.iterator();
@@ -136,8 +136,8 @@ public class Sync implements Runnable{
                     PeerNode peerNode = it.next();
                     HashMap<String, ArrayList<String>> hmFilesPeers = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer(),peerNode.getListOfFiles().getArrayListOfFiles());
 
-                    System.out.print("\nThe File list of " + peerNode.getId() + "is:");
-                    peerNode.getListOfFiles().printFileList();
+                    //System.out.print("\nThe File list of " + peerNode.getId() + "is:");
+                    //peerNode.getListOfFiles().printFileList();
 
                     System.out.print("Sync.java: Hashmap from controller to " + peerNode.getId());
                     print(hmFilesPeers);
@@ -169,9 +169,9 @@ public class Sync implements Runnable{
         
         while(itr.hasNext()){
             Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
-            System.out.print(entry.getKey() + ", ");
+            //System.out.print(entry.getKey() + ", ");
         }
-        System.out.println();
+        //System.out.println();
     }
     
     boolean seekFromPeer(String fileName, ArrayList<String> peerIds, boolean isCloud){
