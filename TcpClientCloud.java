@@ -52,7 +52,7 @@ public class TcpClientCloud implements Runnable
                     }
                 }
             }while(client==null);
-            System.out.println("Client:Just connected to cloud" + client.getRemoteSocketAddress());
+            //System.out.println("Client:Just connected to cloud" + client.getRemoteSocketAddress());
 
             //System.out.println("\nQuickSync:main:Adding Cloud to Peer List");
             PeerNode cloudNode = new PeerNode(serverName, serverName, 0);
@@ -94,12 +94,12 @@ public class TcpClientCloud implements Runnable
             {
             }
         }
-        System.out.println();
+        //System.out.println();
     }
     
     void start ()
     {
-        System.out.println("TcpClient:start: Starting " +  threadName );
+        //System.out.println("TcpClient:start: Starting " +  threadName );
         if (t == null)
         {
             t = new Thread (this, threadName);

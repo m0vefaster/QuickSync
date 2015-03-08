@@ -71,7 +71,7 @@ public class TcpClient implements Runnable
             {
             }
         }
-        System.out.println();
+        //System.out.println();
     }
     
     void start ()

@@ -39,18 +39,18 @@ public class TcpServer implements Runnable
     public void run()
     {
         int count =0;
-        System.out.println("TcpServer:run: Server running "+s.toString());
+        //System.out.println("TcpServer:run: Server running "+s.toString());
         try {
             JSONObject obj = getMessage(s);
 
             if(count++%100 == 0){
-                System.out.println("TcpServer:run: Running TcpServer\n");
+                //System.out.println("TcpServer:run: Running TcpServer\n");
             }
 
             //Check for NULL Object
             if(obj.get("type").equals("Control"))
             {
-                System.out.println("TcpServer:run: Got an Control Message from:"+s.getInetAddress().toString());
+                //System.out.println("TcpServer:run: Got an Control Message from:"+s.getInetAddress().toString());
                 String str = (String)obj.get("value");
                 //Send the file from ...
                 File file= new File(path+"/"+str);
@@ -61,7 +61,7 @@ public class TcpServer implements Runnable
             else if(obj.get("type").toString().substring(0,4).equals("File"))
             {
                 
-                System.out.println("TcpServer:run: Got an File from:"+s.getInetAddress().toString());
+                //System.out.println("TcpServer:run: Got an File from:"+s.getInetAddress().toString());
                 String fileContent = (String)obj.get("value");
                 //Store this File...
                 String receivedPath = obj.get("type").toString().substring(4);
@@ -92,19 +92,19 @@ public class TcpServer implements Runnable
 		dateFormatter.setTimeZone(utc);
      
 		String t = dateFormatter.format(new java.util.Date());
-		System.out.println("From peer " + peerList.getSelf().getListOfFiles().getArrayListOfFiles().size() + " " + t);
+		//System.out.println("From peer " + peerList.getSelf().getListOfFiles().getArrayListOfFiles().size() + " " + t);
 
             }
             else if(obj.get("type").equals("ArrayList"))
             {
-                System.out.println("TcpServer:run: Got an ArrayList from:"+s.getInetAddress().toString());
+                //System.out.println("TcpServer:run: Got an ArrayList from:"+s.getInetAddress().toString());
                 ArrayList list = (ArrayList)obj.get("value");
                 //Uodate the peerList peerNode list of files
                 PeerNode peerNode = peerList.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
                 
                 if(peerNode ==null)
                 {
-                    System.out.println("TcpServer:run: \nCouldn't find the PeerNode");
+                    //System.out.println("TcpServer:run: \nCouldn't find the PeerNode");
                 }
                 else
                 {
@@ -114,13 +114,13 @@ public class TcpServer implements Runnable
             }
             else if(obj.get("type").equals("HashMap"))
             {
-                System.out.println("TcpServer:run: Got an HashMap from:"+s.getInetAddress().toString());
+                //System.out.println("TcpServer:run: Got an HashMap from:"+s.getInetAddress().toString());
                 HashMap map = (HashMap)obj.get("value");
                 peerList.getSelf().setHashMapFilePeer(map);
             }
             else
             {
-                System.out.println("TcpServer:run: Got an Invalid Message from:"+s.getInetAddress().toString());
+                //System.out.println("TcpServer:run: Got an Invalid Message from:"+s.getInetAddress().toString());
             }
             
             //CLOSE SOCKET HERE
@@ -130,13 +130,13 @@ public class TcpServer implements Runnable
      }catch (Exception e) {
             try{
                 s.close();
-                System.out.println("TcpServer:run: closing socket "+s.toString());
+                //System.out.println("TcpServer:run: closing socket "+s.toString());
             e.printStackTrace();}
             catch(Exception ee)
             {
             }
         }
-        System.out.println();        
+        //System.out.println();        
     }
     
     JSONObject getMessage(Socket s)

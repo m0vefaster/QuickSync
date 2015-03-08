@@ -40,8 +40,8 @@ public class TcpServerCloud implements Runnable
     @Override
     public void run()
     {
-        System.out.println("TcpServer:run: Socket closed? "+s.isClosed());
-        System.out.println("TcpServer:run: Server running "+s.toString());
+        //System.out.println("TcpServer:run: Socket closed? "+s.isClosed());
+        //System.out.println("TcpServer:run: Server running "+s.toString());
         PeerNode self = listOfPeers.getSelf();
 
         /* Send your Init */
@@ -56,7 +56,7 @@ public class TcpServerCloud implements Runnable
                 if(obj.get("type").equals("Control"))
                 {
                     String str = (String)obj.get("value");
-                    System.out.println("TcpServer:run: Got an Control Message from:"+s.getInetAddress().toString() + " message: " + str);
+                    //System.out.println("TcpServer:run: Got an Control Message from:"+s.getInetAddress().toString() + " message: " + str);
                     //Send the file from ...
                     File file= new File(path+"/"+str);
                     JSONObject obj2 = JSONManager.getJSON(file);
@@ -64,7 +64,7 @@ public class TcpServerCloud implements Runnable
                     PeerNode node = listOfPeers.getPeerNode(s.getInetAddress().getHostAddress());
                     if(node.isCloud()){
                         self.sendMessage(obj2);
-                        System.out.println("TcpServerCloud:run:Sending file " + str + " to cloud");
+                        //System.out.println("TcpServerCloud:run:Sending file " + str + " to cloud");
                     }else{
                         Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", obj2));
                         client.start();
@@ -73,7 +73,7 @@ public class TcpServerCloud implements Runnable
                 else if(obj.get("type").toString().substring(0,4).equals("File"))
                 {
                     
-                    System.out.println("TcpServer:run: Got an File from:"+s.getInetAddress().toString());
+                    //System.out.println("TcpServer:run: Got an File from:"+s.getInetAddress().toString());
                     String fileContent = (String)obj.get("value");
                     //Store this File...
                     String receivedPath = obj.get("type").toString().substring(4);
@@ -107,14 +107,14 @@ public class TcpServerCloud implements Runnable
                 }
                 else if(obj.get("type").equals("HashMap"))
                 {
-                    System.out.println("TcpServer:run: Got an HashMap from:"+s.getInetAddress().toString());
+                    //System.out.println("TcpServer:run: Got an HashMap from:"+s.getInetAddress().toString());
                     HashMap map = (HashMap)obj.get("value");
 		    System.out.println("Hashmap size: "+map.size());
                     self.setHashMapFilePeer(map);
                 }
                 else
                 {
-                    System.out.println("TcpServer:run: Got an Invalid Message from:"+s.getInetAddress().toString());
+                    //System.out.println("TcpServer:run: Got an Invalid Message from:"+s.getInetAddress().toString());
                 }
                 
                 //CLOSE SOCKET HERE
@@ -124,7 +124,7 @@ public class TcpServerCloud implements Runnable
                 ee.printStackTrace();
 	    }catch (Exception e) {
                 try{
-                    System.out.println("*********************" + e.getClass());
+                    //System.out.println("*********************" + e.getClass());
                     if(e instanceof EOFException){
                         PeerNode nodeToBeRemoved = listOfPeers.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
                         System.out.println("Removing PeerNode:" + nodeToBeRemoved.getId() + ":" + listOfPeers.removePeerNode(nodeToBeRemoved));

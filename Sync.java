@@ -70,7 +70,7 @@ public class Sync implements Runnable{
                     }else{
                         Thread client = new Thread(new TcpClient(masterNode.getIPAddress(), "60010", obj));
                         client.start();
-                        System.out.println("Sync:run:Starting Client thread !!!!!!!!!!!!!");
+                        //System.out.println("Sync:run:Starting Client thread !!!!!!!!!!!!!");
                     }
                 }
             }
@@ -79,7 +79,7 @@ public class Sync implements Runnable{
             {
                 java.util.Date date= new java.util.Date();
                 Timestamp t = new Timestamp(date.getTime());
-                System.out.println("\n Number of Files Received till"+ t + "is:"+ count2);
+                System.out.println("\n Number of Files Received till "+ t + " is: "+ count2);
                 count1=count2;
             }
  
@@ -108,8 +108,8 @@ public class Sync implements Runnable{
             {
                 /* Get your own Lof */
 
-                if(listOfPeers.getList().size() !=0)
-                  System.out.println("Sync:run:I am the master and number of nodes in the list are" + listOfPeers.getList().size() );
+                if(listOfPeers.getList().size() !=0){}
+                  //System.out.println("Sync:run:I am the master and number of nodes in the list are" + listOfPeers.getList().size() );
                 else
                     {
                         System.out.println("Sync:run:Looks like I am the only one here!");
@@ -179,7 +179,7 @@ public class Sync implements Runnable{
         PeerNode peer = null;
         //System.out.println("FileName is:"+fileName + " and Peer Id is:"+peerIds);
         if(fileName == null || peerIds == null){
-		System.out.println("Seek from peer; " + fileName + " " + peerIds);
+		//System.out.println("Seek from peer; " + fileName + " " + peerIds);
             return false;
         }
         for(String peerId: peerIds)
