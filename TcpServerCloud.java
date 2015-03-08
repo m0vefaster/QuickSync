@@ -108,7 +108,9 @@ public class TcpServerCloud implements Runnable
                 
                 //CLOSE SOCKET HERE
                 //s.close();
-            }catch (Exception e) {
+            }catch(StreamCorruptedException ee){
+		System.out.println("StreamCorruptedException !!!!!!");
+	    }catch (Exception e) {
                 try{
                     System.out.println("*********************" + e.getClass());
                     if(e instanceof EOFException){
