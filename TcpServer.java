@@ -86,7 +86,7 @@ public class TcpServer implements Runnable
 		java.util.Date date= new java.util.Date();
 		Timestamp t = new Timestamp(date.getTime());
 
-		System.out.println(peerList.getSelf().getListOfFiles().getList().size() + " " + t);
+		System.out.println(peerList.getSelf().getListOfFiles().getArrayListOfFiles().size() + " " + t);
 
             }
             else if(obj.get("type").equals("ArrayList"))
@@ -147,7 +147,7 @@ public class TcpServer implements Runnable
         }
         catch(Exception e)
         {
-            e.printStackTrace();
+            //e.printStackTrace();
         }
         return obj;
     }
