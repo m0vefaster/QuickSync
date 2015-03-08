@@ -98,11 +98,11 @@ public class Sync implements Runnable{
                 ret = seekFromPeer(String.valueOf(entry.getKey()), entry.getValue(), masterNode==null ? listOfPeers.getSelf().isCloud() : masterNode.isCloud());//Instead of Index 0 seek from peer based on Algo.
                 if(ret == false){
                     System.out.println("Sync:run:Seeking from Peer failed\n");
-                    listOfPeers.printPeerList();
+                    //listOfPeers.printPeerList();
                 }
             }
             
-            listOfPeers.printPeerList();
+            //listOfPeers.printPeerList();
             if(listOfPeers.getMaster() == null) /*I am the master*/
             {
                 /* Get your own Lof */
