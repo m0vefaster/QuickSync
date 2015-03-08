@@ -14,9 +14,13 @@ public class TcpClientCloud implements Runnable
     private Thread t;
     private String threadName = "ClientToCloud";
     private ListOfPeers listOfPeers;
+    OutputStream outToServer = null;
+    ObjectOutputStream out = null;
+    Socket client = null;
 
     TcpClientCloud (String serverName, String port, ListOfPeers listOfPeers)
     {
+        
         this.serverName = serverName;
         this.port = Integer.parseInt(port);
         this.listOfPeers = listOfPeers;
@@ -26,7 +30,6 @@ public class TcpClientCloud implements Runnable
     {
         File myFile;
         String file;
-        Socket client = null;
         int count = 0;
         PeerNode self = listOfPeers.getSelf();
         
@@ -38,6 +41,8 @@ public class TcpClientCloud implements Runnable
                 try
                 {
                     client = new Socket(serverName, port);
+		    outToServer = client.getOutputStream();
+		    out = new ObjectOutputStream(outToServer);
                 }
                 catch (Exception anye)
                 {
@@ -62,7 +67,7 @@ public class TcpClientCloud implements Runnable
 
             String data = self.getId() + ":" + String.valueOf(self.getWeight());
             JSONObject JSONobj = JSONManager.getJSON(data, "Init");
-            sendMessage(JSONobj, client);
+            sendMessage(JSONobj);
             //System.out.println("Client:Sent Init to cloud");
             //System.out.println("TcpCient:run: Socket closed? "+ client.isClosed());
             
@@ -99,15 +104,13 @@ public class TcpClientCloud implements Runnable
         }
     }
 
-    void sendMessage(JSONObject obj, Socket client)
+    void sendMessage(JSONObject obj)
     {
         if(client == null){
             return;
         }
         try
         {
-            OutputStream outToServer = client.getOutputStream();
-            ObjectOutputStream out = new ObjectOutputStream(outToServer);
             byte[] outputArray = obj.toString().getBytes();
             int len = obj.toString().length();
             out.writeObject(len);
