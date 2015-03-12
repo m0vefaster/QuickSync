@@ -66,13 +66,15 @@ public class TcpClient implements Runnable
             }while(client==null);
             System.out.println("TcpClient:run: Client:Just connected to " + client.getRemoteSocketAddress());
 
+            OutputStream outToServer = client.getOutputStream();
+            ObjectOutputStream out = new ObjectOutputStream(outToServer);
             if(obj == null){
                 if(seeking == true){
                     System.out.println("TcpClient:run: Sending fileList");
                     /* Send a list of files to be sought. Put a randomized or a part of file list */
                     ArrayList<String> filesToAsk = fileList;
                     JSONObject obj1 = JSONManager.getJSON(filesToAsk, 1);
-                    sendMessage(obj1, client);
+                    sendMessage(obj1, client, out);
                 }else{
                     System.out.println("TcpClient:run: Sending files to the remote");
                     Iterator<String> itr = fileList.iterator();
@@ -81,14 +83,15 @@ public class TcpClient implements Runnable
                         //Send the file from ...
                         File file= new File(path+"/"+str);
                         JSONObject obj2 = JSONManager.getJSON(file);
-                        sendMessage(obj2, client);
+                        sendMessage(obj2, client, out);
                     }
                 }
             }else{
                 System.out.println("TcpClient:run: Sending single message to remote");
-                sendMessage(obj, client);
+                sendMessage(obj, client, out);
             }
                
+            out.close();
             client.close();
         }
         catch(Exception e)
@@ -114,17 +117,14 @@ public class TcpClient implements Runnable
         }
     }
 
-    void sendMessage(JSONObject obj, Socket client)
+    void sendMessage(JSONObject obj, Socket client, ObjectOutputStream out)
     {
         try
         {
-            OutputStream outToServer = client.getOutputStream();
-            ObjectOutputStream out = new ObjectOutputStream(outToServer);
             byte[] outputArray = obj.toString().getBytes();
             int len = obj.toString().length();
             out.writeObject(len);
             out.writeObject(outputArray);
-            out.close();
         }
         catch(Exception e)
         {
