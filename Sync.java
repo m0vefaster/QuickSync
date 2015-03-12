@@ -234,13 +234,14 @@ public class Sync implements Runnable{
         //System.out.println();
     }
     
-    boolean seekFromPeer(ArrayList<String> fileName, String peer, boolean isCloud){
+    boolean seekFromPeer(ArrayList<String> fileName, String peerId, boolean isCloud){
         //System.out.println("FileName is:"+fileName + " and Peer Id is:"+peerIds);
-        if(fileName == null || peer == null){
+        if(fileName == null || peerId == null){
 		//System.out.println("Seek from peer; " + fileName + " " + peerIds);
             return false;
         }
 
+        PeerNode peer = listOfPeers.getPeerNode(peerId);
         JSONObject obj = JSONManager.getJSON(fileName, 1);
         if(peer.isCloud() == true){
             listOfPeers.getSelf().sendMessage(obj);
