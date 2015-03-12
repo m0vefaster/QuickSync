@@ -39,18 +39,14 @@ public class TcpServer implements Runnable
     public void run()
     {
         int count =0;
-        //System.out.println("TcpServer:run: Server running "+s.toString());
+        System.out.println("TcpServer:run: Server running "+s.toString());
         try {
             JSONObject obj = getMessage(s);
-
-            if(count++%100 == 0){
-                //System.out.println("TcpServer:run: Running TcpServer\n");
-            }
 
             //Check for NULL Object
             if(obj.get("type").equals("Control"))
             {
-                //System.out.println("TcpServer:run: Got an Control Message from:"+s.getInetAddress().toString());
+                System.out.println("TcpServer:run: Got an Control Message from:"+s.getInetAddress().toString());
                 String str = (String)obj.get("value");
                 //Send the file from ...
                 File file= new File(path+"/"+str);
@@ -61,13 +57,13 @@ public class TcpServer implements Runnable
             else if(obj.get("type").toString().substring(0,4).equals("File"))
             {
                 
-                //System.out.println("TcpServer:run: Got an File from:"+s.getInetAddress().toString());
                 String fileContent = (String)obj.get("value");
                 //Store this File...
                 String receivedPath = obj.get("type").toString().substring(4);
                 String[] splits = receivedPath.split("/");
                 int noOfSplits = splits.length;
                 String newPath = path;
+                System.out.println("TcpServer:run: Got an File " + receivedPath + " from:"+s.getInetAddress().toString());
 
                 while(noOfSplits > 1){
                     newPath = newPath + "/" + splits[splits.length - noOfSplits];
@@ -120,7 +116,7 @@ public class TcpServer implements Runnable
             }
             else if(obj.get("type").toString().substring(0,4).equals("ArrayListFiles"))
             {
-                //System.out.println("TcpServer:run: Got an File from:"+s.getInetAddress().toString());
+                System.out.println("TcpServer:run: Got an ArrayListFile from:"+s.getInetAddress().toString());
                 ArrayList<String> fileArray = (ArrayList<String>)obj.get("value");
                 //Store this File...
                 Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", fileArray, false));

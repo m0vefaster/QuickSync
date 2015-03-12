@@ -43,14 +43,10 @@ public class TcpClient implements Runnable
         
         try
         {
-            //System.out.println("TcpClient:run: Connecting to " + serverName + " on port " + port);
+            System.out.println("TcpClient:run: Connecting to " + serverName + " on port " + port);
             client =null ;
             do
             {
-                if(count++%10 == 0){
-                    //System.out.println("TcpClient:run: Running TcpClient\n");
-                }
-
                 try
                 {
                     client = new Socket(serverName, port);
@@ -68,15 +64,17 @@ public class TcpClient implements Runnable
                     //anye.printStackTrace();
                 }
             }while(client==null);
-            //System.out.println("TcpClient:run: Client:Just connected to " + client.getRemoteSocketAddress());
+            System.out.println("TcpClient:run: Client:Just connected to " + client.getRemoteSocketAddress());
 
             if(obj == null){
                 if(seeking == true){
+                    System.out.println("TcpClient:run: Sending fileList");
                     /* Send a list of files to be sought. Put a randomized or a part of file list */
                     ArrayList<String> filesToAsk = fileList;
                     JSONObject obj1 = JSONManager.getJSON(filesToAsk, 1);
                     sendMessage(obj1, client);
                 }else{
+                    System.out.println("TcpClient:run: Sending files to the remote");
                     Iterator<String> itr = fileList.iterator();
                     while(itr.hasNext()){
                         String str = itr.next();
@@ -87,6 +85,7 @@ public class TcpClient implements Runnable
                     }
                 }
             }else{
+                System.out.println("TcpClient:run: Sending single message to remote");
                 sendMessage(obj, client);
             }
                
@@ -107,7 +106,7 @@ public class TcpClient implements Runnable
     
     void start ()
     {
-        //System.out.println("TcpClient:start: Starting " +  threadName );
+        System.out.println("TcpClient:start: Starting " +  threadName );
         if (t == null)
         {
             t = new Thread (this, threadName);
