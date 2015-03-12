@@ -104,13 +104,47 @@ public class Sync implements Runnable{
 
 
              //Alogrithm 2 -> Randomized
-             HashMap<String,ArrayList<String>> mappingSet = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer(),listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles());
+
+             HashMap<String,ArrayList<String>> fileToPeersMap = getFilesToRequestPerPeer(listOfPeers.getSelf().getHashMapFilePeer(),listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles());
+             HashMap<String,ArrayList<String>> peerToFilesMap = new HashMap<String,ArrayList<String>>();
+             Random rand = new Random(); 
+     
+             Set mappingSet = fileToPeersMap.entrySet();    
+             Iterator itr =  mappingSet.iterator();
+        
+             while(itr.hasNext()){
+                 Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
+                 ArrayList<String> listofPeerHavingTheFile = entry.getValue();
+                 String randomPeerId = listofPeerHavingTheFile.get(rand.nextInt(listofPeerHavingTheFile.size()));
+                 if(peerToFilesMap.containsKey(randomPeerId))
+                 {
+                    ArrayList<String> listOfFileForPeer = peerToFilesMap.get(randomPeerId);
+                    listOfFileForPeer.add(entry.getKey());
+                 }  
+                 else
+                 {
+                    ArrayList<String> listOfFileForPeer = new ArrayList<String>();
+                    listOfFileForPeer.add(entry.getKey());
+                    peerToFilesMap.put(randomPeerId,listOfFileForPeer);
+                 }
+             }
              
+             mappingSet = peerToFilesMap.entrySet();    
+             itr =  mappingSet.iterator();
+        
+             while(itr.hasNext()){
+                 Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
+                 Collections.shuffle(entry.getValue());
+                 ret = seekFromPeer( entry.getValue(), entry.getKey(), masterNode==null ? listOfPeers.getSelf().isCloud() : masterNode.isCloud());//Instead of Index 0 seek from peer based on Algo.
+             }
+
+/*Old.....Remove after commit
              ArrayList<String> randList = new ArrayList<String>();
              for(String k : mappingSet.keySet()) 
              {
-             randList.add(k);
+               randList.add(k);
              }
+
 
              Collections.shuffle(randList);
              for(int j=0;j<randList.size();j++)
@@ -122,6 +156,10 @@ public class Sync implements Runnable{
                     //listOfPeers.printPeerList();
                 }
              }
+
+
+*/
+             
 
             
             //listOfPeers.printPeerList();
@@ -196,34 +234,19 @@ public class Sync implements Runnable{
         //System.out.println();
     }
     
-    boolean seekFromPeer(String fileName, ArrayList<String> peerIds, boolean isCloud){
-        PeerNode peer = null;
+    boolean seekFromPeer(ArrayList<String> fileName, String peer, boolean isCloud){
         //System.out.println("FileName is:"+fileName + " and Peer Id is:"+peerIds);
-        if(fileName == null || peerIds == null){
+        if(fileName == null || peer == null){
 		//System.out.println("Seek from peer; " + fileName + " " + peerIds);
             return false;
         }
-        ArrayList<String> peerIdDup = new ArrayList<String>(peerIds);
-        Collections.shuffle(peerIdDup);
-        for(String peerId: peerIdDup)
-        {
-            peer = listOfPeers.getPeerNode(peerId);
-            if(peer != null){
-                break;
-            }
-            
-        }
-        if(peer==null){
-		//System.out.println("Seek from peer; Peer not found for peerId " + peerIds);
-            return false;
-	}
 
-        JSONObject obj = JSONManager.getJSON(fileName);
+        JSONObject obj = JSONManager.getJSON(fileName, 1);
         if(peer.isCloud() == true){
             listOfPeers.getSelf().sendMessage(obj);
             //System.out.println("Sync:run:Sending control message to cloud");
         }else{
-            Thread client = new Thread(new TcpClient(peer.getIPAddress(), "60010", obj));
+            Thread client = new Thread(new TcpClient(peer.getIPAddress(), "60010", fileName, true));
             client.start();
         }
         
