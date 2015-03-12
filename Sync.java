@@ -131,7 +131,7 @@ public class Sync implements Runnable{
              }
              
              mappingSet = peerToFilesMap.entrySet();    
-             System.out.println("HashMap of peerToFilesMap is :"+ peerToFilesMap);
+             //System.out.println("HashMap of peerToFilesMap is :"+ peerToFilesMap);
 			 itr =  mappingSet.iterator();
        		  
              while(itr.hasNext()){
