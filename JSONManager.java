@@ -83,6 +83,14 @@ public class JSONManager {
         return obj;
     }
 
+    public static JSONObject getJSON(ArrayList<String> files, int x)
+    {
+        JSONObject obj = new JSONObject();
+        obj.put("type", "ArrayListFiles");
+        obj.put("value", files);
+        return obj;
+    }
+ 
     public static Object convertStringToJSON(String str)
     {
         //System.out.println("JSONManager:convertStringToJSON:Converting String to JSON");

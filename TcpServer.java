@@ -118,13 +118,21 @@ public class TcpServer implements Runnable
                 HashMap map = (HashMap)obj.get("value");
                 peerList.getSelf().setHashMapFilePeer(map);
             }
+            else if(obj.get("type").toString().substring(0,4).equals("ArrayListFiles"))
+            {
+                //System.out.println("TcpServer:run: Got an File from:"+s.getInetAddress().toString());
+                ArrayList<String> fileArray = (ArrayList<String>)obj.get("value");
+                //Store this File...
+                Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", fileArray, false));
+                client.start();
+            }
             else
             {
                 //System.out.println("TcpServer:run: Got an Invalid Message from:"+s.getInetAddress().toString());
             }
             
             //CLOSE SOCKET HERE
-            s.close();
+            //s.close();
     }catch(StreamCorruptedException ee){
             ee.printStackTrace();
      }catch (Exception e) {

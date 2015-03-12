@@ -14,6 +14,11 @@ public class TcpClient implements Runnable
     private Thread t;
     private String threadName = "Client";
     private JSONObject obj;
+    private ArrayList<String> fileList;
+    private boolean seeking;
+    static String homeDir = System.getProperty("user.home");
+    static String folder = "QuickSync";
+    static String path = homeDir + "/" + folder ;
 
     TcpClient (String serverName, String port, JSONObject obj)
     {
@@ -22,10 +27,17 @@ public class TcpClient implements Runnable
         this.obj = obj;
     }
     
+    TcpClient (String serverName, String port, ArrayList<String> fileList, boolean seeking)
+    {
+        this.serverName = serverName;
+        this.port = Integer.parseInt(port);
+        this.fileList = fileList;
+        this.seeking = seeking;
+        this.obj = null;
+    }
+
     public void run()
     {
-        File myFile;
-        String file;
         Socket client=null;
         int count =0;
         
@@ -57,7 +69,26 @@ public class TcpClient implements Runnable
                 }
             }while(client==null);
             //System.out.println("TcpClient:run: Client:Just connected to " + client.getRemoteSocketAddress());
-            sendMessage(obj, client);
+
+            if(obj == null){
+                if(seeking == true){
+                    /* Send a list of files to be sought. Put a randomized or a part of file list */
+                    ArrayList<String> filesToAsk = fileList;
+                    JSONObject obj1 = JSONManager.getJSON(filesToAsk, 1);
+                    sendMessage(obj1, client);
+                }else{
+                    Iterator<String> itr = fileList.iterator();
+                    while(itr.hasNext()){
+                        String str = itr.next();
+                        //Send the file from ...
+                        File file= new File(path+"/"+str);
+                        JSONObject obj2 = JSONManager.getJSON(file);
+                        sendMessage(obj2, client);
+                    }
+                }
+            }else{
+                sendMessage(obj, client);
+            }
                
             client.close();
         }
