@@ -111,7 +111,8 @@ public class Sync implements Runnable{
      
              Set mappingSet = fileToPeersMap.entrySet();    
              Iterator itr =  mappingSet.iterator();
-        
+      		 System.out.println("HashMap of fileToPeerMap is :"+ fileToPeersMap);
+			 System.out.println("Temp:"+listOfPeers.getSelf().getHashMapFilePeer());
              while(itr.hasNext()){
                  Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
                  ArrayList<String> listofPeerHavingTheFile = entry.getValue();
@@ -130,8 +131,9 @@ public class Sync implements Runnable{
              }
              
              mappingSet = peerToFilesMap.entrySet();    
-             itr =  mappingSet.iterator();
-        
+             System.out.println("HashMap of peerToFilesMap is :"+ peerToFilesMap);
+			 itr =  mappingSet.iterator();
+       		  
              while(itr.hasNext()){
                  Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
                  Collections.shuffle(entry.getValue());
@@ -185,8 +187,8 @@ public class Sync implements Runnable{
                     }
                 
                 listOfPeers.getSelf().setHashMapFilePeer( getFilesToRequestPerPeerMaster(listOfPeers));
-                //System.out.println("Sync.java: Global Hashmap of controller");
-                //print(listOfPeers.getSelf().getHashMapFilePeer());
+                System.out.println("Sync.java: Global Hashmap of controller");
+                print(listOfPeers.getSelf().getHashMapFilePeer());
 
                 SortedSet<PeerNode> peerList =listOfPeers.getList();
                 Iterator<PeerNode> it = peerList.iterator();
@@ -229,9 +231,9 @@ public class Sync implements Runnable{
         
         while(itr.hasNext()){
             Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
-            //System.out.print(entry.getKey() + ", ");
+            System.out.print(entry.getKey() + ", ");
         }
-        //System.out.println();
+        System.out.println();
     }
     
     boolean seekFromPeer(ArrayList<String> fileName, String peerId, boolean isCloud){
