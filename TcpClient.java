@@ -125,7 +125,6 @@ public class TcpClient implements Runnable
             out.writeObject(len);
             out.writeObject(outputArray);
             out.close();
-            client.close();
         }
         catch(Exception e)
         {
