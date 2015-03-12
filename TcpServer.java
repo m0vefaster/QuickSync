@@ -93,7 +93,7 @@ public class TcpServer implements Runnable
             }
             else if(obj.get("type").equals("ArrayList"))
             {
-                //System.out.println("TcpServer:run: Got an ArrayList from:"+s.getInetAddress().toString());
+                System.out.println("TcpServer:run: Got an ArrayList from:"+s.getInetAddress().toString());
                 ArrayList list = (ArrayList)obj.get("value");
                 //Uodate the peerList peerNode list of files
                 PeerNode peerNode = peerList.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
@@ -110,7 +110,7 @@ public class TcpServer implements Runnable
             }
             else if(obj.get("type").equals("HashMap"))
             {
-                //System.out.println("TcpServer:run: Got an HashMap from:"+s.getInetAddress().toString());
+                System.out.println("TcpServer:run: Got an HashMap from:"+s.getInetAddress().toString());
                 HashMap map = (HashMap)obj.get("value");
                 peerList.getSelf().setHashMapFilePeer(map);
             }
