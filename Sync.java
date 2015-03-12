@@ -187,8 +187,8 @@ public class Sync implements Runnable{
                     }
                 
                 listOfPeers.getSelf().setHashMapFilePeer( getFilesToRequestPerPeerMaster(listOfPeers));
-                System.out.println("Sync.java: Global Hashmap of controller");
-                print(listOfPeers.getSelf().getHashMapFilePeer());
+                //System.out.println("Sync.java: Global Hashmap of controller");
+                //print(listOfPeers.getSelf().getHashMapFilePeer());
 
                 SortedSet<PeerNode> peerList =listOfPeers.getList();
                 Iterator<PeerNode> it = peerList.iterator();
@@ -202,7 +202,7 @@ public class Sync implements Runnable{
                     //peerNode.getListOfFiles().printFileList();
 
                     //System.out.print("Sync.java: Hashmap from controller to " + peerNode.getId());
-                    print(hmFilesPeers);
+                    //print(hmFilesPeers);
                     if(!hmFilesPeers.isEmpty()){
                         JSONObject obj = JSONManager.getJSON(hmFilesPeers);// make the object
                         Thread client = new Thread(new TcpClient(peerNode.getIPAddress(), "60010", obj));
