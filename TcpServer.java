@@ -114,7 +114,7 @@ public class TcpServer implements Runnable
                 HashMap map = (HashMap)obj.get("value");
                 peerList.getSelf().setHashMapFilePeer(map);
             }
-            else if(obj.get("type").toString().substring(0,4).equals("ArrayListFiles"))
+            else if(obj.get("type").equals("ArrayListFiles"))
             {
                 System.out.println("TcpServer:run: Got an ArrayListFile from:"+s.getInetAddress().toString());
                 ArrayList<String> fileArray = (ArrayList<String>)obj.get("value");
