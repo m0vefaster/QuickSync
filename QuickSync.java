@@ -63,7 +63,7 @@ public class QuickSync{
             cloudIP=  InetAddress.getByName("ec2-52-10-100-25.us-west-2.compute.amazonaws.com").getHostAddress();// args[1];//JOptionPane.showInputDialog("Enter CloudIP");
             //cloudIP = "52.10.50.217";
             Integer weight = rand.nextInt(5000) + 1;//Integer.parseInt(args[2]);
-            
+	    //Integer weight = NodeWeightCalculation.getWeight();
             PeerNode self = new PeerNode(hostName, selfIp, weight);//Integer.parseInt(JOptionPane.showInputDialog("Enter Weight:")));
             peerList = new ListOfPeers(self);
             System.out.println("Node Details:\n"+hostName+"\n"+cloudIP+"\n"+weight+"\n\n");

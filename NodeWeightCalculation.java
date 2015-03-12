@@ -30,11 +30,11 @@ class NodeWeightCalculation
   }
   public static String matchFromFile(String file, String pattern)
   {   
-    Pattern regexp = Pattern.compile(pattern, Pattern.MULTILINE);
-    Matcher matcher = regexp.matcher("");
-    Path path = Paths.get(file);
-    String value = "";
+      String value = "";
     try {
+      Pattern regexp = Pattern.compile(pattern, Pattern.MULTILINE);
+      Matcher matcher = regexp.matcher("");
+      Path path = Paths.get(file);
       BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
       LineNumberReader lineReader = new LineNumberReader(reader);
     
@@ -50,7 +50,6 @@ class NodeWeightCalculation
       }    
     }
     catch (IOException ex){
-      ex.printStackTrace();
     }
     return value;
   }
@@ -61,13 +60,20 @@ class NodeWeightCalculation
     Double cpu=0.0;
     Integer battery=1, state=0;
     long sysLatency = getSysLatency();
-    try{
       switch(os)
       {
         case "linux":
-          cpu = Double.parseDouble(matchFromFile("/proc/cpuinfo", "cpu\\s+M(.*)"));
-          battery = Integer.parseInt(matchFromFile("/proc/acpi/battery/BAT0/info", "design\\s+c(.*)"));
-          state = Integer.parseInt(matchFromFile("/proc/acpi/battery/BAT0/state", "remaining\\s+c(.*)"));                         
+          try{cpu = Double.parseDouble(matchFromFile("/proc/cpuinfo", "cpu\\s+M(.*)"));}
+	  catch(Exception e){cpu = 100.0;}
+          try{
+		battery = Integer.parseInt(matchFromFile("/proc/acpi/battery/BAT0/info", "design\\s+c(.*)"));
+          	state = Integer.parseInt(matchFromFile("/proc/acpi/battery/BAT0/state", "remaining\\s+c(.*)"));
+	  }
+	  catch(Exception e)
+	  {
+		state = 100;
+		battery = 100;
+	  }                         
           System.out.println(cpu+" " + battery+" " +state);
           break;
         case "windows":
@@ -75,6 +81,7 @@ class NodeWeightCalculation
           break;
         case "mac os x":
           //Processor Speed
+	  try{
           String command = "system_profiler SPPowerDataType";
           String command2 = "system_profiler SPHardwareDataType";
 
@@ -116,16 +123,15 @@ class NodeWeightCalculation
           System.out.println(cpu+" " + battery+" " +state);
           System.out.println("3");
           break;
+    }
+	    catch(IOException e)
+	    {
+	      e.printStackTrace();}
         case "android":
           System.out.println("4");
           break;
-      }
+	    }
 
-    }
-    catch(IOException e)
-    {
-      e.printStackTrace();
-    }
-    return (int)(cpu + (state*1000)/battery + 1000/sysLatency);
+    return (int)(100000*(1.0/(cpu + (state*1000)/battery + 1000/sysLatency)));
   }
 }
