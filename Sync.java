@@ -111,8 +111,8 @@ public class Sync implements Runnable{
      
              Set mappingSet = fileToPeersMap.entrySet();    
              Iterator itr =  mappingSet.iterator();
-      		 System.out.println("HashMap of fileToPeerMap is :"+ fileToPeersMap);
-			 System.out.println("Temp:"+listOfPeers.getSelf().getHashMapFilePeer());
+      		 //System.out.println("HashMap of fileToPeerMap is :"+ fileToPeersMap);
+		//	 System.out.println("Temp:"+listOfPeers.getSelf().getHashMapFilePeer());
              while(itr.hasNext()){
                  Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
                  ArrayList<String> listofPeerHavingTheFile = entry.getValue();
