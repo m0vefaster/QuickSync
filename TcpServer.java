@@ -156,6 +156,7 @@ public class TcpServer implements Runnable
          }catch (Exception e) {
                 try{
                     s.close();
+                    break;
                     //System.out.println("TcpServer:run: closing socket "+s.toString());
                 e.printStackTrace();}
                 catch(Exception ee)
@@ -164,6 +165,7 @@ public class TcpServer implements Runnable
             }
             //System.out.println();        
         }
+        s.close();
     }
     
     JSONObject getMessage(Socket s, ObjectInputStream in)
