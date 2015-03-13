@@ -140,7 +140,7 @@ public class TcpServer implements Runnable
                     client.start();
                     break;
                 }
-                else if(obj.get("type").equals("EOF")){
+                else if(obj.get("type").equals("EOFFileList")){
                     System.out.println("File EOF received from: " + s.getInetAddress().toString());
                     break;
                 }else

@@ -90,7 +90,7 @@ public class TcpClient implements Runnable
                         JSONObject obj2 = JSONManager.getJSON(file);
                         sendMessage(obj2, client, out);
                     }
-                    JSONObject obj3 = JSONManager.getJSON("", "EOF");
+                    JSONObject obj3 = JSONManager.getJSON("", "EOFFileList");
                     sendMessage(obj3, client, out);
                 }
             }else{
