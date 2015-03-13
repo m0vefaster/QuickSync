@@ -7,7 +7,7 @@ class ListOfPeers
     SortedSet<PeerNode> peerList = new TreeSet<PeerNode>(new Comp());
     
     PeerNode mySelf;
-    HashSet<String> filesInSync = new HashSet<String>();
+    HashMap<String,String> filesInSync = new HashMap<String,String>();
     ListOfPeers(PeerNode mySelf)
     {
         //Insert to Peer List cloud domain id
@@ -190,7 +190,7 @@ class ListOfPeers
    }
 
 
-   ArrayList<String> addFilesInTransit(ArrayList<String> fileList)
+   ArrayList<String> addFilesInTransit(ArrayList<String> fileList,String peerId)
    {
        int i;
        //System.out.println("Sent fileList" + fileList);
@@ -198,10 +198,10 @@ class ListOfPeers
        ArrayList<String> listOfFileToSend = new ArrayList<String>();
        for(i=0;i<fileList.size();i++)
        {
-            if(!syncMap(fileList.get(i),"contains"))
+            if(!syncMap(fileList.get(i),peerId,"contains"))
             {
                 listOfFileToSend.add(fileList.get(i));
-                syncMap(fileList.get(i),"add");
+                syncMap(fileList.get(i),peerId,"add");
             }
        }
 
@@ -210,35 +210,37 @@ class ListOfPeers
 
    }
 
-   boolean removeFileInTransit(String fileName)
+   boolean removeFileInTransit(String fileName,String peerId)
    {
         //System.out.println("Just Entered removeFileInTransit:"+syncMap("","print"));
 
-        if(!syncMap(fileName,"contains"))
+        if(!syncMap(fileName,peerId,"contains"))
             {
                 return false;
             }
-         syncMap(fileName,"remove");   
+         syncMap(fileName,peerId,"remove");   
          return true;      
    }
 
-   synchronized boolean syncMap(String fileName,String type)
+   synchronized boolean syncMap(String fileName, String peerId, String type)
    {
     //System.out.println("Just Entered syncMap:"+filesInSync);
     //System.out.println("SyncMap: fileName: " + fileName + " type: " + type);
+
+    /*HahsMap is <File,Peer> */
     switch(type)
     {
         case "add":  
-                    if(filesInSync.contains(fileName))
+                    if(filesInSync.containsKey(fileName))
                         {
                             //System.out.println("Error:File present in filesInSync");
                             return false;
                         }
                     //System.out.println("Adding File");
-                    filesInSync.add(fileName);
+                    filesInSync.put(fileName,peerId);
                     break;
         case "remove":
-                       if(!filesInSync.contains(fileName))
+                       if(!filesInSync.containsKey(fileName))
                        {
                             //System.out.println("Error:File not present in filesInSync");
                             return false;
@@ -246,7 +248,18 @@ class ListOfPeers
                         //System.out.println("Rmoving File");
                        filesInSync.remove(fileName);
                        break;
-        case "contains":return filesInSync.contains(fileName);
+        case "contains":return filesInSync.containsKey(fileName);
+        case "clearForPeer":
+                             Set mappingSet = filesInSync.entrySet();
+                             Iterator itr =  mappingSet.iterator();
+                            while(itr.hasNext()){
+                            Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
+                                if(entry.getValue().equals(peerId))
+                                {
+                                    filesInSync.remove(entry.getKey());
+                                }
+                            }
+                            break;
         case "print" :   if(filesInSync==null) return false;
                         System.out.print(filesInSync);
                         break;

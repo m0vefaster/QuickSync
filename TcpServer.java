@@ -27,12 +27,14 @@ public class TcpServer implements Runnable
     static String homeDir = System.getProperty("user.home");
     static String folder = "QuickSync";
     static String path = homeDir + "/" + folder ;
-    
+    boolean isFileSocket =false;
+    PeerNode peerNode;//Communicating with this node
     public TcpServer(ServerSocket ss, Socket s, ListOfPeers peerList)
     {
         this.ss = ss;
         this.s = s;
         this.peerList = peerList;
+        peerNode = peerList.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
     }
 
     @Override
@@ -66,13 +68,13 @@ public class TcpServer implements Runnable
                 }
                 else if(obj.get("type").toString().substring(0,4).equals("File"))
                 {
-                    
+                    isFileSocket=true;
                     String fileContent = (String)obj.get("value");
                     //Store this File...
                     String receivedPath = obj.get("type").toString().substring(4);
                     System.out.println("TcpServer:run: Got an File " + receivedPath + " from:"+s.getInetAddress().toString());
                     /* Remove the file from in-transit hashset */
-                    if(!peerList.removeFileInTransit(receivedPath)){
+                    if(!peerList.removeFileInTransit(receivedPath,peerNode.getId())){
                         System.out.println("Error!!! File not found in hash set. Something is wrong");
                     }
 
@@ -112,7 +114,6 @@ public class TcpServer implements Runnable
                     System.out.println("TcpServer:run: Got an ArrayList from:"+s.getInetAddress().toString());
                     ArrayList list = (ArrayList)obj.get("value");
                     //Uodate the peerList peerNode list of files
-                    PeerNode peerNode = peerList.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
                     
                     if(peerNode ==null)
                     {
@@ -166,6 +167,11 @@ public class TcpServer implements Runnable
             {
             }
         }
+        finally
+        {
+            peerList.syncMap("",peerNode.getId(),"clearForPeer");
+        }
+
             //System.out.println();        
     }
     
