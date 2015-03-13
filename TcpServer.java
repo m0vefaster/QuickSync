@@ -60,6 +60,7 @@ public class TcpServer implements Runnable
                 String fileContent = (String)obj.get("value");
                 //Store this File...
                 String receivedPath = obj.get("type").toString().substring(4);
+                System.out.println("TcpServer:run: Got an File " + receivedPath + " from:"+s.getInetAddress().toString());
                 /* Remove the file from in-transit hashset */
                 if(!peerList.removeFileInTransit(receivedPath)){
                     System.out.println("Error!!! File not found in hash set. Something is wrong");
@@ -68,7 +69,6 @@ public class TcpServer implements Runnable
                 String[] splits = receivedPath.split("/");
                 int noOfSplits = splits.length;
                 String newPath = path;
-                System.out.println("TcpServer:run: Got an File " + receivedPath + " from:"+s.getInetAddress().toString());
 
                 while(noOfSplits > 1){
                     newPath = newPath + "/" + splits[splits.length - noOfSplits];
