@@ -16,6 +16,8 @@ public class Sync implements Runnable{
     int count1=0,count2=0;
     boolean firstTime=true;
     boolean arrayListSent = false;
+    boolean first = false;
+    
     Sync(ListOfPeers listOfPeers)
     {
         this.listOfPeers = listOfPeers;
@@ -205,10 +207,11 @@ public class Sync implements Runnable{
 
                     //System.out.print("Sync.java: Hashmap from controller to " + peerNode.getId());
                     //print(hmFilesPeers);
-                    if(!hmFilesPeers.isEmpty()){
+                    if(!hmFilesPeers.isEmpty() && first){
                         JSONObject obj = JSONManager.getJSON(hmFilesPeers);// make the object
                         Thread client = new Thread(new TcpClient(peerNode.getIPAddress(), "60010", obj, listOfPeers));
                         client.start();
+                        first=false;
                     }
                 }
 
