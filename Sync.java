@@ -15,7 +15,6 @@ public class Sync implements Runnable{
     ListOfPeers listOfPeers;
     int count1=0,count2=0;
     boolean firstTime=true;
-    boolean arrayListSent = false;
     
     Sync(ListOfPeers listOfPeers)
     {
@@ -69,10 +68,9 @@ public class Sync implements Runnable{
                     if(masterNode.isCloud()){
                         self.sendMessage(obj);
                         //System.out.println("Sync:run:Sending arraylist to cloud");
-                    }else if(arrayListSent == false){
+                    }else{
                         Thread client = new Thread(new TcpClient(masterNode.getIPAddress(), "60010", obj, listOfPeers));
                         client.start();
-                        arrayListSent = true;
                         //System.out.println("Sync:run:Starting Client thread !!!!!!!!!!!!!");
                     }
                 }
@@ -204,8 +202,8 @@ public class Sync implements Runnable{
                     //System.out.print("\nThe File list of " + peerNode.getId() + "is:");
                     //peerNode.getListOfFiles().printFileList();
 
-                    //System.out.print("Sync.java: Hashmap from controller to " + peerNode.getId());
-                    //print(hmFilesPeers);
+                    System.out.print("Sync.java: Hashmap from controller to " + peerNode.getId());
+                    print(hmFilesPeers);
                     if(!hmFilesPeers.isEmpty() ){
                         JSONObject obj = JSONManager.getJSON(hmFilesPeers);// make the object
                         Thread client = new Thread(new TcpClient(peerNode.getIPAddress(), "60010", obj, listOfPeers));
