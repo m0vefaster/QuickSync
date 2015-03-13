@@ -226,7 +226,7 @@ class ListOfPeers
 
    synchronized boolean syncMap(String fileName,String type)
    {
-    System.out.println("Just Entered syncMap:"+syncMap("","print"));
+    System.out.println("Just Entered syncMap:"+filesInSync);
     switch(type)
     {
         case "add":  
@@ -246,7 +246,9 @@ class ListOfPeers
                        filesInSync.remove(fileName);
                        break;
         case "contains":return filesInSync.contains(fileName);
-        case "print" : System.out.print(filesInSync);
+        case "print" :   if(filesInSync==null) return false;
+                        System.out.print(filesInSync);
+                        break;
         case "default": System.out.println("Hit wrong statement");
                         return false;
     } 
