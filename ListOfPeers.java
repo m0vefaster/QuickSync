@@ -193,8 +193,8 @@ class ListOfPeers
    ArrayList<String> addFilesInTransit(ArrayList<String> fileList)
    {
        int i;
-       System.out.println("Sent fileList" + fileList);
-       System.out.println("Just Entered addFilesInTransit:"+syncMap("","print"));
+       //System.out.println("Sent fileList" + fileList);
+       //System.out.println("Just Entered addFilesInTransit:"+syncMap("","print"));
        ArrayList<String> listOfFileToSend = new ArrayList<String>();
        for(i=0;i<fileList.size();i++)
        {
@@ -205,14 +205,14 @@ class ListOfPeers
             }
        }
 
-       System.out.println("Leaving addFilesInTransit:"+syncMap("","print"));
+       //System.out.println("Leaving addFilesInTransit:"+syncMap("","print"));
        return listOfFileToSend;
 
    }
 
    boolean removeFileInTransit(String fileName)
    {
-        System.out.println("Just Entered removeFileInTransit:"+syncMap("","print"));
+        //System.out.println("Just Entered removeFileInTransit:"+syncMap("","print"));
 
         if(!syncMap(fileName,"contains"))
             {
@@ -224,36 +224,36 @@ class ListOfPeers
 
    synchronized boolean syncMap(String fileName,String type)
    {
-    System.out.println("Just Entered syncMap:"+filesInSync);
-    System.out.println("SyncMap: fileName: " + fileName + " type: " + type);
+    //System.out.println("Just Entered syncMap:"+filesInSync);
+    //System.out.println("SyncMap: fileName: " + fileName + " type: " + type);
     switch(type)
     {
         case "add":  
                     if(filesInSync.contains(fileName))
                         {
-                            System.out.println("Error:File present in filesInSync");
+                            //System.out.println("Error:File present in filesInSync");
                             return false;
                         }
-                    System.out.println("Adding File");
+                    //System.out.println("Adding File");
                     filesInSync.add(fileName);
                     break;
         case "remove":
                        if(!filesInSync.contains(fileName))
                        {
-                            System.out.println("Error:File not present in filesInSync");
+                            //System.out.println("Error:File not present in filesInSync");
                             return false;
                        }   
-                        System.out.println("Rmoving File");
+                        //System.out.println("Rmoving File");
                        filesInSync.remove(fileName);
                        break;
         case "contains":return filesInSync.contains(fileName);
         case "print" :   if(filesInSync==null) return false;
                         System.out.print(filesInSync);
                         break;
-        case "default": System.out.println("Hit wrong statement");
+        case "default": //System.out.println("Hit wrong statement");
                         return false;
     } 
-     System.out.println("Leaving syncMap:"+filesInSync);
+     //System.out.println("Leaving syncMap:"+filesInSync);
      return true;
    }
 

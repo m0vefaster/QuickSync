@@ -237,7 +237,7 @@ public class Sync implements Runnable{
     }
     
     boolean seekFromPeer(ArrayList<String> fileName, String peerId, boolean isCloud){
-        System.out.println("Files are:"+fileName + " and Peer Id is:"+peerId);
+        //System.out.println("Files are:"+fileName + " and Peer Id is:"+peerId);
         if(fileName == null || peerId == null){
 		//System.out.println("Seek from peer; " + fileName + " " + peerIds);
             return false;
