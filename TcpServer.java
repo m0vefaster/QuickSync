@@ -171,7 +171,8 @@ public class TcpServer implements Runnable
         }
         finally
         {
-            peerList.syncMap("",peerId,"clearForPeer");
+            if(isFileSocket)
+              peerList.syncMap("",peerId,"clearForPeer");
         }
 
             //System.out.println();        
