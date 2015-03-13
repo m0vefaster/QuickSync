@@ -173,15 +173,12 @@ public class TcpServer implements Runnable
         JSONObject obj = null;
         try
         {
-            int length = (int)in.readObject();
-            byte[] inputArray = new byte[length];
-            inputArray = (byte[])in.readObject();
-            String line = new String(inputArray);
-            obj = (JSONObject)(JSONManager.convertStringToJSON(line));
+            Message obj2 = (Message)in.readObject();
+            obj = (JSONObject)(obj2.obj);
         }
         catch(Exception e)
         {
-            //e.printStackTrace();
+            e.printStackTrace();
         }
         return obj;
     }

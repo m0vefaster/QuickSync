@@ -128,10 +128,8 @@ public class TcpClient implements Runnable
     {
         try
         {
-            byte[] outputArray = obj.toString().getBytes();
-            int len = obj.toString().length();
-            out.writeObject(len);
-            out.writeObject(outputArray);
+            Message msg = new Message(obj);
+            out.writeObject(msg);
         }
         catch(Exception e)
         {
