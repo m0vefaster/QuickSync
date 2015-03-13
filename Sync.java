@@ -245,6 +245,9 @@ public class Sync implements Runnable{
 
         PeerNode peer = listOfPeers.getPeerNode(peerId);
         JSONObject obj = JSONManager.getJSON(fileName, 1);
+        if(peer == null){
+            return false;
+        }
         if(peer.isCloud() == true){
             listOfPeers.getSelf().sendMessage(obj);
             //System.out.println("Sync:run:Sending control message to cloud");
