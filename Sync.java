@@ -117,7 +117,16 @@ public class Sync implements Runnable{
              while(itr.hasNext()){
                  Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
                  ArrayList<String> listofPeerHavingTheFile = entry.getValue();
-                 String randomPeerId = listofPeerHavingTheFile.get(rand.nextInt(listofPeerHavingTheFile.size()));
+                 String randomPeerId ="" ;
+                 Collections.shuffle(listofPeerHavingTheFile);
+                 for(int k=0;k<listofPeerHavingTheFile.size();k++)
+                 {
+                        if(listOfPeers.getPeerNode(listofPeerHavingTheFile.get(k)) !=null)
+                        {
+                            randomPeerId = listofPeerHavingTheFile.get(k);
+                        }
+                 }
+                 System.out.println("Trying to get file:"+entry.getKey()+":  from:"+randomPeerId);
                  if(peerToFilesMap.containsKey(randomPeerId))
                  {
                     ArrayList<String> listOfFileForPeer = peerToFilesMap.get(randomPeerId);
