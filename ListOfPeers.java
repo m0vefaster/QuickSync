@@ -193,6 +193,7 @@ class ListOfPeers
    ArrayList<String> addFilesInTransit(ArrayList<String> fileList)
    {
        int i;
+       System.out.println("Just Entered addFilesInTransit:"+syncMap("","print"));
        ArrayList<String> listOfFileToSend = new ArrayList<String>();
        for(i=0;i<fileList.size();i++)
        {
@@ -206,12 +207,15 @@ class ListOfPeers
             }
        }
 
+       System.out.println("Leaving addFilesInTransit:"+syncMap("","print"));
        return listOfFileToSend;
 
    }
 
    boolean removeFileInTransit(String fileName)
    {
+        System.out.println("Just Entered removeFileInTransit:"+syncMap("","print"));
+
         if(!syncMap(fileName,"contains"))
             {
                 return false;
@@ -222,6 +226,7 @@ class ListOfPeers
 
    synchronized boolean syncMap(String fileName,String type)
    {
+    System.out.println("Just Entered syncMap:"+syncMap("","print"));
     switch(type)
     {
         case "add":  
@@ -241,10 +246,11 @@ class ListOfPeers
                        filesInSync.remove(fileName);
                        break;
         case "contains":return filesInSync.contains(fileName);
+        case "print" : System.out.print(filesInSync);
         case "default": System.out.println("Hit wrong statement");
                         return false;
     } 
-    
+     System.out.println("Just Entered syncMap:"+syncMap("","print"));
      return true;
    }
 
