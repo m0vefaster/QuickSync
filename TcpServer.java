@@ -42,13 +42,9 @@ public class TcpServer implements Runnable
         InputStream inFromServer = null;
         ObjectInputStream in = null;
         System.out.println("TcpServer:run: Server running "+s.toString());
-        try{
+        try {
             inFromServer = s.getInputStream();
             in = new ObjectInputStream(inFromServer);
-        }catch(Exception e){
-            e.printStackTrace();
-        }
-        try {
             while(true){
                 JSONObject obj = getMessage(s, in);
 
@@ -104,7 +100,7 @@ public class TcpServer implements Runnable
          
                     String t = dateFormatter.format(new java.util.Date());
                     System.out.println("From peer " + peerList.getSelf().getListOfFiles().getArrayListOfFiles().size() + " " + t + " ----- peer IP -- :" + s.getInetAddress().getHostAddress()+ " File -- " + receivedPath);
-                    break;
+                    //break;
 
                 }
                 else if(obj.get("type").equals("ArrayList"))
