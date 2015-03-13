@@ -77,7 +77,7 @@ public class TcpClient implements Runnable
                     /* Send a list of files to be sought. Put a randomized or a part of file list */
                     ArrayList<String> filesToAsk = fileList;
                     /* Send the array list to List of peer to add and get a filtered array list */
-                    filesToAsk = listOfPeers.addFilesInTransit(filesToAsk);
+                    filesToAsk = listOfPeers.addFilesInTransit(filesToAsk, listOfPeers.getPeerNodeFromIP(serverName));
                     if(filesToAsk != null){
                         JSONObject obj1 = JSONManager.getJSON(filesToAsk, 1);
                         sendMessage(obj1, client, out);
