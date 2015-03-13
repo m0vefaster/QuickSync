@@ -123,6 +123,7 @@ public class TcpServer implements Runnable
                         ListOfFiles lof= new ListOfFiles(list);
                         peerNode.setListOfFiles(lof);
                     }
+                    break;
                 }
                 else if(obj.get("type").equals("HashMap"))
                 {
