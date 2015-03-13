@@ -81,14 +81,16 @@ public class TcpClient implements Runnable
                     JSONObject obj1 = JSONManager.getJSON(filesToAsk, 1);
                     sendMessage(obj1, client, out);
                 }else{
-                    System.out.println("TcpClient:run: Sending files to the remote");
+                    System.out.println("TcpClient:run: Sending files to the remote****************"+ fileList.size());
                     Iterator<String> itr = fileList.iterator();
-                    while(itr.hasNext()){
+                    int x = 0;
+                    while(itr.hasNext() && x < 100 && !client.isClosed()){
                         String str = itr.next();
                         //Send the file from ...
                         File file= new File(path+"/"+str);
                         JSONObject obj2 = JSONManager.getJSON(file);
                         sendMessage(obj2, client, out);
+                        x++;
                     }
                     JSONObject obj3 = JSONManager.getJSON("", "EOFFileList");
                     sendMessage(obj3, client, out);
@@ -130,10 +132,15 @@ public class TcpClient implements Runnable
         {
             Message msg = new Message(obj);
             out.writeObject(msg);
+            //out.flush();
         }
         catch(Exception e)
         {
             e.printStackTrace();
+            try{
+                client.close();
+            }catch(Exception ee){
+            }
         }
     }
 }

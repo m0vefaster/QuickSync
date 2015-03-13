@@ -15,6 +15,7 @@ public class Sync implements Runnable{
     ListOfPeers listOfPeers;
     int count1=0,count2=0;
     boolean firstTime=true;
+    boolean arrayListSent = false;
     Sync(ListOfPeers listOfPeers)
     {
         this.listOfPeers = listOfPeers;
@@ -37,19 +38,19 @@ public class Sync implements Runnable{
             if(masterNode!=null)
             {
                 if(lof.getArrayListOfFiles().size() != 0){
-		         if(firstTime)
-				 {
-					 firstTime=false;
-				 	//java.util.Date date= new java.util.Date();
-		                	//Timestamp t = new Timestamp(date.getTime());
-					SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+                 if(firstTime)
+                         {
+                                 firstTime=false;
+                                //java.util.Date date= new java.util.Date();
+                                //Timestamp t = new Timestamp(date.getTime());
+                                SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
 
-					final TimeZone utc = TimeZone.getTimeZone("UTC");
-					dateFormatter.setTimeZone(utc);
+                                final TimeZone utc = TimeZone.getTimeZone("UTC");
+                                dateFormatter.setTimeZone(utc);
 
-					String t = dateFormatter.format(new java.util.Date());
-					System.out.println("Init "+ t);
-				 }
+                                String t = dateFormatter.format(new java.util.Date());
+                                System.out.println("Init "+ t);
+                         }
                     JSONObject obj = JSONManager.getJSON(lof.getList());// make the object
                     if(obj==null)
                     {
@@ -67,9 +68,10 @@ public class Sync implements Runnable{
                     if(masterNode.isCloud()){
                         self.sendMessage(obj);
                         //System.out.println("Sync:run:Sending arraylist to cloud");
-                    }else{
+                    }else if(arrayListSent == false){
                         Thread client = new Thread(new TcpClient(masterNode.getIPAddress(), "60010", obj, listOfPeers));
                         client.start();
+                        arrayListSent = true;
                         //System.out.println("Sync:run:Starting Client thread !!!!!!!!!!!!!");
                     }
                 }

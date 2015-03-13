@@ -45,14 +45,15 @@ public class TcpServer implements Runnable
         try {
             inFromServer = s.getInputStream();
             in = new ObjectInputStream(inFromServer);
-            while(true){
+            while(!s.isClosed()){
                 JSONObject obj = getMessage(s, in);
 			   
                 //Check for NULL Object
                	if(obj==null)
-				{
-				}
-				else if(obj.get("type").equals("Control"))
+                {
+                    System.out.println("obj null!!!!!!!!!!!!!!!!");
+                }
+                else if(obj.get("type").equals("Control"))
                 {
                     System.out.println("TcpServer:run: Got an Control Message from:"+s.getInetAddress().toString());
                     String str = (String)obj.get("value");
@@ -148,16 +149,17 @@ public class TcpServer implements Runnable
                     break;
                     //System.out.println("TcpServer:run: Got an Invalid Message from:"+s.getInetAddress().toString());
                 }
-                
             }
+            System.out.println("Outside while****************");
             //CLOSE SOCKET HERE
             s.close();
         }catch(StreamCorruptedException ee){
+                System.out.println("TcpServer:run: !!!!!!!!!!*********************** "+s.toString());
                 ee.printStackTrace();
         }catch (Exception e) {
             try{
+                System.out.println("TcpServer:run: !!!!!!!!!!!!!!!!!!!!!!!!!!!!! "+s.toString());
                 s.close();
-                //System.out.println("TcpServer:run: closing socket "+s.toString());
                 e.printStackTrace();
             }
             catch(Exception ee)
@@ -173,12 +175,18 @@ public class TcpServer implements Runnable
         JSONObject obj = null;
         try
         {
+            System.out.println("Server socket " + s + "**** "+ s.isClosed()+" ---- Available " + in.available());
             Message obj2 = (Message)in.readObject();
             obj = (JSONObject)(obj2.obj);
         }
         catch(Exception e)
         {
+            System.out.println("Dude Dude****************");
             e.printStackTrace();
+            try{
+                s.close();
+            }catch(Exception ee){
+            }
         }
         return obj;
     }
