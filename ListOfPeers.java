@@ -250,6 +250,7 @@ class ListOfPeers
                        break;
         case "contains":return filesInSync.containsKey(fileName);
         case "clearForPeer":
+                            System.out.println("Size of filesInSync is:"+filesInSync.size());
                              Set mappingSet = filesInSync.entrySet();
                              Iterator itr =  mappingSet.iterator();
                             while(itr.hasNext()){
@@ -259,6 +260,7 @@ class ListOfPeers
                                     filesInSync.remove(entry.getKey());
                                 }
                             }
+                            System.out.println("Size of filesInSync is:"+filesInSync.size());
                             break;
         case "print" :   if(filesInSync==null) return false;
                         System.out.print(filesInSync);

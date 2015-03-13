@@ -57,7 +57,7 @@ public class Sync implements Runnable{
                         //System.out.println("Sync:run:Obj is null");
                         try
                         {
-                        Thread.sleep(3000);
+                        Thread.sleep(30000);
                         }
 
                         catch(Exception e)
@@ -233,8 +233,9 @@ public class Sync implements Runnable{
         
         while(itr.hasNext()){
             Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
-            System.out.print(entry.getKey() + ", ");
+        //    System.out.print(entry.getKey() + ", ");
         }
+		System.out.println("Size of HashMap Sending is:"+hmap.size());
         System.out.println();
     }
     
