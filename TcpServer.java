@@ -47,9 +47,12 @@ public class TcpServer implements Runnable
             in = new ObjectInputStream(inFromServer);
             while(true){
                 JSONObject obj = getMessage(s, in);
-
+			   
                 //Check for NULL Object
-                if(obj.get("type").equals("Control"))
+               	if(obj==null)
+				{
+				}
+				else if(obj.get("type").equals("Control"))
                 {
                     System.out.println("TcpServer:run: Got an Control Message from:"+s.getInetAddress().toString());
                     String str = (String)obj.get("value");
