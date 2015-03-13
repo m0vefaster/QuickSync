@@ -7,7 +7,7 @@ class ListOfPeers
     SortedSet<PeerNode> peerList = new TreeSet<PeerNode>(new Comp());
     
     PeerNode mySelf;
-    
+    HashSet<String> filesInSync = new HashSet<String>();
     ListOfPeers(PeerNode mySelf)
     {
         //Insert to Peer List cloud domain id
@@ -188,6 +188,72 @@ class ListOfPeers
         //System.out.println("=====================HashMap after removal---"+hmFilesPeers); 
 
    }
+
+
+   ArrayList<String> addFilesInTransit(ArrayList<String> fileList)
+   {
+       int i;
+       ArrayList<String> listOfFileToSend = new ArrayList<String>();
+       for(i=0;i<fileList.size();i++)
+       {
+            if(!syncMap(fileList.get(i),"contains"))
+            {
+                listOfFileToSend.add(fileList.get(i));
+            }
+            else
+            {
+                syncMap(fileList.get(i),"add");
+            }
+       }
+
+       return listOfFileToSend;
+
+   }
+
+   boolean removeFileInTransit(String fileName)
+   {
+        if(!syncMap(fileName,"contains"))
+            {
+                return false;
+            }
+         syncMap(fileName,"remove");   
+         return true;      
+   }
+
+   synchronized boolean syncMap(String fileName,String type)
+   {
+    switch(type)
+    {
+        case "add":  
+                    if(filesInSync.contains(fileName))
+                        {
+                            System.out.println("Error:File present in filesInSync");
+                            return false;
+                        }
+                    filesInSync.add(fileName);
+                    break;
+        case "remove":
+                       if(filesInSync.contains(fileName))
+                       {
+                            System.out.println("Error:File not present in filesInSync");
+                            return false;
+                       }   
+                       filesInSync.remove(fileName);
+                       break;
+        case "contains":return filesInSync.contains(fileName);
+        case "default": System.out.println("Hit wrong statement");
+                        return false;
+    } 
+    
+     return true;
+   }
+
+
+
+
+
+
+
 
 
 }
