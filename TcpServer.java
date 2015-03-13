@@ -51,7 +51,7 @@ public class TcpServer implements Runnable
                 //Send the file from ...
                 File file= new File(path+"/"+str);
                 JSONObject obj2 = JSONManager.getJSON(file);
-                Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", obj2));
+                Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", obj2, peerList));
                 client.start();
             }
             else if(obj.get("type").toString().substring(0,4).equals("File"))
@@ -60,6 +60,11 @@ public class TcpServer implements Runnable
                 String fileContent = (String)obj.get("value");
                 //Store this File...
                 String receivedPath = obj.get("type").toString().substring(4);
+                /* Remove the file from in-transit hashset */
+                if(!peerList.removeFileInTransit(receivedPath)){
+                    System.out.println("Error!!! File not found in hash set. Something is wrong");
+                }
+
                 String[] splits = receivedPath.split("/");
                 int noOfSplits = splits.length;
                 String newPath = path;
@@ -119,7 +124,7 @@ public class TcpServer implements Runnable
                 System.out.println("TcpServer:run: Got an ArrayListFile from:"+s.getInetAddress().toString());
                 ArrayList<String> fileArray = (ArrayList<String>)obj.get("value");
                 //Store this File...
-                Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", fileArray, false));
+                Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", fileArray, false, peerList));
                 client.start();
             }
             else

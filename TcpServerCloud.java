@@ -66,7 +66,7 @@ public class TcpServerCloud implements Runnable
                         self.sendMessage(obj2);
                         //System.out.println("TcpServerCloud:run:Sending file " + str + " to cloud");
                     }else{
-                        Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", obj2));
+                        Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", obj2, listOfPeers));
                         client.start();
                     }
                 }

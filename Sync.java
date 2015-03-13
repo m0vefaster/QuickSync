@@ -68,7 +68,7 @@ public class Sync implements Runnable{
                         self.sendMessage(obj);
                         //System.out.println("Sync:run:Sending arraylist to cloud");
                     }else{
-                        Thread client = new Thread(new TcpClient(masterNode.getIPAddress(), "60010", obj));
+                        Thread client = new Thread(new TcpClient(masterNode.getIPAddress(), "60010", obj, listOfPeers));
                         client.start();
                         //System.out.println("Sync:run:Starting Client thread !!!!!!!!!!!!!");
                     }
@@ -205,7 +205,7 @@ public class Sync implements Runnable{
                     //print(hmFilesPeers);
                     if(!hmFilesPeers.isEmpty()){
                         JSONObject obj = JSONManager.getJSON(hmFilesPeers);// make the object
-                        Thread client = new Thread(new TcpClient(peerNode.getIPAddress(), "60010", obj));
+                        Thread client = new Thread(new TcpClient(peerNode.getIPAddress(), "60010", obj, listOfPeers));
                         client.start();
                     }
                 }
@@ -249,7 +249,7 @@ public class Sync implements Runnable{
             listOfPeers.getSelf().sendMessage(obj);
             //System.out.println("Sync:run:Sending control message to cloud");
         }else{
-            Thread client = new Thread(new TcpClient(peer.getIPAddress(), "60010", fileName, true));
+            Thread client = new Thread(new TcpClient(peer.getIPAddress(), "60010", fileName, true, listOfPeers));
             client.start();
         }
         

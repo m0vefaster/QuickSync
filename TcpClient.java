@@ -19,21 +19,24 @@ public class TcpClient implements Runnable
     static String homeDir = System.getProperty("user.home");
     static String folder = "QuickSync";
     static String path = homeDir + "/" + folder ;
+    private ListOfPeers listOfPeers;
 
-    TcpClient (String serverName, String port, JSONObject obj)
+    TcpClient (String serverName, String port, JSONObject obj, ListOfPeers listOfPeers)
     {
         this.serverName = serverName;
         this.port = Integer.parseInt(port);
         this.obj = obj;
+        this.listOfPeers = listOfPeers;
     }
     
-    TcpClient (String serverName, String port, ArrayList<String> fileList, boolean seeking)
+    TcpClient (String serverName, String port, ArrayList<String> fileList, boolean seeking, ListOfPeers listOfPeers)
     {
         this.serverName = serverName;
         this.port = Integer.parseInt(port);
         this.fileList = fileList;
         this.seeking = seeking;
         this.obj = null;
+        this.listOfPeers = listOfPeers;
     }
 
     public void run()
@@ -73,6 +76,8 @@ public class TcpClient implements Runnable
                     System.out.println("TcpClient:run: Sending fileList");
                     /* Send a list of files to be sought. Put a randomized or a part of file list */
                     ArrayList<String> filesToAsk = fileList;
+                    /* Send the array list to List of peer to add and get a filtered array list */
+                    filesToAsk = listOfPeers.addFilesInTransit(filesToAsk);
                     JSONObject obj1 = JSONManager.getJSON(filesToAsk, 1);
                     sendMessage(obj1, client, out);
                 }else{
