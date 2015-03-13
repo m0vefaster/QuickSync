@@ -90,6 +90,8 @@ public class TcpClient implements Runnable
                         JSONObject obj2 = JSONManager.getJSON(file);
                         sendMessage(obj2, client, out);
                     }
+                    JSONObject obj3 = JSONManager.getJSON("", "EOF");
+                    sendMessage(obj3, client, out);
                 }
             }else{
                 System.out.println("TcpClient:run: Sending single message to remote");
