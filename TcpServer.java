@@ -29,13 +29,15 @@ public class TcpServer implements Runnable
     static String path = homeDir + "/" + folder ;
     boolean isFileSocket =false;
     PeerNode peerNode;//Communicating with this node
-    public TcpServer(ServerSocket ss, Socket s, ListOfPeers peerList)
+    String peerId;
+	public TcpServer(ServerSocket ss, Socket s, ListOfPeers peerList)
     {
         this.ss = ss;
         this.s = s;
         this.peerList = peerList;
         peerNode = peerList.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
-    }
+    	peerId=peerNode.getId();
+	}
 
     @Override
     public void run()
@@ -169,7 +171,7 @@ public class TcpServer implements Runnable
         }
         finally
         {
-            peerList.syncMap("",peerNode.getId(),"clearForPeer");
+            peerList.syncMap("",peerId,"clearForPeer");
         }
 
             //System.out.println();        

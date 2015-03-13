@@ -253,7 +253,7 @@ class ListOfPeers
                              Set mappingSet = filesInSync.entrySet();
                              Iterator itr =  mappingSet.iterator();
                             while(itr.hasNext()){
-                            Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
+                            Map.Entry<String, String> entry = (Map.Entry<String, String>)itr.next();
                                 if(entry.getValue().equals(peerId))
                                 {
                                     filesInSync.remove(entry.getKey());
