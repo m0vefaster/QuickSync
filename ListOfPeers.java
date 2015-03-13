@@ -252,7 +252,7 @@ class ListOfPeers
         case "default": System.out.println("Hit wrong statement");
                         return false;
     } 
-     System.out.println("Just Entered syncMap:"+syncMap("","print"));
+     System.out.println("Leaving syncMap:"+filesInSync);
      return true;
    }
 
