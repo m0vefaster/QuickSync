@@ -78,8 +78,10 @@ public class TcpClient implements Runnable
                     ArrayList<String> filesToAsk = fileList;
                     /* Send the array list to List of peer to add and get a filtered array list */
                     filesToAsk = listOfPeers.addFilesInTransit(filesToAsk);
-                    JSONObject obj1 = JSONManager.getJSON(filesToAsk, 1);
-                    sendMessage(obj1, client, out);
+                    if(filesToAsk != null){
+                        JSONObject obj1 = JSONManager.getJSON(filesToAsk, 1);
+                        sendMessage(obj1, client, out);
+                    }
                 }else{
                     System.out.println("TcpClient:run: Sending files to the remote****************"+ fileList.size());
                     Iterator<String> itr = fileList.iterator();
