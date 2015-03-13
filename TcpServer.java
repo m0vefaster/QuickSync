@@ -48,8 +48,8 @@ public class TcpServer implements Runnable
         }catch(Exception e){
             e.printStackTrace();
         }
-        while(true){
-            try {
+        try {
+            while(true){
                 JSONObject obj = getMessage(s, in);
 
                 //Check for NULL Object
@@ -149,23 +149,22 @@ public class TcpServer implements Runnable
                     //System.out.println("TcpServer:run: Got an Invalid Message from:"+s.getInetAddress().toString());
                 }
                 
-                //CLOSE SOCKET HERE
-                //s.close();
+            }
+            //CLOSE SOCKET HERE
+            s.close();
         }catch(StreamCorruptedException ee){
                 ee.printStackTrace();
-         }catch (Exception e) {
-                try{
-                    s.close();
-                    break;
-                    //System.out.println("TcpServer:run: closing socket "+s.toString());
-                e.printStackTrace();}
-                catch(Exception ee)
-                {
-                }
+        }catch (Exception e) {
+            try{
+                s.close();
+                //System.out.println("TcpServer:run: closing socket "+s.toString());
+                e.printStackTrace();
             }
-            //System.out.println();        
+            catch(Exception ee)
+            {
+            }
         }
-        s.close();
+            //System.out.println();        
     }
     
     JSONObject getMessage(Socket s, ObjectInputStream in)
