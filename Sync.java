@@ -123,7 +123,7 @@ public class Sync implements Runnable{
                  for(int k=0;k<listofPeerHavingTheFile.size();k++)
                  {
                      PeerNode peer = listOfPeers.getPeerNode(listofPeerHavingTheFile.get(k));
-                    if( peer != null && peer.isCloud() && peer.getWeight() < min_weight)
+                    if( peer != null && !peer.isCloud() && peer.getWeight() < min_weight)
                     {
                         randomPeerId = listofPeerHavingTheFile.get(k);
                         min_weight = peer.getWeight();
