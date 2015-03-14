@@ -107,9 +107,7 @@ public class TcpServer implements Runnable
                     dateFormatter.setTimeZone(utc);
          
                     String t = dateFormatter.format(new java.util.Date());
-                    System.out.println("From peer " + peerList.getSelf().getListOfFiles().getArrayListOfFiles().size() + " " + t + " ----- peer IP -- :" + s.getInetAddress().getHostAddress()+ " File -- " + receivedPath);
-                    //break;
-
+                    System.out.println("_"+peerNode.getId()+ "_" + t + "_" + receivedPath);
                 }
                 else if(obj.get("type").equals("ArrayList"))
                 {

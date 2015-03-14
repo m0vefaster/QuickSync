@@ -96,19 +96,16 @@ public class TcpServerCloud implements Runnable
                     BufferedOutputStream bos = new BufferedOutputStream(fos);
                     bos.write(fileContent.getBytes());
                     bos.close();
-			SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
-	     
-			final TimeZone utc = TimeZone.getTimeZone("UTC");
-			dateFormatter.setTimeZone(utc);
-	     
-			String t = dateFormatter.format(new java.util.Date());
-                        System.out.println("From cloud" + listOfPeers.getSelf().getListOfFiles().getArrayListOfFiles().size() + " " + t + " ----- peer IP -- :" + s.getInetAddress().getHostAddress()+ " File -- " + receivedPath);
-			//System.out.println("From cloud" + self.getListOfFiles().getArrayListOfFiles().size() + " " + t);
-
+                    SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
+         
+                    final TimeZone utc = TimeZone.getTimeZone("UTC");
+                    dateFormatter.setTimeZone(utc);
+         
+                    String t = dateFormatter.format(new java.util.Date());
+                    System.out.println("_cloud_" + t + "_" + receivedPath);
                 }
                 else if(obj.get("type").equals("HashMap"))
                 {
-                    //System.out.println("TcpServer:run: Got an HashMap from:"+s.getInetAddress().toString());
                     HashMap map = (HashMap)obj.get("value");
 		    System.out.println("Hashmap size: "+map.size());
                     self.setHashMapFilePeer(map);
