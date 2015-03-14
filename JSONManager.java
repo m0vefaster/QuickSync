@@ -42,7 +42,6 @@ public class JSONManager {
         //System.out.println("JSONManager:getJSON:Making JSON from Message");
         obj.put("type", "Control");
         obj.put("value", message);
-	System.out.println("!!!!!!!!Control message:"+message);
         return obj;
     }
     
