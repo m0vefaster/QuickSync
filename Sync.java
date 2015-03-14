@@ -261,7 +261,13 @@ public class Sync implements Runnable{
             return false;
         }
         if(peer.isCloud() == true){
-            listOfPeers.getSelf().sendMessage(obj);
+            Iterator<String> itr = fileName.iterator();
+            
+            while(itr.hasNext()){
+                String str = itr.next();
+                JSONObject obj1 = JSONManager.getJSON(str);
+                listOfPeers.getSelf().sendMessage(obj1);
+            }
             //System.out.println("Sync:run:Sending control message to cloud");
         }else{
             Thread client = new Thread(new TcpClient(peer.getIPAddress(), "60010", fileName, true, listOfPeers));
