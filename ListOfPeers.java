@@ -253,13 +253,20 @@ class ListOfPeers
                             System.out.println("Size of filesInSync is:"+filesInSync.size());
                              Set mappingSet = filesInSync.entrySet();
                              Iterator itr =  mappingSet.iterator();
-                            while(itr.hasNext()){
+                            ArrayList<String> removeList = new ArrayList<String>();
+							while(itr.hasNext()){
                             Map.Entry<String, String> entry = (Map.Entry<String, String>)itr.next();
-                                if(entry.getValue().equals(peerId))
+                            
+								if(entry.getValue().equals(peerId))
                                 {
-                                    filesInSync.remove(entry.getKey());
+									removeList.add(entry.getKey());
                                 }
                             }
+
+							for(int z=0;z<removeList.size();z++)
+							{
+								filesInSync.remove(removeList.get(z));
+							}
                             System.out.println("Size of filesInSync is:"+filesInSync.size());
                             break;
         case "print" :   if(filesInSync==null) return false;
