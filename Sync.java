@@ -118,15 +118,18 @@ public class Sync implements Runnable{
                  Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
                  ArrayList<String> listofPeerHavingTheFile = entry.getValue();
                  String randomPeerId ="" ;
-                 Collections.shuffle(listofPeerHavingTheFile);
+                 //Collections.shuffle(listofPeerHavingTheFile);
+                 int min_weight = 10000;
                  for(int k=0;k<listofPeerHavingTheFile.size();k++)
                  {
-                        if(listOfPeers.getPeerNode(listofPeerHavingTheFile.get(k)) !=null)
-                        {
-                            randomPeerId = listofPeerHavingTheFile.get(k);
-                        }
+                     PeerNode peer = listOfPeers.getPeerNode(listofPeerHavingTheFile.get(k));
+                    if( peer != null && peer.isCloud() && peer.getWeight() < min_weight)
+                    {
+                        randomPeerId = listofPeerHavingTheFile.get(k);
+                        min_weight = peer.getWeight();
+                    }
                  }
-                 //System.out.println("Trying to get file:"+entry.getKey()+":  from:"+randomPeerId);
+                 System.out.println("Getting from: "+randomPeerId);
                  if(peerToFilesMap.containsKey(randomPeerId))
                  {
                     ArrayList<String> listOfFileForPeer = peerToFilesMap.get(randomPeerId);
