@@ -67,7 +67,7 @@ public class Sync implements Runnable{
                     }
                     if(masterNode.isCloud()){
                         self.sendMessage(obj);
-                        //System.out.println("Sync:run:Sending arraylist to cloud");
+                        System.out.println("Sync:run:Sending arraylist to cloud -- ");
                     }else{
                         Thread client = new Thread(new TcpClient(masterNode.getIPAddress(), "60010", obj, listOfPeers));
                         client.start();
@@ -141,7 +141,7 @@ public class Sync implements Runnable{
              }
              
              mappingSet = peerToFilesMap.entrySet();    
-             //System.out.println("HashMap of peerToFilesMap is :"+ peerToFilesMap);
+             System.out.println("HashMap of peerToFilesMap is :"+ peerToFilesMap);
              itr =  mappingSet.iterator();
        		  
              while(itr.hasNext()){
