@@ -45,7 +45,7 @@ public class TcpServer implements Runnable
         int count =0;
         InputStream inFromServer = null;
         ObjectInputStream in = null;
-        System.out.println("TcpServer:run: Server running "+s.toString());
+//        System.out.println("TcpServer:run: Server running "+s.toString());
         try {
             inFromServer = s.getInputStream();
             in = new ObjectInputStream(inFromServer);
@@ -59,7 +59,7 @@ public class TcpServer implements Runnable
                 }
                 else if(obj.get("type").equals("Control"))
                 {
-                    System.out.println("TcpServer:run: Got an Control Message from:"+s.getInetAddress().toString());
+                    //System.out.println("TcpServer:run: Got an Control Message from:"+s.getInetAddress().toString());
                     String str = (String)obj.get("value");
                     //Send the file from ...
                     File file= new File(path+"/"+str);
@@ -74,7 +74,7 @@ public class TcpServer implements Runnable
                     String fileContent = (String)obj.get("value");
                     //Store this File...
                     String receivedPath = obj.get("type").toString().substring(4);
-                    System.out.println("TcpServer:run: Got an File " + receivedPath + " from:"+s.getInetAddress().toString());
+        //            System.out.println("TcpServer:run: Got an File " + receivedPath + " from:"+s.getInetAddress().toString());
                     /* Remove the file from in-transit hashset */
                     if(!peerList.removeFileInTransit(receivedPath,peerNode.getId())){
                         System.out.println("Error!!! File not found in hash set. Something is wrong");
@@ -111,7 +111,7 @@ public class TcpServer implements Runnable
                 }
                 else if(obj.get("type").equals("ArrayList"))
                 {
-                    System.out.println("TcpServer:run: Got an ArrayList from:"+s.getInetAddress().toString());
+                   // System.out.println("TcpServer:run: Got an ArrayList from:"+s.getInetAddress().toString());
                     ArrayList list = (ArrayList)obj.get("value");
                     //Uodate the peerList peerNode list of files
                     
@@ -135,7 +135,7 @@ public class TcpServer implements Runnable
                 }
                 else if(obj.get("type").equals("ArrayListFiles"))
                 {
-                    System.out.println("TcpServer:run: Got an ArrayListFile from:"+s.getInetAddress().toString());
+                    //System.out.println("TcpServer:run: Got an ArrayListFile from:"+s.getInetAddress().toString());
                     ArrayList<String> fileArray = (ArrayList<String>)obj.get("value");
                     //Store this File...
                     Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", fileArray, false, peerList));
@@ -143,7 +143,7 @@ public class TcpServer implements Runnable
                     break;
                 }
                 else if(obj.get("type").equals("EOFFileList")){
-                    System.out.println("File EOF received from: " + s.getInetAddress().toString());
+                    //System.out.println("File EOF received from: " + s.getInetAddress().toString());
                     break;
                 }else
                 {
@@ -151,15 +151,15 @@ public class TcpServer implements Runnable
                     //System.out.println("TcpServer:run: Got an Invalid Message from:"+s.getInetAddress().toString());
                 }
             }
-            System.out.println("Outside while****************");
+            //System.out.println("Outside while****************");
             //CLOSE SOCKET HERE
             s.close();
         }catch(StreamCorruptedException ee){
-                System.out.println("TcpServer:run: !!!!!!!!!!*********************** "+s.toString());
+              //  System.out.println("TcpServer:run: !!!!!!!!!!*********************** "+s.toString());
                 ee.printStackTrace();
         }catch (Exception e) {
             try{
-                System.out.println("TcpServer:run: !!!!!!!!!!!!!!!!!!!!!!!!!!!!! "+s.toString());
+                //System.out.println("TcpServer:run: !!!!!!!!!!!!!!!!!!!!!!!!!!!!! "+s.toString());
                 s.close();
                 e.printStackTrace();
             }
@@ -182,13 +182,13 @@ public class TcpServer implements Runnable
         JSONObject obj = null;
         try
         {
-            System.out.println("Server socket " + s + "**** "+ s.isClosed()+" ---- Available " + in.available());
+            //System.out.println("Server socket " + s + "**** "+ s.isClosed()+" ---- Available " + in.available());
             Message obj2 = (Message)in.readObject();
             obj = (JSONObject)(obj2.obj);
         }
         catch(Exception e)
         {
-            System.out.println("Dude Dude****************");
+            //System.out.println("Dude Dude****************");
             e.printStackTrace();
             try{
                 s.close();
@@ -201,14 +201,14 @@ public class TcpServer implements Runnable
     
     void find(int x)
     {
-        System.out.println("========Inside find" + x + "===========");
+        //System.out.println("========Inside find" + x + "===========");
         Iterator<PeerNode> it = peerList.getList().iterator();
         while (it.hasNext())
         {
             PeerNode peerNode = it.next();
             ArrayList<String> lof = peerNode.getListOfFiles().getList();
-            System.out.println("For peer node:"+peerNode.getId()+" list of files is:"+lof.toString());
+            //System.out.println("For peer node:"+peerNode.getId()+" list of files is:"+lof.toString());
         }
-        System.out.println("========Leaving find()===========");
+        //System.out.println("========Leaving find()===========");
     }
 }
