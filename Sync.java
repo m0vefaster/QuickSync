@@ -67,7 +67,7 @@ public class Sync implements Runnable{
                     }
                     if(masterNode.isCloud()){
                         self.sendMessage(obj);
-                        System.out.println("Sync:run:Sending arraylist to cloud -- ");
+                        //System.out.println("Sync:run:Sending arraylist to cloud -- ");
                     }else{
                         Thread client = new Thread(new TcpClient(masterNode.getIPAddress(), "60010", obj, listOfPeers));
                         client.start();
@@ -126,7 +126,7 @@ public class Sync implements Runnable{
                             randomPeerId = listofPeerHavingTheFile.get(k);
                         }
                  }
-                 System.out.println("Trying to get file:"+entry.getKey()+":  from:"+randomPeerId);
+                 //System.out.println("Trying to get file:"+entry.getKey()+":  from:"+randomPeerId);
                  if(peerToFilesMap.containsKey(randomPeerId))
                  {
                     ArrayList<String> listOfFileForPeer = peerToFilesMap.get(randomPeerId);
@@ -141,7 +141,7 @@ public class Sync implements Runnable{
              }
              
              mappingSet = peerToFilesMap.entrySet();    
-             System.out.println("HashMap of peerToFilesMap is :"+ peerToFilesMap);
+             //System.out.println("HashMap of peerToFilesMap is :"+ peerToFilesMap);
              itr =  mappingSet.iterator();
        		  
              while(itr.hasNext()){
@@ -211,8 +211,8 @@ public class Sync implements Runnable{
                     //System.out.print("\nThe File list of " + peerNode.getId() + "is:");
                     //peerNode.getListOfFiles().printFileList();
 
-                    System.out.print("Sync.java: Hashmap from controller to " + peerNode.getId());
-                    print(hmFilesPeers);
+                    //System.out.print("Sync.java: Hashmap from controller to " + peerNode.getId());
+                    //print(hmFilesPeers);
                     if(!hmFilesPeers.isEmpty() ){
                         JSONObject obj = JSONManager.getJSON(hmFilesPeers);// make the object
                         Thread client = new Thread(new TcpClient(peerNode.getIPAddress(), "60010", obj, listOfPeers));
@@ -268,7 +268,7 @@ public class Sync implements Runnable{
                 JSONObject obj1 = JSONManager.getJSON(str);
                 listOfPeers.getSelf().sendMessage(obj1);
             }
-            System.out.println("Sync:run:Sending control message to cloud --- ");
+            //System.out.println("Sync:run:Sending control message to cloud --- ");
         }else{
             Thread client = new Thread(new TcpClient(peer.getIPAddress(), "60010", fileName, true, listOfPeers));
             client.start();
