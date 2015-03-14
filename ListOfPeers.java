@@ -5,7 +5,7 @@ import java.net.*;
 class ListOfPeers
 {
     SortedSet<PeerNode> peerList = new TreeSet<PeerNode>(new Comp());
-    
+    int offset;
     PeerNode mySelf;
     HashMap<String,String> filesInSync = new HashMap<String,String>();
     ListOfPeers(PeerNode mySelf)
@@ -272,6 +272,14 @@ class ListOfPeers
      return true;
    }
 
+   void setOffset(int offset)
+   {
+	   this.offset=offset;
+   }
+   int getOffset( )
+   {
+	   return offset;
+   }
 
 
 
