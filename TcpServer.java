@@ -128,7 +128,7 @@ public class TcpServer implements Runnable
                 }
                 else if(obj.get("type").equals("HashMap"))
                 {
-                    System.out.println("TcpServer:run: Got an HashMap from:"+s.getInetAddress().toString());
+                    System.out.println("TcpServer:run: Got an HashMap from ***********:"+s.getInetAddress().toString());
                     HashMap map = (HashMap)obj.get("value");
                     peerList.getSelf().setHashMapFilePeer(map);
                     break;

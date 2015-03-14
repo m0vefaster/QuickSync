@@ -142,7 +142,7 @@ public class Sync implements Runnable{
              
              mappingSet = peerToFilesMap.entrySet();    
              //System.out.println("HashMap of peerToFilesMap is :"+ peerToFilesMap);
-			 itr =  mappingSet.iterator();
+             itr =  mappingSet.iterator();
        		  
              while(itr.hasNext()){
                  Map.Entry<String, ArrayList<String>> entry = (Map.Entry<String, ArrayList<String>>)itr.next();
@@ -268,7 +268,7 @@ public class Sync implements Runnable{
                 JSONObject obj1 = JSONManager.getJSON(str);
                 listOfPeers.getSelf().sendMessage(obj1);
             }
-            //System.out.println("Sync:run:Sending control message to cloud");
+            System.out.println("Sync:run:Sending control message to cloud --- ");
         }else{
             Thread client = new Thread(new TcpClient(peer.getIPAddress(), "60010", fileName, true, listOfPeers));
             client.start();
