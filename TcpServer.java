@@ -18,8 +18,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
-import java.util.Calendar;
-import java.text.DateFormat;
+
 public class TcpServer implements Runnable
 {
     private ServerSocket ss;
@@ -102,17 +101,12 @@ public class TcpServer implements Runnable
                     bos.close();
                     //java.util.Date date= new java.util.Date();
                     //Timestamp t = new Timestamp(date.getTime());
-			DateFormat dateFormat = new SimpleDateFormat("HH:mm:ss z");
-			    final TimeZone utc = TimeZone.getTimeZone("UTC");
-			    dateFormat.setTimeZone(utc);
-		 Calendar cal = Calendar.getInstance();
-		 Date dat = cal.getTime();
-		 cal.add(Calendar.SECOND, peerList.getOffset());
-         	 String t = dateFormat.format(cal);
-                    //SimpleDateFormat dateFormatter = new SimpleDateFormat("HH:mm:ss.SSSZ");
+                    SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
          
+                    final TimeZone utc = TimeZone.getTimeZone("UTC");
+                    dateFormatter.setTimeZone(utc);
          
-                    //String t = dateFormatter.format(new java.util.Date());
+                    String t = dateFormatter.format(new java.util.Date());
                     System.out.println("_"+peerNode.getId()+ "_" + t + "_" + receivedPath);
                 }
                 else if(obj.get("type").equals("ArrayList"))
