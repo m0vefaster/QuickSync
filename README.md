@@ -1,6 +1,13 @@
 # QuickSync
 An application that combines the benefits of Cloud and P2P networks to provide modes for faster sync , conserve battery life ondevices , cost reduction on mobile devices and high availability
 
+##What's Missing ?
+
+![alt tag](https://github.com/vish1562/QuickSync/blob/master/img/GD%2BBittorent.png)
+
+## We have leveraged both P2P and Cloud Topologies
+
+![alt tag](https://github.com/vish1562/QuickSync/blob/master/img/P2P.png)
 
 ## Steps to Run
 
