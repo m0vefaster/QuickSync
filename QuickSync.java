@@ -9,69 +9,63 @@ import java.util.Date;
 import java.text.SimpleDateFormat;
 import java.util.TimeZone;
 
-public class QuickSync{
+public class QuickSync {
     public static String selfIp;
     public static ListOfPeers peerList;
     public static Sync sync;
     public static String serverPort;
     public static String cloudIP;
     public static String hostName;
-    public static boolean isCloud=false;
+    public static boolean isCloud = false;
     public static int count;
 
-    public static void main(String[] args){
+    public static void main(String[] args) {
 
         InetAddress cloudInetAddress = null;
-        System.setProperty("java.net.preferIPv4Stack" , "true");
+        System.setProperty("java.net.preferIPv4Stack", "true");
 
-        ArrayList<String> client = new ArrayList<String>();
-        try{
+        ArrayList < String > client = new ArrayList < String > ();
+        try {
             Enumeration e = NetworkInterface.getNetworkInterfaces();
             NetworkInterface intface = null;
-            while(e.hasMoreElements())
-            {
+            while (e.hasMoreElements()) {
                 NetworkInterface n = (NetworkInterface) e.nextElement();
                 String interfaceName = n.getName();
-                if(interfaceName.equals("wlan0") || interfaceName.equals("en0")){
+                if (interfaceName.equals("wlan0") || interfaceName.equals("en0")) {
                     intface = n;
-                }else if(interfaceName.equals("eth0")){
+                } else if (interfaceName.equals("eth0")) {
                     intface = n;
-                }else{
+                } else {
                     continue;
                 }
-                
+
             }
-            if(intface != null){
+            if (intface != null) {
                 Enumeration ee = intface.getInetAddresses();
-                while (ee.hasMoreElements())
-                {
+                while (ee.hasMoreElements()) {
                     InetAddress i = (InetAddress) ee.nextElement();
-                    if(i.getHostAddress().indexOf(":") == -1){
+                    if (i.getHostAddress().indexOf(":") == -1) {
                         selfIp = i.getHostAddress();
                     }
                 }
             }
             //System.out.println("\nQuickSync:main:Self IP is:"+selfIp);
-        }catch(Exception e){
-        }
+        } catch (Exception e) {}
 
 
-        try
-        {
-            Random rand = new Random(); 
+        try {
+            Random rand = new Random();
             //hostName = InetAddress.getLocalHost().getHostName();//args[0]; //Change it to get automatic hostname
             hostName = args[0];
-            cloudIP=  InetAddress.getByName("ec2-52-10-100-25.us-west-2.compute.amazonaws.com").getHostAddress();// args[1];//JOptionPane.showInputDialog("Enter CloudIP");
+            cloudIP = InetAddress.getByName("ec2-52-10-100-25.us-west-2.compute.amazonaws.com").getHostAddress(); // args[1];//JOptionPane.showInputDialog("Enter CloudIP");
             Integer weight = Integer.parseInt(args[1]);
             //Integer weight = rand.nextInt(5000) + 1;//Integer.parseInt(args[2]);
-            PeerNode self = new PeerNode(hostName, selfIp, weight);//Integer.parseInt(JOptionPane.showInputDialog("Enter Weight:")));
+            PeerNode self = new PeerNode(hostName, selfIp, weight); //Integer.parseInt(JOptionPane.showInputDialog("Enter Weight:")));
             peerList = new ListOfPeers(self);
             peerList.setOffset(Integer.parseInt(args[1]));
-            System.out.println("Node Details:\n"+hostName+"\n"+cloudIP+"\n"+weight+"\n\n");
-        }
-        catch (Exception e)
-        {
-		e.printStackTrace();
+            System.out.println("Node Details:\n" + hostName + "\n" + cloudIP + "\n" + weight + "\n\n");
+        } catch (Exception e) {
+            e.printStackTrace();
         }
 
 
@@ -86,25 +80,24 @@ public class QuickSync{
         */
 
         /* By pass 2 arguments */
-    		/*
+        /*
         if(args.length > 2){
             while(count < args.length - 2){
                 client.add(args[0]);
                 count++;
             }
         }*/
-        if(!isCloud)
-        {
-          /* Start UDP client thread. Broadcast IP is hard-coded to "255.255.255.255" for now. Change if needed. */
-          Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "255.255.255.255", client, peerList));
-          //Thread udpClient = new Thread(new UdpClient("FF7E:230::1234", client, peerList));
-          //Thread udpClient = new Thread(new UdpClient("235.1.1.1", client, peerList));
-          udpClient.start();
-        
-          /* Start UDP server thread */
-          Thread udpServer = new Thread(new UdpServer(Integer.parseInt("61001"), peerList));
-          udpServer.start();
-        } 
+        if (!isCloud) {
+            /* Start UDP client thread. Broadcast IP is hard-coded to "255.255.255.255" for now. Change if needed. */
+            Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "255.255.255.255", client, peerList));
+            //Thread udpClient = new Thread(new UdpClient("FF7E:230::1234", client, peerList));
+            //Thread udpClient = new Thread(new UdpClient("235.1.1.1", client, peerList));
+            udpClient.start();
+
+            /* Start UDP server thread */
+            Thread udpServer = new Thread(new UdpServer(Integer.parseInt("61001"), peerList));
+            udpServer.start();
+        }
         /* Start Sync thread */
         Thread sync = new Thread(new Sync(peerList));
         sync.start();
@@ -119,37 +112,32 @@ public class QuickSync{
             }
         }catch(Exception e){
         }*/
-        
+
         /* Start a TCP receive thread */
         ServerSocket ss = null;
-        
-        try
-        {
+
+        try {
             serverPort = "60010";
             ss = new ServerSocket(Integer.parseInt(serverPort));
             ss.setSoTimeout(2000);
+        } catch (Exception e) {
+
         }
-        
-        catch(Exception e)
-        {
-            
-        }
-        Socket s=null;
+        Socket s = null;
 
         SimpleDateFormat dateFormatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z");
         final TimeZone utc = TimeZone.getTimeZone("UTC");
         dateFormatter.setTimeZone(utc);
         String t = dateFormatter.format(new java.util.Date());
-        System.out.println("Started at "+ t);
+        System.out.println("Started at " + t);
 
         count = 0;
         /*Server listening for Incoming Connections and will spawn new Servers*/
-        while(true){
+        while (true) {
             try {
                 cloudInetAddress = InetAddress.getByName(cloudIP);
                 peerList.printPeerList();
-                if(!isCloud && cloudInetAddress.isReachable(1000) && peerList.getPeerNodeFromIP(cloudIP) == null && count == 0)
-                {
+                if (!isCloud && cloudInetAddress.isReachable(1000) && peerList.getPeerNodeFromIP(cloudIP) == null && count == 0) {
                     /* Start TCP client for the cloud */
                     //System.out.println("\nQuickSync:main: Starting Client cloud thread");
                     Thread toCloudClient = new Thread(new TcpClientCloud(cloudIP, "60011", peerList));
@@ -158,29 +146,27 @@ public class QuickSync{
                 }
                 s = ss.accept();
                 //System.out.println("\nQuickSync:main:Server Accepted Connection");
-                Thread server = new Thread(new TcpServer(ss, s,peerList));
+                Thread server = new Thread(new TcpServer(ss, s, peerList));
                 //System.out.println("ClientServer:Created Thread for " +s. getRemoteSocketAddress());
-                server.start();   
-            } 
-            catch (Exception e) {
-                try{
+                server.start();
+            } catch (Exception e) {
+                try {
                     s.close();
-                }catch(Exception e1){}
+                } catch (Exception e1) {}
             }
         }
     }
 
-    static String getCloudIp(){
+    static String getCloudIp() {
         return cloudIP;
     }
 }
 
-class Comp implements Comparator<PeerNode>{
-    
+class Comp implements Comparator < PeerNode > {
+
     @Override
-    public int  compare(PeerNode pn1,PeerNode pn2) {
-        if( pn1.getWeight() > pn2.getWeight())
-        return 1;
-        return -1 ;
+    public int compare(PeerNode pn1, PeerNode pn2) {
+        if (pn1.getWeight() > pn2.getWeight()) return 1;
+        return -1;
     }
 }

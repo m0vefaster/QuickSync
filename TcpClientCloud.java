@@ -6,52 +6,41 @@ import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
-public class TcpClientCloud implements Runnable
-{
-    
-    String serverName ;
+public class TcpClientCloud implements Runnable {
+
+    String serverName;
     int port;
     private Thread t;
     private String threadName = "ClientToCloud";
     private ListOfPeers listOfPeers;
     Socket client = null;
 
-    TcpClientCloud (String serverName, String port, ListOfPeers listOfPeers)
-    {
-        
+    TcpClientCloud(String serverName, String port, ListOfPeers listOfPeers) {
+
         this.serverName = serverName;
         this.port = Integer.parseInt(port);
         this.listOfPeers = listOfPeers;
     }
-    
-    public void run()
-    {
+
+    public void run() {
         File myFile;
         String file;
         int count = 0;
         PeerNode self = listOfPeers.getSelf();
-        
-        try
-        {
+
+        try {
             client = null;
-            do
-            {
-                try
-                {
+            do {
+                try {
                     client = new Socket(serverName, port);
-                }
-                catch (Exception anye)
-                {
-                    try
-                    {
+                } catch (Exception anye) {
+                    try {
                         t.sleep(100);
-                    }
-                    catch (InterruptedException e)
-                    {
+                    } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
                 }
-            }while(client==null);
+            } while (client == null);
             //System.out.println("Client:Just connected to cloud" + client.getRemoteSocketAddress());
 
             //System.out.println("\nQuickSync:main:Adding Cloud to Peer List");
@@ -68,20 +57,18 @@ public class TcpClientCloud implements Runnable
             ObjectInputStream in = new ObjectInputStream(inFromServer);
 
             self.setOutputStream(out);
-            self.setInputStream(in);
+            self.setInputStream( in );
 
 
             //System.out.println("Client:Sent Init to cloud");
             //System.out.println("TcpCient:run: Socket closed? "+ client.isClosed());
-            
+
             /* Start TCP server for cloud */
             Thread fromCloud = new Thread(new TcpServerCloud(client, listOfPeers));
             fromCloud.start();
-        }
-        catch(Exception e)
-        {
+        } catch (Exception e) {
             e.printStackTrace();
-            try{
+            try {
                 /*
                 PeerNode nodeToBeRemoved = listOfPeers.getPeerNodeFromSocket(client);
                 System.out.println("Removing PeerNode:" + nodeToBeRemoved.getId() + ":" + listOfPeers.removePeerNode(nodeToBeRemoved));
@@ -89,21 +76,16 @@ public class TcpClientCloud implements Runnable
                 client.close();
                 */
                 System.out.println("TcpClientCloud: Exiting clientCloud thread");
-            }
-            catch (Exception ee)
-            {
-            }
+            } catch (Exception ee) {}
         }
         //System.out.println();
     }
-    
-    void start ()
-    {
+
+    void start() {
         //System.out.println("TcpClient:start: Starting " +  threadName );
-        if (t == null)
-        {
-            t = new Thread (this, threadName);
-            t.start ();
+        if (t == null) {
+            t = new Thread(this, threadName);
+            t.start();
         }
     }
 
