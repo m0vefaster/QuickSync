@@ -1,15 +1,18 @@
 # QuickSync
 An application that combines the benefits of Cloud and P2P networks to provide modes for faster sync , conserve battery life ondevices , cost reduction on mobile devices and high availability
 
+
 ## Steps to Run
 
 - Create a folder 'QuickSync' in your directory
 - Add the path to jar files to CLASSPATH
+
 ``export CLASSPATH=~/QuickSync/json-simple-1.1.1.jar:~/QuickSync/java-json.jar:.``
 - Compile the code
-``javac *.java``
-- Run the Code(QuickSync) with the hostname 
 
+``javac *.java``
+
+- Run the Code(QuickSync) with the hostname 
 
 ##Class Definition
 ####QuickSync
