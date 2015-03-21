@@ -52,7 +52,6 @@ public class QuickSync {
              
         } catch (Exception e) {}
 
-
         try {
             Random rand = new Random();
              
@@ -67,7 +66,6 @@ public class QuickSync {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
 
 
          

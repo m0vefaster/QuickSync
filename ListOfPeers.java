@@ -35,7 +35,6 @@ class ListOfPeers {
     return true;
   }
 
-
   boolean removePeerNode(PeerNode removeNode) {
     if (!present(removeNode)) return false;
 
@@ -86,7 +85,6 @@ class ListOfPeers {
     return null;
   }
 
-
   SortedSet < PeerNode > getList() {
     return peerList;
   }
@@ -104,7 +102,6 @@ class ListOfPeers {
 
     return null;
   }
-
 
   void printPeerList() {
     Iterator < PeerNode > itr = peerList.iterator();
@@ -133,7 +130,6 @@ class ListOfPeers {
     return null;
   }
 
-
   void updateHashMapBeforeRemovingNode(PeerNode nodeToBeRemoved) {
     HashMap < String, ArrayList < String >> hmFilesPeers = mySelf.getHashMapFilePeer();
     Set mappingSet = hmFilesPeers.entrySet();
@@ -159,7 +155,6 @@ class ListOfPeers {
      
 
   }
-
 
   ArrayList < String > addFilesInTransit(ArrayList < String > fileList, String peerId) {
     int i;
@@ -248,12 +243,5 @@ class ListOfPeers {
   int getOffset() {
     return offset;
   }
-
-
-
-
-
-
-
 
 }
