@@ -118,10 +118,10 @@ public class PeerNode implements Serializable {
         try {
             Message msg = new Message(obj);
             out.writeObject(msg);
-            //out.reset();
-            //out.flush();
-            //client.shutdownOutput();
-            //out.close();
+             
+             
+             
+             
         } catch (Exception e) {
             e.printStackTrace();
         }

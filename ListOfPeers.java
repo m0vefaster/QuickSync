@@ -8,7 +8,7 @@ class ListOfPeers {
   PeerNode mySelf;
   HashMap < String, String > filesInSync = new HashMap < String, String > ();
   ListOfPeers(PeerNode mySelf) {
-    //Insert to Peer List cloud domain id
+     
     this.mySelf = mySelf;
   }
 
@@ -109,12 +109,12 @@ class ListOfPeers {
   void printPeerList() {
     Iterator < PeerNode > itr = peerList.iterator();
     PeerNode node;
-    //System.out.print("\n************************The Peer list is:");
+     
     while (itr.hasNext()) {
       node = itr.next();
-      //System.out.print(node.getId()+",");
+       
     }
-    //System.out.println();
+     
   }
 
   PeerNode getPeerNodeFromSocket(Socket s) {
@@ -122,9 +122,9 @@ class ListOfPeers {
     PeerNode node;
     while (itr.hasNext()) {
       node = itr.next();
-      //System.out.println("Comparing roginal Socket:"+s +":with:"+node.getSocket());
+       
       if (node.getSocket() == s) {
-        //System.out.println("Found a match for socket as PeerNode :"+ node.getId());
+         
         return node;
       }
 
@@ -139,32 +139,32 @@ class ListOfPeers {
     Set mappingSet = hmFilesPeers.entrySet();
     String removeNodeId = nodeToBeRemoved.getId();
     Iterator itr = mappingSet.iterator();
-    //System.out.println("=================Node Id is :"+removeNodeId);
-    //System.out.println("==================HashMap before removal---"+hmFilesPeers);  
+     
+     
     while (itr.hasNext()) {
       Map.Entry < String, ArrayList < String >> entry = (Map.Entry < String, ArrayList < String >> ) itr.next();
       ArrayList < String > allPeers = entry.getValue();
       int i = 0;
       while (i < allPeers.size()) {
-        //System.out.println("inside looping i=:" + i+  "and finding peer node with ID:"+allPeers.get(i));
+         
         PeerNode node = getPeerNode(allPeers.get(i));
         if (node != null && node.getId().equals(removeNodeId)) {
-          //System.out.println("removed node" + node.getId());
+           
           allPeers.remove(node.getId());
           break;
         } else i++;
       }
     }
 
-    //System.out.println("=====================HashMap after removal---"+hmFilesPeers); 
+     
 
   }
 
 
   ArrayList < String > addFilesInTransit(ArrayList < String > fileList, String peerId) {
     int i;
-    //System.out.println("Sent fileList" + fileList);
-    //System.out.println("Just Entered addFilesInTransit:"+syncMap("","print"));
+     
+     
     ArrayList < String > listOfFileToSend = new ArrayList < String > ();
     for (i = 0; i < fileList.size(); i++) {
       if (!syncMap(fileList.get(i), peerId, "contains")) {
@@ -173,13 +173,13 @@ class ListOfPeers {
       }
     }
 
-    //System.out.println("Leaving addFilesInTransit:"+syncMap("","print"));
+     
     return listOfFileToSend;
 
   }
 
   boolean removeFileInTransit(String fileName, String peerId) {
-    //System.out.println("Just Entered removeFileInTransit:"+syncMap("","print"));
+     
 
     if (!syncMap(fileName, peerId, "contains")) {
       return false;
@@ -189,25 +189,25 @@ class ListOfPeers {
   }
 
   synchronized boolean syncMap(String fileName, String peerId, String type) {
-    //System.out.println("Just Entered syncMap:"+filesInSync);
-    //System.out.println("SyncMap: fileName: " + fileName + " type: " + type);
+     
+     
 
-    /*HahsMap is <File,Peer> */
+     
     switch (type) {
       case "add":
         if (filesInSync.containsKey(fileName)) {
-          //System.out.println("Error:File present in filesInSync");
+           
           return false;
         }
-        //System.out.println("Adding File");
+         
         filesInSync.put(fileName, peerId);
         break;
       case "remove":
         if (!filesInSync.containsKey(fileName)) {
-          //System.out.println("Error:File not present in filesInSync");
+           
           return false;
         }
-        //System.out.println("Rmoving File");
+         
         filesInSync.remove(fileName);
         break;
       case "contains":
@@ -235,10 +235,10 @@ class ListOfPeers {
         System.out.print(filesInSync);
         break;
       case "default":
-        //System.out.println("Hit wrong statement");
+         
         return false;
     }
-    //System.out.println("Leaving syncMap:"+filesInSync);
+     
     return true;
   }
 

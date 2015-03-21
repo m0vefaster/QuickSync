@@ -49,18 +49,18 @@ public class QuickSync {
                     }
                 }
             }
-            //System.out.println("\nQuickSync:main:Self IP is:"+selfIp);
+             
         } catch (Exception e) {}
 
 
         try {
             Random rand = new Random();
-            //hostName = InetAddress.getLocalHost().getHostName();//args[0]; //Change it to get automatic hostname
+             
             hostName = args[0];
-            cloudIP = InetAddress.getByName("ec2-52-10-100-25.us-west-2.compute.amazonaws.com").getHostAddress(); // args[1];//JOptionPane.showInputDialog("Enter CloudIP");
+            cloudIP = InetAddress.getByName("ec2-52-10-100-25.us-west-2.compute.amazonaws.com").getHostAddress();  
             Integer weight = Integer.parseInt(args[1]);
-            //Integer weight = rand.nextInt(5000) + 1;//Integer.parseInt(args[2]);
-            PeerNode self = new PeerNode(hostName, selfIp, weight); //Integer.parseInt(JOptionPane.showInputDialog("Enter Weight:")));
+             
+            PeerNode self = new PeerNode(hostName, selfIp, weight);  
             peerList = new ListOfPeers(self);
             peerList.setOffset(Integer.parseInt(args[1]));
             System.out.println("Node Details:\n" + hostName + "\n" + cloudIP + "\n" + weight + "\n\n");
@@ -70,50 +70,28 @@ public class QuickSync {
 
 
 
-        /*
-        if(cloudIP.equals(selfIp))
-        {
-           System.out.println("\nQuickSync:main:I am the cloud");
-           isCloud = true; 
-           self.setIsCloud(true);
-        }
-        */
+         
 
-        /* By pass 2 arguments */
-        /*
-        if(args.length > 2){
-            while(count < args.length - 2){
-                client.add(args[0]);
-                count++;
-            }
-        }*/
+         
+         
         if (!isCloud) {
-            /* Start UDP client thread. Broadcast IP is hard-coded to "255.255.255.255" for now. Change if needed. */
+             
             Thread udpClient = new Thread(new UdpClient(Integer.parseInt("8886"), "255.255.255.255", client, peerList));
-            //Thread udpClient = new Thread(new UdpClient("FF7E:230::1234", client, peerList));
-            //Thread udpClient = new Thread(new UdpClient("235.1.1.1", client, peerList));
+             
+             
             udpClient.start();
 
-            /* Start UDP server thread */
+             
             Thread udpServer = new Thread(new UdpServer(Integer.parseInt("61001"), peerList));
             udpServer.start();
         }
-        /* Start Sync thread */
+         
         Thread sync = new Thread(new Sync(peerList));
         sync.start();
 
-        /*
-        try
-        {
-            cloudInetAddress = InetAddress.getByName(cloudIP);
-            if(!isCloud && cloudInetAddress.isReachable(1000)){
-                Thread toCloudClient = new Thread(new TcpClientCloud(cloudIP, "60011", peerList));
-                toCloudClient.start();
-            }
-        }catch(Exception e){
-        }*/
+         
 
-        /* Start a TCP receive thread */
+         
         ServerSocket ss = null;
 
         try {
@@ -132,22 +110,22 @@ public class QuickSync {
         System.out.println("Started at " + t);
 
         count = 0;
-        /*Server listening for Incoming Connections and will spawn new Servers*/
+         
         while (true) {
             try {
                 cloudInetAddress = InetAddress.getByName(cloudIP);
                 peerList.printPeerList();
                 if (!isCloud && cloudInetAddress.isReachable(1000) && peerList.getPeerNodeFromIP(cloudIP) == null && count == 0) {
-                    /* Start TCP client for the cloud */
-                    //System.out.println("\nQuickSync:main: Starting Client cloud thread");
+                     
+                     
                     Thread toCloudClient = new Thread(new TcpClientCloud(cloudIP, "60011", peerList));
                     toCloudClient.start();
                     count = 1;
                 }
                 s = ss.accept();
-                //System.out.println("\nQuickSync:main:Server Accepted Connection");
+                 
                 Thread server = new Thread(new TcpServer(ss, s, peerList));
-                //System.out.println("ClientServer:Created Thread for " +s. getRemoteSocketAddress());
+                 
                 server.start();
             } catch (Exception e) {
                 try {

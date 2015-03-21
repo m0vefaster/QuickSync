@@ -35,11 +35,11 @@ public class TcpServerCloud implements Runnable {
 
     @Override
     public void run() {
-        //System.out.println("TcpServer:run: Socket closed? "+s.isClosed());
-        //System.out.println("TcpServer:run: Server running "+s.toString());
+         
+         
         PeerNode self = listOfPeers.getSelf();
 
-        /* Send your Init */
+         
         String data = self.getId() + ":" + String.valueOf(self.getWeight());
         JSONObject JSONobj = JSONManager.getJSON(data, "Init");
         self.sendMessage(JSONobj);
@@ -47,27 +47,27 @@ public class TcpServerCloud implements Runnable {
             try {
                 JSONObject obj = getMessage();
 
-                //Check for NULL Object
+                 
                 if (obj.get("type").equals("Control")) {
                     String str = (String) obj.get("value");
-                    //System.out.println("TcpServer:run: Got an Control Message from:"+s.getInetAddress().toString() + " message: " + str);
-                    //Send the file from ...
+                     
+                     
                     File file = new File(path + "/" + str);
                     JSONObject obj2 = JSONManager.getJSON(file);
 
                     PeerNode node = listOfPeers.getPeerNode(s.getInetAddress().getHostAddress());
                     if (node.isCloud()) {
                         self.sendMessage(obj2);
-                        //System.out.println("TcpServerCloud:run:Sending file " + str + " to cloud");
+                         
                     } else {
                         Thread client = new Thread(new TcpClient(s.getInetAddress().getHostAddress(), "60010", obj2, listOfPeers));
                         client.start();
                     }
                 } else if (obj.get("type").toString().substring(0, 4).equals("File")) {
 
-                    //System.out.println("TcpServer:run: Got an File from:"+s.getInetAddress().toString());
+                     
                     String fileContent = (String) obj.get("value");
-                    //Store this File...
+                     
                     String receivedPath = obj.get("type").toString().substring(4);
                     String[] splits = receivedPath.split("/");
                     int noOfSplits = splits.length;
@@ -100,21 +100,21 @@ public class TcpServerCloud implements Runnable {
                     System.out.println("Hashmap size: " + map.size());
                     self.setHashMapFilePeer(map);
                 } else {
-                    //System.out.println("TcpServer:run: Got an Invalid Message from:"+s.getInetAddress().toString());
+                     
                 }
 
-                //CLOSE SOCKET HERE
-                //s.close();
+                 
+                 
             } catch (StreamCorruptedException ee) {
                 System.out.println("StreamCorruptedException !!!!!!");
                 ee.printStackTrace();
             } catch (Exception e) {
                 try {
-                    //System.out.println("*********************" + e.getClass());
+                     
                     if (e instanceof EOFException) {
                         PeerNode nodeToBeRemoved = listOfPeers.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
                         System.out.println("Removing PeerNode:" + nodeToBeRemoved.getId() + ":" + listOfPeers.removePeerNode(nodeToBeRemoved));
-                        //listOfPeers.printPeerList();
+                         
                         listOfPeers.getSelf().setSocket(null);
                         s.close();
                         System.out.println("TcpServerCloud: closing cloud socket");
@@ -123,7 +123,7 @@ public class TcpServerCloud implements Runnable {
                     break;
                 } catch (Exception ee) {}
             }
-            //System.out.println();        
+             
         }
     }
 
@@ -140,7 +140,7 @@ public class TcpServerCloud implements Runnable {
                 System.out.println("*********************" + e.getClass());
                 PeerNode nodeToBeRemoved = listOfPeers.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
                 System.out.println("Removing PeerNode:" + nodeToBeRemoved.getId() + ":" + listOfPeers.removePeerNode(nodeToBeRemoved));
-                //                    listOfPeers.printPeerList();
+                 
                 listOfPeers.getSelf().setSocket(null);
                 s.close();
                 System.out.println("TcpServerCloud: closing cloud socket");
@@ -152,7 +152,7 @@ public class TcpServerCloud implements Runnable {
                 System.out.println("*********************" + e.getClass());
                 PeerNode nodeToBeRemoved = listOfPeers.getPeerNodeFromIP(s.getInetAddress().getHostAddress());
                 System.out.println("Removing PeerNode:" + nodeToBeRemoved.getId() + ":" + listOfPeers.removePeerNode(nodeToBeRemoved));
-                //                    listOfPeers.printPeerList();
+                 
                 listOfPeers.getSelf().setSocket(null);
                 s.close();
                 System.out.println("TcpServerCloud: closing cloud socket");
@@ -167,18 +167,5 @@ public class TcpServerCloud implements Runnable {
 
 
 
-    /*
-    void find(int x)
-    {
-        System.out.println("========Inside find" + x + "===========");
-        Iterator<PeerNode> it = peerList.getList().iterator();
-        while (it.hasNext())
-        {
-            PeerNode peerNode = it.next();
-            ArrayList<String> lof = peerNode.getListOfFiles().getList();
-            System.out.println("For peer node:"+peerNode.getId()+" list of files is:"+lof.toString());
-        }
-        System.out.println("========Leaving find()===========");
-    }
-    */
+     
 }

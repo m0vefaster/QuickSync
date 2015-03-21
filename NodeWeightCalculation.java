@@ -11,7 +11,7 @@ import java.util.regex.Matcher;
 import java.io.InputStreamReader;
 
 class NodeWeightCalculation {
-  //public String getOs()
+   
   public static int getSysLatency() {
     long t3 = System.currentTimeMillis();
     try {
@@ -34,7 +34,7 @@ class NodeWeightCalculation {
 
       String line = null;
       while ((line = lineReader.readLine()) != null) {
-        matcher.reset(line); //reset the input
+        matcher.reset(line);  
         if (matcher.find()) {
           value = line.split(":")[1];
           value = value.replaceAll("[^\\.0123456789]", "");
@@ -70,7 +70,7 @@ class NodeWeightCalculation {
         System.out.println("2");
         break;
       case "mac os x":
-        //Processor Speed
+         
         try {
           String command = "system_profiler SPPowerDataType";
           String command2 = "system_profiler SPHardwareDataType";

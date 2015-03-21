@@ -48,11 +48,11 @@ public class TcpClient implements Runnable {
                     client = new Socket(serverName, port);
                 } catch (Exception anye) {
                     try {
-                        t.sleep(100); //milliseconds
+                        t.sleep(100);  
                     } catch (InterruptedException e) {
                         e.printStackTrace();
                     }
-                    //anye.printStackTrace();
+                     
                 }
             } while (client == null);
             System.out.println("TcpClient:run: Client:Just connected to " + client.getRemoteSocketAddress());
@@ -62,9 +62,9 @@ public class TcpClient implements Runnable {
             if (obj == null) {
                 if (seeking == true) {
                     System.out.println("TcpClient:run: Sending fileList");
-                    /* Send a list of files to be sought. Put a randomized or a part of file list */
+                     
                     ArrayList < String > filesToAsk = fileList;
-                    /* Send the array list to List of peer to add and get a filtered array list */
+                     
                     filesToAsk = listOfPeers.addFilesInTransit(filesToAsk, listOfPeers.getPeerNodeFromIP(serverName).getId());
                     if (filesToAsk != null) {
                         JSONObject obj1 = JSONManager.getJSON(filesToAsk, 1);
@@ -76,7 +76,7 @@ public class TcpClient implements Runnable {
 
                     while (itr.hasNext() && !client.isClosed()) {
                         String str = itr.next();
-                        //Send the file from ...
+                         
                         File file = new File(path + "/" + str);
                         JSONObject obj2 = JSONManager.getJSON(file);
                         sendMessage(obj2, client, out);
@@ -98,7 +98,7 @@ public class TcpClient implements Runnable {
                 client.close();
             } catch (Exception ee) {}
         }
-        //System.out.println();
+         
     }
 
     void start() {
@@ -113,7 +113,7 @@ public class TcpClient implements Runnable {
         try {
             Message msg = new Message(obj);
             out.writeObject(msg);
-            //out.flush();
+             
         } catch (Exception e) {
             e.printStackTrace();
             try {

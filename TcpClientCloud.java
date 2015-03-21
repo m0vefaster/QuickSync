@@ -41,16 +41,16 @@ public class TcpClientCloud implements Runnable {
                     }
                 }
             } while (client == null);
-            //System.out.println("Client:Just connected to cloud" + client.getRemoteSocketAddress());
+             
 
-            //System.out.println("\nQuickSync:main:Adding Cloud to Peer List");
+             
             PeerNode cloudNode = new PeerNode(serverName, serverName, 0);
             cloudNode.setIsCloud(true);
             listOfPeers.addPeerNode(cloudNode);
 
             self.setSocket(client);
 
-            /* Create out and in streams */
+             
             OutputStream outToServer = client.getOutputStream();
             ObjectOutputStream out = new ObjectOutputStream(outToServer);
             InputStream inFromServer = client.getInputStream();
@@ -60,54 +60,29 @@ public class TcpClientCloud implements Runnable {
             self.setInputStream( in );
 
 
-            //System.out.println("Client:Sent Init to cloud");
-            //System.out.println("TcpCient:run: Socket closed? "+ client.isClosed());
+             
+             
 
-            /* Start TCP server for cloud */
+             
             Thread fromCloud = new Thread(new TcpServerCloud(client, listOfPeers));
             fromCloud.start();
         } catch (Exception e) {
             e.printStackTrace();
             try {
-                /*
-                PeerNode nodeToBeRemoved = listOfPeers.getPeerNodeFromSocket(client);
-                System.out.println("Removing PeerNode:" + nodeToBeRemoved.getId() + ":" + listOfPeers.removePeerNode(nodeToBeRemoved));
-                listOfPeers.printPeerList();
-                client.close();
-                */
+                 
                 System.out.println("TcpClientCloud: Exiting clientCloud thread");
             } catch (Exception ee) {}
         }
-        //System.out.println();
+         
     }
 
     void start() {
-        //System.out.println("TcpClient:start: Starting " +  threadName );
+         
         if (t == null) {
             t = new Thread(this, threadName);
             t.start();
         }
     }
 
-    /*
-    void sendMessage(JSONObject obj)
-    {
-        if(client == null){
-            return;
-        }
-        try
-        {
-            byte[] outputArray = obj.toString().getBytes();
-            int len = obj.toString().length();
-            out.writeObject(len);
-            out.writeObject(outputArray);
-            //client.shutdownOutput();
-            //out.close();
-        }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-    }
-    */
+     
 }
